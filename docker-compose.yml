@@ -6,9 +6,11 @@ services:
       - db
     ports:
       - "8069:8069"
+      - "8072:8072"
     volumes:
-      - ./local_data:/var/lib/odoo
-      - ./config/docker:/etc/odoo
+      - ~/local_data:/var/lib/odoo
+      - ~/local_data/log:/var/log/odoo
+      - ~/local_data/config:/etc/odoo
       - ./beanbakery-addons:/mnt/extra-addons
     environment:
       - PASSWORD_FILE=/run/secrets/postgresql_password
@@ -22,7 +24,7 @@ services:
       - POSTGRES_USER=odoo
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
-      - ./local_data/db:/var/lib/postgresql/data/pgdata
+      - ~/local_data/db:/var/lib/postgresql/data/pgdata
     secrets:
       - postgresql_password
 volumes:
@@ -31,4 +33,4 @@ volumes:
 
 secrets:
   postgresql_password:
-    file: ./config/docker/odoo_pg_pass
+    file: odoo_pg_pass

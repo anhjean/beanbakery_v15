@@ -16,7 +16,8 @@ the Database pass is: "P@assword#@!321"
 
 ## Docker
 - Just install Docker and docker-compose
-- Run ````docker-compose up``` on the root of proẹct
+- Run ````docker-compose up``` on the root of project
+- Then setup the nginx proxy as mentioned below.
 
 ### Note
 - If you want to change the DB password, edit the "odoo_pg_pass" file
@@ -68,77 +69,62 @@ the Database pass is: "P@assword#@!321"
     
 ## Nginx setup
 - dnf install nginx -y
-- sudo nano /etc/nginx/conf.d/yourdomain.com.conf
+- sudo nano /etc/nginx/conf.d/beanbakery.conf
 - add following code:
     ''''
         #odoo server
-          upstream odoobean {
-            server 127.0.0.1:8071;
-          }
-          upstream odoobeanchat {
-            server 127.0.0.1:8073;
-          }
+    upstream odoo {
+      server 127.0.0.1:8069;
+    }
+    upstream odoochat {
+      server 127.0.0.1:8072;
+    }
 
-          # http -> https
-          server {
-            listen 80;
-            #server_name beanbakery.vn www.beanbakery.vn nhadaubakery.com;
-            #rewrite ^(.*) https://beanbakery.vn permanent;
-            server_name *.beanbakery.vn beanbakery.vn;
-            rewrite ^(.*) https://$host$1 permanent;
-          }
-          server {
-            listen 443 ssl;
-            server_name erp.beanbakery.vn beanbakery.vn;
+    # http -> https
+    server {
+      listen 80;
+      server_name beanbakery.vn;
+      rewrite ^(.*) https://$host$1 permanent;
+    }
 
-              proxy_read_timeout 720s;
-              proxy_connect_timeout 720s;
-              proxy_send_timeout 720s;
+    server {
+      listen 443 ssl;
+      server_name beanbakery.vn;
+      proxy_read_timeout 720s;
+      proxy_connect_timeout 720s;
+      proxy_send_timeout 720s;
 
-          # Add Headers for odoo proxy mode
-              proxy_set_header X-Forwarded-Host $host;
-              proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-              proxy_set_header X-Forwarded-Proto $scheme;
-              proxy_set_header X-Real-IP $remote_addr;
+      # Add Headers for odoo proxy mode
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Real-IP $remote_addr;
 
-          # SSL parameters
-          # ssl on;
-            ssl_certificate /etc/ssl/beanbakery_origin_cert.pem;
-            ssl_certificate_key /etc/ssl/beanbakery.key;
-            ssl_session_timeout 30m;
-            ssl_protocols TLSv1.2;
-            ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES$
-            ssl_prefer_server_ciphers off;
+      # SSL parameters
+      ssl_certificate /etc/ssl/nginx/server.crt;
+      ssl_certificate_key /etc/ssl/nginx/server.key;
+      ssl_session_timeout 30m;
+      ssl_protocols TLSv1.2;
+      ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
+      ssl_prefer_server_ciphers off;
 
-          # log
-            access_log /var/log/nginx/odoo.access.log;
-            error_log /var/log/nginx/odoo.error.log;
+      # log
+      access_log /var/log/nginx/odoo.access.log;
+      error_log /var/log/nginx/odoo.error.log;
 
-          #Others config
-            client_max_body_size 100M;
+      # Redirect longpoll requests to odoo longpolling port
+      location /longpolling {
+        proxy_pass http://odoochat;
+      }
 
-          # Redirect longpoll requests to odoo longpolling port
-            location /longpolling {
-              proxy_pass http://odoobeanchat;
-            }
+      # Redirect requests to odoo backend server
+      location / {
+        proxy_redirect off;
+        proxy_pass http://odoo;
+      }
 
-          # Redirect requests to odoo backend server
-            location / {
-              proxy_redirect off;
-              proxy_pass http://odoobean;
-            }
-
-
-          # Cache static files
-            location ~* /web/static/ {
-              proxy_cache_valid 200 90m;
-              proxy_buffering on;
-              expires 864000;
-              proxy_pass http://odoobean;
-            }
-              
-          # common gzip
-            gzip_types text/css text/scss text/plain text/xml application/xml application/json application/javascript;
-            gzip on;
-        }
+      # common gzip
+      gzip_types text/css text/scss text/plain text/xml application/xml application/json application/javascript;
+      gzip on;
+    }
     ''''
