@@ -1,0 +1,144 @@
+﻿id;name;code;slug;state_id;country_id
+res_city_1;Thành phố Vĩnh Yên;VN-70_Cvinh-yen;vinh-yen;VN-70;VN
+res_city_2;Thành phố Phúc Yên;VN-70_Cphuc-yen;phuc-yen;VN-70;VN
+res_city_3;Thành phố Ninh Bình;VN-18_Cninh-binh;ninh-binh;VN-18;VN
+res_city_4;Thành phố Tam Điệp;VN-18_Ctam-diep;tam-diep;VN-18;VN
+res_city_5;Thành phố Cà Mau;VN-59_Cca-mau;ca-mau;VN-59;VN
+res_city_6;Thành phố Vinh;VN-22_Cvinh;vinh;VN-22;VN
+res_city_7;Thành phố Vĩnh Long;VN-49_Cvinh-long;vinh-long;VN-49;VN
+res_city_8;Thành Phố Đồng Hới;VN-24_Cdong-hoi;dong-hoi;VN-24;VN
+res_city_9;Thành phố Cao Lãnh;VN-45_Ccao-lanh;cao-lanh;VN-45;VN
+res_city_10;Thành phố Sa Đéc;VN-45_Csa-dec;sa-dec;VN-45;VN
+res_city_11;Thành phố Hồng Ngự;VN-45_Chong-ngu;hong-ngu;VN-45;VN
+res_city_12;Thành phố Lai Châu;VN-01_Clai-chau;lai-chau;VN-01;VN
+res_city_13;Thành phố Hưng Yên;VN-66_Chung-yen;hung-yen;VN-66;VN
+res_city_14;Thành phố Lạng Sơn;VN-09_Clang-son;lang-son;VN-09;VN
+res_city_15;Thành phố Biên Hòa;VN-39_Cbien-hoa;bien-hoa;VN-39;VN
+res_city_16;Thành phố Long Khánh;VN-39_Clong-khanh;long-khanh;VN-39;VN
+res_city_17;Thành phố Mỹ Tho;VN-46_Cmy-tho;my-tho;VN-46;VN
+res_city_18;Thành phố Tuy Hoà;VN-32_Ctuy-hoa;tuy-hoa;VN-32;VN
+res_city_19;Thành phố Yên Bái;VN-06_Cyen-bai;yen-bai;VN-06;VN
+res_city_20;Thành phố Thủ Dầu Một;VN-57_Cthu-dau-mot;thu-dau-mot;VN-57;VN
+res_city_21;Thành phố Dĩ An;VN-57_Cdi-an;di-an;VN-57;VN
+res_city_22;Thành phố Thuận An;VN-57_Cthuan-an;thuan-an;VN-57;VN
+res_city_23;Thành phố Tam Kỳ;VN-27_Ctam-ky;tam-ky;VN-27;VN
+res_city_24;Thành phố Hội An;VN-27_Choi-an;hoi-an;VN-27;VN
+res_city_25;Thành phố Điện Biên Phủ;VN-71_Cdien-bien-phu;dien-bien-phu;VN-71;VN
+res_city_26;Thành phố Kon Tum;VN-28_Ckon-tum;kon-tum;VN-28;VN
+res_city_27;Thành phố Bạc Liêu;VN-55_Cbac-lieu;bac-lieu;VN-55;VN
+res_city_28;Thành phố Buôn Ma Thuột;VN-33_Cbuon-ma-thuot;buon-ma-thuot;VN-33;VN
+res_city_29;Thành phố Long Xuyên;VN-44_Clong-xuyen;long-xuyen;VN-44;VN
+res_city_30;Thành phố Châu Đốc;VN-44_Cchau-doc;chau-doc;VN-44;VN
+res_city_31;Thành phố Thanh Hóa;VN-21_Cthanh-hoa;thanh-hoa;VN-21;VN
+res_city_32;Thành phố Sầm Sơn;VN-21_Csam-son;sam-son;VN-21;VN
+res_city_33;Thành phố Quảng Ngãi;VN-29_Cquang-ngai;quang-ngai;VN-29;VN
+res_city_34;Thành phố Tây Ninh;VN-37_Ctay-ninh;tay-ninh;VN-37;VN
+res_city_35;Thành phố Bắc Giang;VN-54_Cbac-giang;bac-giang;VN-54;VN
+res_city_36;Thành phố Thủ Đức;VN-SG_Cthu-duc;thu-duc;VN-SG;VN
+res_city_37;Thành phố Phan Rang-Tháp Chàm;VN-36_Cphan-rang-thap-cham;phan-rang-thap-cham;VN-36;VN
+res_city_38;Thành phố Tuyên Quang;VN-07_Ctuyen-quang;tuyen-quang;VN-07;VN
+res_city_39;Thành phố Sơn La;VN-05_Cson-la;son-la;VN-05;VN
+res_city_40;Thành phố Nam Định;VN-67_Cnam-dinh;nam-dinh;VN-67;VN
+res_city_41;Thành phố Phủ Lý;VN-63_Cphu-ly;phu-ly;VN-63;VN
+res_city_42;Thành phố Hải Dương;VN-61_Chai-duong;hai-duong;VN-61;VN
+res_city_43;Thành phố Chí Linh;VN-61_Cchi-linh;chi-linh;VN-61;VN
+res_city_44;Thành phố Vũng Tàu;VN-43_Cvung-tau;vung-tau;VN-43;VN
+res_city_45;Thành phố Bà Rịa;VN-43_Cba-ria;ba-ria;VN-43;VN
+res_city_46;Thành phố Rạch Giá;VN-47_Crach-gia;rach-gia;VN-47;VN
+res_city_47;Thành phố Hà Tiên;VN-47_Cha-tien;ha-tien;VN-47;VN
+res_city_48;Thành phố Phú Quốc;VN-47_Cphu-quoc;phu-quoc;VN-47;VN
+res_city_49;Thành phố Cao Bằng;VN-04_Ccao-bang;cao-bang;VN-04;VN
+res_city_50;Thành phố Hà Tĩnh;VN-23_Cha-tinh;ha-tinh;VN-23;VN
+res_city_51;Thành phố Pleiku;VN-30_Cpleiku;pleiku;VN-30;VN
+res_city_52;Thành phố Hòa Bình;VN-14_Choa-binh;hoa-binh;VN-14;VN
+res_city_53;Thành phố Sóc Trăng;VN-52_Csoc-trang;soc-trang;VN-52;VN
+res_city_54;Thành phố Quy Nhơn;VN-31_Cquy-nhon;quy-nhon;VN-31;VN
+res_city_55;Thành phố Thái Bình;VN-20_Cthai-binh;thai-binh;VN-20;VN
+res_city_56;Thành phố Việt Trì;VN-68_Cviet-tri;viet-tri;VN-68;VN
+res_city_57;Thành phố Vị Thanh;VN-73_Cvi-thanh;vi-thanh;VN-73;VN
+res_city_58;Thành phố Ngã Bảy;VN-73_Cnga-bay;nga-bay;VN-73;VN
+res_city_59;Thành phố Hạ Long;VN-13_Cha-long;ha-long;VN-13;VN
+res_city_60;Thành phố Móng Cái;VN-13_Cmong-cai;mong-cai;VN-13;VN
+res_city_61;Thành phố Cẩm Phả;VN-13_Ccam-pha;cam-pha;VN-13;VN
+res_city_62;Thành phố Uông Bí;VN-13_Cuong-bi;uong-bi;VN-13;VN
+res_city_63;Thành phố Đông Hà;VN-25_Cdong-ha;dong-ha;VN-25;VN
+res_city_64;Thành phố Lào Cai;VN-02_Clao-cai;lao-cai;VN-02;VN
+res_city_65;Thành phố Gia Nghĩa;VN-72_Cgia-nghia;gia-nghia;VN-72;VN
+res_city_66;Thành phố Bắc Ninh;VN-56_Cbac-ninh;bac-ninh;VN-56;VN
+res_city_67;Thành phố Đà Lạt;VN-35_Cda-lat;da-lat;VN-35;VN
+res_city_68;Thành phố Bảo Lộc;VN-35_Cbao-loc;bao-loc;VN-35;VN
+res_city_69;Thành phố Thái Nguyên;VN-69_Cthai-nguyen;thai-nguyen;VN-69;VN
+res_city_70;Thành phố Sông Công;VN-69_Csong-cong;song-cong;VN-69;VN
+res_city_71;Thành phố Phan Thiết;VN-40_Cphan-thiet;phan-thiet;VN-40;VN
+res_city_72;Thành phố Nha Trang;VN-34_Cnha-trang;nha-trang;VN-34;VN
+res_city_73;Thành phố Cam Ranh;VN-34_Ccam-ranh;cam-ranh;VN-34;VN
+res_city_74;Thành phố Bến Tre;VN-50_Cben-tre;ben-tre;VN-50;VN
+res_city_75;Thành phố Huế;VN-26_Chue;hue;VN-26;VN
+res_city_76;Thành phố Hà Giang;VN-03_Cha-giang;ha-giang;VN-03;VN
+res_city_77;Thành phố Trà Vinh;VN-51_Ctra-vinh;tra-vinh;VN-51;VN
+res_city_78;Thành phố Tân An;VN-41_Ctan-an;tan-an;VN-41;VN
+res_city_79;Thành Phố Bắc Kạn;VN-53_Cbac-kan;bac-kan;VN-53;VN
+res_city_80;Thành phố Đồng Xoài;VN-58_Cdong-xoai;dong-xoai;VN-58;VN
+res_city_81;Tỉnh Vĩnh Phúc;VN-70_C0;0;VN-70;VN
+res_city_82;Tỉnh Ninh Bình;VN-18_C0;0;VN-18;VN
+res_city_83;Tỉnh Cà Mau;VN-59_C0;0;VN-59;VN
+res_city_84;Tỉnh Nghệ An;VN-22_C0;0;VN-22;VN
+res_city_85;Tỉnh Vĩnh Long;VN-49_C0;0;VN-49;VN
+res_city_86;Tỉnh Quảng Bình;VN-24_C0;0;VN-24;VN
+res_city_87;Thành phố Hải Phòng;VN-HP_C0;0;VN-HP;VN
+res_city_88;Thành phố Hà Nội;VN-HN_C0;0;VN-HN;VN
+res_city_89;Tỉnh Đồng Tháp;VN-45_C0;0;VN-45;VN
+res_city_90;Tỉnh Lai Châu;VN-01_C0;0;VN-01;VN
+res_city_91;Tỉnh Hưng Yên;VN-66_C0;0;VN-66;VN
+res_city_92;Tỉnh Lạng Sơn;VN-09_C0;0;VN-09;VN
+res_city_93;Tỉnh Đồng Nai;VN-39_C0;0;VN-39;VN
+res_city_94;Tỉnh Tiền Giang;VN-46_C0;0;VN-46;VN
+res_city_95;Tỉnh Phú Yên;VN-32_C0;0;VN-32;VN
+res_city_96;Tỉnh Yên Bái;VN-06_C0;0;VN-06;VN
+res_city_97;Tỉnh Bình Dương;VN-57_C0;0;VN-57;VN
+res_city_98;Tỉnh Quảng Nam;VN-27_C0;0;VN-27;VN
+res_city_99;Tỉnh Điện Biên;VN-71_C0;0;VN-71;VN
+res_city_100;Tỉnh Kon Tum;VN-28_C0;0;VN-28;VN
+res_city_101;Tỉnh Bạc Liêu;VN-55_C0;0;VN-55;VN
+res_city_102;Tỉnh Đắk Lắk;VN-33_C0;0;VN-33;VN
+res_city_103;Tỉnh An Giang;VN-44_C0;0;VN-44;VN
+res_city_104;Tỉnh Thanh Hóa;VN-21_C0;0;VN-21;VN
+res_city_105;Tỉnh Quảng Ngãi;VN-29_C0;0;VN-29;VN
+res_city_106;Tỉnh Tây Ninh;VN-37_C0;0;VN-37;VN
+res_city_107;Tỉnh Bắc Giang;VN-54_C0;0;VN-54;VN
+res_city_108;Thành phố Hồ Chí Minh;VN-SG_C0;0;VN-SG;VN
+res_city_109;Tỉnh Ninh Thuận;VN-36_C0;0;VN-36;VN
+res_city_110;Tỉnh Tuyên Quang;VN-07_C0;0;VN-07;VN
+res_city_111;Tỉnh Sơn La;VN-05_C0;0;VN-05;VN
+res_city_112;Tỉnh Nam Định;VN-67_C0;0;VN-67;VN
+res_city_113;Tỉnh Hà Nam;VN-63_C0;0;VN-63;VN
+res_city_114;Tỉnh Hải Dương;VN-61_C0;0;VN-61;VN
+res_city_115;Tỉnh Bà Rịa - Vũng Tàu;VN-43_C0;0;VN-43;VN
+res_city_116;Tỉnh Kiên Giang;VN-47_C0;0;VN-47;VN
+res_city_117;Tỉnh Cao Bằng;VN-04_C0;0;VN-04;VN
+res_city_118;Tỉnh Hà Tĩnh;VN-23_C0;0;VN-23;VN
+res_city_119;Tỉnh Gia Lai;VN-30_C0;0;VN-30;VN
+res_city_120;Tỉnh Hoà Bình;VN-14_C0;0;VN-14;VN
+res_city_121;Tỉnh Sóc Trăng;VN-52_C0;0;VN-52;VN
+res_city_122;Tỉnh Bình Định;VN-31_C0;0;VN-31;VN
+res_city_123;Tỉnh Thái Bình;VN-20_C0;0;VN-20;VN
+res_city_124;Tỉnh Phú Thọ;VN-68_C0;0;VN-68;VN
+res_city_125;Tỉnh Hậu Giang;VN-73_C0;0;VN-73;VN
+res_city_126;Thành phố Cần Thơ;VN-CT_C0;0;VN-CT;VN
+res_city_127;Tỉnh Quảng Ninh;VN-13_C0;0;VN-13;VN
+res_city_128;Tỉnh Quảng Trị;VN-25_C0;0;VN-25;VN
+res_city_129;Tỉnh Lào Cai;VN-02_C0;0;VN-02;VN
+res_city_130;Tỉnh Đắk Nông;VN-72_C0;0;VN-72;VN
+res_city_131;Tỉnh Bắc Ninh;VN-56_C0;0;VN-56;VN
+res_city_132;Tỉnh Lâm Đồng;VN-35_C0;0;VN-35;VN
+res_city_133;Tỉnh Thái Nguyên;VN-69_C0;0;VN-69;VN
+res_city_134;Tỉnh Bình Thuận;VN-40_C0;0;VN-40;VN
+res_city_135;Tỉnh Khánh Hòa;VN-34_C0;0;VN-34;VN
+res_city_136;Tỉnh Bến Tre;VN-50_C0;0;VN-50;VN
+res_city_137;Tỉnh Thừa Thiên Huế;VN-26_C0;0;VN-26;VN
+res_city_138;Tỉnh Hà Giang;VN-03_C0;0;VN-03;VN
+res_city_139;Tỉnh Trà Vinh;VN-51_C0;0;VN-51;VN
+res_city_140;Tỉnh Long An;VN-41_C0;0;VN-41;VN
+res_city_141;Tỉnh Bắc Kạn;VN-53_C0;0;VN-53;VN
+res_city_142;Thành phố Đà Nẵng;VN-DN_C0;0;VN-DN;VN
+res_city_143;Tỉnh Bình Phước;VN-58_C0;0;VN-58;VN

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="model_name_view_form" model="ir.ui.view">
+        <field name="name">res.company.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='city']" position="replace">
+                <div>
+                    <field name="city_id" 
+                        placeholder="Please choose a City" string="City"
+                        options='{"no_open": True}' 
+                        class="oe_edit_only" 
+                    />
+                    <field name="district_id" 
+                        placeholder="Please choose a District" string="District"
+                        options='{"no_open": True}' 
+                        class="oe_edit_only" 
+                    />
+                    
+                    <field name="ward_id" 
+                    placeholder="Please choose a Ward" string="Ward"
+                    options='{"no_open": True}' 
+                    class="oe_edit_only"
+                    />
+                   
+                </div>
+            </xpath>
+            <field name="state_id" position="attributes"> 
+                <attribute name="class">oe_edit_only</attribute>
+                <attribute name="options">{"no_open": True}</attribute>
+            </field>
+            <field name="zip" position="attributes"> 
+                <attribute name="class">oe_edit_only</attribute>
+                <attribute name="options">{"no_open": True}</attribute>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,11 @@
+<odoo>
+
+    <record id="sale.view_quotation_tree_with_onboarding" model="ir.ui.view">
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="js_class">sale_list_dashboard</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

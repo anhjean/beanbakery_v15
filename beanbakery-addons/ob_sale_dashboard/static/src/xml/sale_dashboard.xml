@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+    <!-- This template is for a table at the top of purchase views that shows some KPIs. -->
+    <t t-name="sale_dashboard.SaleDashboard">
+        <div class="o_sale_dashboard container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <table class="table table-sm">
+                        <!-- thead needed to avoid list view rendering error for some reason -->
+                        <thead>
+                            <tr>
+                                <!-- can't use th tag due to list rendering error when no values in list... -->
+                                <td class="o_text">
+                                    <div>All Quotes</div>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="All Draft Quotes"
+                                    name="sale_action_dashboard_draft">
+                                    <a href="#"><t t-esc="values['all_to_send']"/><br/>To Send</a>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="All Waiting Quotes"
+                                    name="sale_action_dashboard_waiting">
+                                    <a href="#"><t t-esc="values['all_waiting']"/><br/>Waiting</a>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="All Late Quotes"
+                                    name="sale_action_dashboard_late">
+                                    <a href="#"><t t-esc="values['all_late']"/><br/>Late</a>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="o_text">
+                                    <div>My Quotes</div>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="My Draft quotes"
+                                    name="sale_action_dashboard_draft_my">
+                                    <a href="#"><t t-esc="values['my_to_send']"/></a>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="My Waiting Quotes"
+                                    name="sale_action_dashboard_waiting_my">
+                                    <a href="#"><t t-esc="values['my_waiting']"/></a>
+                                </td>
+                                <td class="o_main o_dashboard_action" title="My Late quotes"
+                                    name="sale_action_dashboard_late_my">
+                                    <a href="#"><t t-esc="values['my_late']"/></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table></div>
+
+                <div class="col-sm-7">
+                    <table class="table table-sm">
+                        <!-- thead needed to avoid list view rendering error for some reason -->
+                        <thead>
+                            <tr>
+                                <!-- can't use th tag due to list rendering error when no values in list... -->
+                                <td class="o_text">Avg Order Value (<t t-esc="values['company_currency_symbol']"/>)</td>
+                                <td><span><t t-esc="values['all_avg_order_value']"/></span></td>
+                                <td class="o_text">Sale Last 7 Days (<t t-esc="values['company_currency_symbol']"/>
+                                    )</td>
+                                <td><span><t t-esc="values['all_total_last_7_days']"/></span></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="o_text">Lead Time to Sale</td>
+                                <td><span><t t-esc="values['all_avg_days_to_sale']"/> &#160;Days</span></td>
+                                <td class="o_text">Quotes Sent Last 7 Days</td>
+                                <td><span><t t-esc="values['all_sent_quotes']"/></span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

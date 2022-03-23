@@ -1,0 +1,65 @@
+<odoo>
+  <!-- <data> -->
+  <!-- explicit list view definition -->
+  <!-- menu categories -->
+  <record id="product_menu_act" model="ir.actions.act_window">
+    <field name="name">Products</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.template</field>
+    <field name="view_mode">kanban,tree,form,activity</field>
+    <field name="view_id" ref="product.product_template_kanban_view" />
+    <field name="search_view_id" ref="product.product_template_search_view" />
+    <field name="context">{"search_default_filter_to_sell":1, "sale_multi_pricelist_product_template": 1}</field>
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+                Create a new product
+            </p>
+      <p>
+                You must define a product for everything you sell or purchase,
+                whether it's a storable product, a consumable or a service.
+            </p>
+    </field>
+  </record>
+
+
+  <record id="product_category_act" model="ir.actions.act_window">
+    <field name="name">Products Category</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.category</field>
+    <field name="view_mode">kanban,tree,form,activity</field>
+    <field name="search_view_id" ref="product.product_category_search_view" />
+    <field name="view_id" ref="product.product_category_list_view" />
+    <field name="help" type="html">
+      <p class="o_view_nocontent_smiling_face">
+                Create a new product category
+            </p>
+      <p>
+                You must define a product category for everything you sell or purchase.
+            </p>
+    </field>
+  </record>
+
+  <!-- Root menu -->
+  <menuitem id="products_base_menu" name="Products" action="product_menu_act" sequence="5" web_icon="bean_bakery_module,static/icons/product.png" />
+  
+  <!-- Root menu -->
+  <!-- <menuitem id="products_base_menu_zalo" name="Zalo" action="product_menu_act" sequence="52" web_icon="bean_bakery_module,static/icons/product.png" /> -->
+  <!-- Top Menu  -->
+  <menuitem name="Product List" id="products_base_menu_1" parent="products_base_menu" action="product_menu_act" />
+  <menuitem name="Category List" id="products_base_menu_2" parent="products_base_menu" action="product_category_act" />
+
+
+  <record id="view_category_property_form" model="ir.ui.view">
+    <field name="name">Product Category View</field>
+    <field name="model">product.category</field>
+    <field name="inherit_id" ref="product.product_category_form_view" />
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='parent_id']" position="after">
+        <field name="description" placeholder="Product Category Description" />
+        <field name="accessory_product_ids" widget="many2many_tags" placeholder="Suggested accessories in the eCommerce cart" />
+      </xpath>
+
+    </field>
+  </record>
+  
+</odoo>
