@@ -14,22 +14,48 @@ services:
       - ./beanbakery-addons:/mnt/extra-addons
     environment:
       - PASSWORD_FILE=/run/secrets/postgresql_password
+      - USER=beanbakery
     secrets:
       - postgresql_password
+    networks:
+      - my-network
   db:
     image: postgres:13
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgresql_password
-      - POSTGRES_USER=odoo
+      - POSTGRES_USER=beanbakery
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - ~/local_data/db:/var/lib/postgresql/data/pgdata
     secrets:
       - postgresql_password
+    networks:
+      - my-network
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    depends_on:
+      - web
+    links:
+      - web
+    ports:
+      - 80:80
+      - 443:443
+      - 8081:8081
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    networks:
+      - my-network 
 volumes:
   odoo-web-data:
   odoo-db-data:
+
+networks:
+  my-network:
+    driver: bridge
 
 secrets:
   postgresql_password:
