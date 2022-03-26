@@ -30,3 +30,4 @@ jobs:
       - name: Deploy Bean Bakery v15 App
         run: |
           docker-compose up -d --force-recreate  --build
+          command -v nginx || echo "nginx not install"
