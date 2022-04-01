@@ -32,23 +32,7 @@ services:
       - postgresql_password
     networks:
       - my-network
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    restart: unless-stopped
-    depends_on:
-      - web
-    links:
-      - web
-    ports:
-      - 80:80
-      - 443:443
-      - 8081:8081
-    volumes:
-      - ./nginx/conf:/etc/nginx/conf.d
-      - ./nginx/ssl:/etc/nginx/ssl
-    networks:
-      - my-network 
+   
 volumes:
   odoo-web-data:
   odoo-db-data:

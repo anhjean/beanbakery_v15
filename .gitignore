@@ -1,1 +1,4 @@
 **/local_data
+*.pyc
+bean-venv
+.local
