@@ -146,7 +146,7 @@ the Database default pass is: "P@assword#@!321"
 ## Note
 - If you want to change the DB password, edit the "odoo_pg_pass" file
 - All the odoo's custom module should put in the "beanbakery-addons" folder.
-- The odoo config file is in the "~/local_data/config" folder ***(docker setup)*** and in the "~/beanbakery_app/" folder ***(non-docker setup)***
+- The odoo config file is in the `~/local_data/config` folder ***(docker setup)*** and in the `~/beanbakery_app/` folder ***(non-docker setup)***
 - All of the odoo running data are in the "~/local_data/share" folder ***(docker setup)***
 - All of the odoo databasse data are in the "~/local_data/db" folder ***(docker setup)***
 - All of the odoo databasse log are in the "~/local_data/log" folder 
