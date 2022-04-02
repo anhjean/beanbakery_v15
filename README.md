@@ -27,9 +27,13 @@ the Database default pass is: "P@assword#@!321"
 
     - Install **nodejs** and : 
       - `sudo npm install -g rtlcss` 
-- **For Ubuntu** 
+- **For Ubuntu v20** 
     - `sudo apt install python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev`
-    - `sudo apt install https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos8.x86_64.rpm` 
+    - `wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb`
+    - `sudo apt install ./wkhtmltox_0.12.6-1.focal_amd64.deb` 
+    - If use Ubuntu v18:
+      - `wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb`
+      - `sudo apt install ./wkhtmltox_0.12.6-1.bionic_amd64.deb`
     -  Install **nodejs** and : 
       - `sudo npm install -g rtlcss`
 
