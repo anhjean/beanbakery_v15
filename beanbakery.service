@@ -1,0 +1,16 @@
+[Unit]
+Description=Bean Bakery ERP Server
+#Requires=postgresql.service
+#After=network.target postgresql.service
+
+[Service]
+User=beanbakery
+Group=beanbakery
+Type=simple
+SyslogIdentifier=beanbakery
+PermissionsStartOnly=true
+ExecStart=~/beanbakery_app/beanbakery-venv/bin/python3 ~/beanbakery_app/odoo-bin -c ~/beanbakery_app/odoo.conf 
+StandardOutput=journal+console
+
+[Install]
+WantedBy=multi-user.target

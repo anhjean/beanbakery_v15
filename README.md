@@ -2,90 +2,92 @@
 
 This project is build on the Odoo v15 Community which customized to match the requirment for Online/ Offline Store.
 
-# Requirements
+## Requirements
 I use this project for my own bakery business with the following requirements:
-- My business need a website for customer to purchase our product
-- My business need a frontend page for my staff make order on the offline store
-- My business have manufactoring processes, Inventory processes and Accounting, so I need a tool to management These processes
+- ***My business need a website for customer to purchase our product***
+- ***My business need a frontend page for my staff make order on the offline store***
+- ***My business have manufactoring processes, Inventory processes and Accounting, so I need a tool to management these processes***
 
 
 # Set up
 
-In this project, I can install odoo v15 with 2 ways: **Traditional** and **Docker**
-the Database pass is: "P@assword#@!321"
+In this project, I can install odoo v15 with 2 ways: **Non-docker** and **Docker**
+the Database default pass is: "P@assword#@!321"
 
-## Docker
-- Just install Docker and docker-compose
-- Run ````docker-compose up``` on the root of project
+## Docker setup
+- Just install Docker and docker-compose on your VPS
+- Run `docker-compose up -d` on the root of project
 - Then setup the nginx proxy as mentioned below.
 
-### Note
-- If you want to change the DB password, edit the "odoo_pg_pass" file
-- All the odoo's custom module should put in the "addons" folder.
-- The odoo config file is in the "config" folder
-- All of the odoo running data are in the "local_data/.local" folder
-- All of the odoo databasse data are in the "local_data/db" folder
-- For production, need a security solution for "local_data" folder
+## Non-docker setup
+1. Install Python 3.7 and nodejs 
+- **For CentOS** 
+    - `sudo dnf install python3 python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev libxslt-devel bzip2-devel openldap-devel git curl unzip -y `
+    - `sudo dnf install https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos8.x86_64.rpm `
 
-## Traditional way (for Cent OS server)
-1. Install Python 3.7 and nodejs
-    - dnf install python3 python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev \
-                  libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev \
-                  liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev \
-                  libxslt-devel bzip2-devel openldap-devel git curl unzip -y
-    - dnf install https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos8.x86_64.rpm
-    -  Install nodejs and : sudo npm install -g rtlcss
+    - Install **nodejs** and : 
+      - `sudo npm install -g rtlcss` 
+- **For Ubuntu** 
+    - `sudo apt install python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev`
+    - `sudo apt install https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos8.x86_64.rpm` 
+    -  Install **nodejs** and : 
+      - `sudo npm install -g rtlcss`
 
 2. Install PostgresSQL
-    - dnf install postgresql postgresql-server postgresql-contrib -y
-    - postgresql-setup initdb
-    - systemctl start postgresql
-    - systemctl enable postgresql
-    - Create Postgres user: su - postgres -c "createuser -s beanbakery"
-    for Ubuntu:
-      # Create the file repository configuration:
-      sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+- **For CentOS** 
+    - `dnf install postgresql postgresql-server postgresql-contrib -y`
+    - `postgresql-setup initdb`
+    - `systemctl start postgresql`
+    - `systemctl enable postgresql`
+    - *Create Postgres user:* 
+      - `su - postgres -c "createuser -s beanbakery"`
+- **For CentOS** 
+    - *Create the file repository configuration:*
+      - `sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' `
+    - *Import the repository signing key:*
+      - ```wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - ```
+    - *Update the package lists:*
+      - `sudo apt-get update`
+    - *Install the latest version of PostgreSQL.If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':*
+      - `sudo apt-get -y install postgresql`
 
-      # Import the repository signing key:
-      wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-
-      # Update the package lists:
-      sudo apt-get update
-
-      # Install the latest version of PostgreSQL.
-      # If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':
-      sudo apt-get -y install postgresql
-
-3. Clone source code and we need to create a new system user for our Odoo installation. Make sure the username is the same as the PostgreSQL user we created in the previous step (username maybe different ):
-    - useradd -m -U -r -d /opt/beanbakery15 -s /bin/bash beanbakery
-    - su - beanbakery
-    - git clone https://github.com/Anhjean/odoo15.git /opt/beanbakery15
+3. Clone source code and we need to create a new system user for our Odoo installation. Make sure the username is the same as the PostgreSQL user we created in the previous step (username maybe different if you want it):
+    - `useradd -m -U -r -d /home/beanbakery -s /bin/bash beanbakery`
+    - `sudo su - beanbakery`
+    - `git clone https://github.com/Anhjean/beanbakery_v15.git ./beanbakery_app`
 
 4. Install python dev by Virtual Env and setup Bean Bakery ERP
-    - install env lib: pip install virtualenv
-    - cd /opt/beanbakery15 && python3 -m venv beanbakery-venv
-    - source beanbakery-venv/bin/activate
-    - pip3 install setuptools wheel
-    - pip3 install -r ./requirements.txt
-    - deactivate && exit
+    - *install env lib: *
+      - `pip install virtualenv`
+      - `cd ~/beanbakery_app && python3 -m venv beanbakery-venv`
+      - `source beanbakery-venv/bin/activate`
+    - *install odoo dependencies lib: *  
+      - `pip3 install setuptools wheel`
+      - `pip3 install -r ./requirements.txt`
 
 5. Make odoo public folder and system user
-    - sudo mkdir /opt/.local && sudo mkdir /opt/.local/beanbakery15
-    - sudo chmod 777 /opt/.local/beanbakery15 -R
+    - `mkdir ~/local_data && mkdir ~/local_data/log && mkdir ~/local_data/share`
+    - `sudo chmod 777 ~/local_data/share -R`
     
 6. Running Bean Bakery ERP
-    - cd /CommunityPath
-    - sudo cp ./config/beanbakery15.service /etc/systemd/system
-    - sudo systemctl start beanbakery15
-    - sudo systemctl enable beanbakery15
-    - sudo systemctl status beanbakery15
+    - sudo cp ~/beanbakery_app/beanbakery.service /etc/systemd/system
+    - *To start service:*
+      - `sudo systemctl start beanbakery.service`
+    - *To stop service:*
+      - `sudo systemctl stop beanbakery.service`
+    - *To check service status:*
+      - `sudo systemctl status beanbakery.service`  
     
 ## Nginx setup
-- dnf install nginx -y
-- sudo nano /etc/nginx/conf.d/beanbakery.conf
-- add following code:
-    ''''
-        #odoo server
+- **For Centos:**
+  - dnf install nginx -y
+- **For Ubuntu:**
+  - apt install nginx -y
+- **Create nginx default with SSL config file**
+  - `sudo nano /etc/nginx/conf.d/beanbakery.conf`
+  - add following code:
+    ```
+    #odoo server
     upstream odoo {
       server 127.0.0.1:8069;
     }
@@ -96,13 +98,13 @@ the Database pass is: "P@assword#@!321"
     # http -> https
     server {
       listen 80;
-      server_name beanbakery.vn;
+      server_name yourdomain.name;
       rewrite ^(.*) https://$host$1 permanent;
     }
 
     server {
       listen 443 ssl;
-      server_name beanbakery.vn;
+      server_name yourdomain.name;
       proxy_read_timeout 720s;
       proxy_connect_timeout 720s;
       proxy_send_timeout 720s;
@@ -140,4 +142,15 @@ the Database pass is: "P@assword#@!321"
       gzip_types text/css text/scss text/plain text/xml application/xml application/json application/javascript;
       gzip on;
     }
-    ''''
+    ```
+## Note
+- If you want to change the DB password, edit the "odoo_pg_pass" file
+- All the odoo's custom module should put in the "beanbakery-addons" folder.
+- The odoo config file is in the "~/local_data/config" folder ***(docker setup)*** and in the "~/beanbakery_app/" folder ***(non-docker setup)***
+- All of the odoo running data are in the "~/local_data/share" folder ***(docker setup)***
+- All of the odoo databasse data are in the "~/local_data/db" folder ***(docker setup)***
+- All of the odoo databasse log are in the "~/local_data/log" folder 
+- For production, need a security solution for "~/local_data" folder
+- **For SSL key**, should buy SSL key from ssls.com (about $7 for 1 years and $16 for 5 years per domain, link: https://www.ssls.com/ssl-certificates/comodo-positivessl).
+- **For email server**, should use Google Gsuite (about $6/month/account)
+- **For VPS**, should a "2 core,4GB Ram" VPS (about $20/month - ex: AWS lightsail)
