@@ -28,14 +28,43 @@ the Database default pass is: "P@assword#@!321"
     - Install **nodejs** and : 
       - `sudo npm install -g rtlcss` 
 - **For Ubuntu v20** 
-    - `sudo apt install python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev`
+    - `sudo apt install libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev libxslt-devel bzip2-devel openldap-devel git curl unzip -y`
+    - ``` 
+      # Change directory
+      cd <path to download location>/Python-3.7.7
+
+      # Check dependencies
+      sudo ./configure --enable-optimizations
+
+      # Make - Compile and build Python
+      sudo make
+      # OR - specify processor units
+      sudo make -j 4
+
+      # Install Binaries
+      sudo make altinstall
+
+      # Switch active Python
+      sudo update-alternatives --install /usr/bin/python3 python3 /usr/local/bin/python3.7 1
+      sudo update-alternatives --config python3
+
+      # It won't show any option for python3
+
+      # Verify Installation
+      python3 --version
+      
+      ```
     - `wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.focal_amd64.deb`
     - `sudo apt install ./wkhtmltox_0.12.6-1.focal_amd64.deb` 
     - If use Ubuntu v18:
       - `wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb`
       - `sudo apt install ./wkhtmltox_0.12.6-1.bionic_amd64.deb`
     -  Install **nodejs** and : 
+      - `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+      - `sudo apt install nodejs -y`
+      - `sudo apt install npm`
       - `sudo npm install -g rtlcss`
+      - `sudo python3.7 -m pip install pip`
 
 2. Install PostgresSQL
 - **For CentOS** 
@@ -44,8 +73,10 @@ the Database default pass is: "P@assword#@!321"
     - `systemctl start postgresql`
     - `systemctl enable postgresql`
     - *Create Postgres user:* 
-      - `su - postgres -c "createuser -s beanbakery"`
-- **For CentOS** 
+      - `sudo su - postgres `
+      - `psql -U postgres`
+      -  `CREATE ROLE beanbakery WITH CREATEDB LOGIN ENCRYPTED PASSWORD 'P@assword#@!321';`
+- **For Ubuntu** 
     - *Create the file repository configuration:*
       - `sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' `
     - *Import the repository signing key:*
@@ -53,7 +84,11 @@ the Database default pass is: "P@assword#@!321"
     - *Update the package lists:*
       - `sudo apt-get update`
     - *Install the latest version of PostgreSQL.If you want a specific version, use 'postgresql-12' or similar instead of 'postgresql':*
-      - `sudo apt-get -y install postgresql`
+      - `sudo apt install postgresql postgresql-contrib`
+    - *Create Postgres user:* 
+      - `sudo su - postgres `
+      - `psql -U postgres`
+      -  `CREATE ROLE beanbakery WITH CREATEDB LOGIN ENCRYPTED PASSWORD 'P@assword#@!321';`
 
 3. Clone source code and we need to create a new system user for our Odoo installation. Make sure the username is the same as the PostgreSQL user we created in the previous step (username maybe different if you want it):
     - `useradd -m -U -r -d /home/beanbakery -s /bin/bash beanbakery`
@@ -62,7 +97,7 @@ the Database default pass is: "P@assword#@!321"
 
 4. Install python dev by Virtual Env and setup Bean Bakery ERP
     - *install env lib: *
-      - `pip install virtualenv`
+      - `pip3 install virtualenv`
       - `cd ~/beanbakery_app && python3 -m venv beanbakery-venv`
       - `source beanbakery-venv/bin/activate`
     - *install odoo dependencies lib: *  
@@ -71,7 +106,7 @@ the Database default pass is: "P@assword#@!321"
 
 5. Make odoo public folder and system user
     - `mkdir ~/local_data && mkdir ~/local_data/log && mkdir ~/local_data/share`
-    - `sudo chmod 777 ~/local_data/share -R`
+    - `chmod 777 ~/local_data/share -R`
     
 6. Running Bean Bakery ERP
     - sudo cp ~/beanbakery_app/beanbakery.service /etc/systemd/system
