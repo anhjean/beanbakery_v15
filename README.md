@@ -11,9 +11,9 @@ I use this project for my own bakery business with the following requirements:
 
 # Set up
 
-- In this project, I can install odoo v15 with 2 ways: **Non-docker** and **Docker**
+- In this project, I can install BeanBakery v15 with 2 ways: **Non-docker** and **Docker**
 - The Database default pass is: "P@assword#@!321"
-- I use **AWS Lightsail Instance with Ubuntu 20.04** that's already had python 3.8.2 which is suitable with Odoo
+- I use **AWS Lightsail Instance with Ubuntu 20.04** that's already had python 3.8.2 which is suitable with BeanBakery v15
 
 ## Docker setup
 - Just install Docker and docker-compose on your VPS
@@ -21,7 +21,7 @@ I use this project for my own bakery business with the following requirements:
 - Then setup the nginx proxy as mentioned below.
 
 ## Non-docker setup
-1. Install Python 3.7 (if needed) and nodejs 
+1. Install Python 3.7 or 3.8 (if needed) and nodejs 
 - 
 - **For CentOS** 
     - `sudo dnf install python3 python3-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libtiff5-dev libjpeg8-dev libopenjp2-7-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev libharfbuzz-dev libfribidi-dev libxcb1-dev libpq-dev libxslt-devel bzip2-devel openldap-devel git curl unzip -y `
@@ -71,24 +71,25 @@ I use this project for my own bakery business with the following requirements:
       - `CREATE ROLE beanbakery WITH CREATEDB LOGIN ENCRYPTED PASSWORD 'P@assword#@!321';`
     - You can check the Created Postges user by command `\du` and exit Postgres command line by 'Ctrl+D' then 'exit'
 
-4. Clone source code and we need to create a new system user for our Odoo installation. Make sure the username is the same as the PostgreSQL user we created in the previous step (username maybe different if you want it). In the following command, I use the ***'/home/beanbakery'*** folder is the home of the 'beanbakery' user. With this setting, the path for Odoo's addons will be ***/home/beanbakery/beanbakery_app/addons***:
+4. Clone source code and we need to create a new system user for BeanBakery v15 installation. Make sure the username is the same as the PostgreSQL user that we created in the previous step (username maybe different if you want it). In the following command, I use the ***'/home/beanbakery'*** folder is the home of the 'beanbakery' user. :
     - `sudo useradd -m -U -r -d /home/beanbakery -s /bin/bash beanbakery`
     - `sudo su - beanbakery`
     - `git clone https://github.com/Anhjean/beanbakery_v15.git ./beanbakery_app`
+    - With this setting, the path for Odoo's addons will be ***/home/beanbakery/beanbakery_app/addons***
 
-5. Install python dev by Virtual Env and setup Bean Bakery ERP
-    - *install env lib: *
+5. Install python dev by Virtual Env and setup BeanBakery v15
+    - *install env lib:*
       - `cd ~/beanbakery_app && python3 -m venv beanbakery-venv`
       - `source beanbakery-venv/bin/activate`
-    - *install odoo dependencies lib: *  
+    - *install odoo dependencies lib:*  
       - `pip install setuptools wheel`
       - `pip install -r ./requirements.txt`
 
-6. Make odoo public folder and system user
+6. Make BeanBakery v15 public folder and data folder:
     - `mkdir ~/local_data && mkdir ~/local_data/log && mkdir ~/local_data/share && mkdir ~/local_data/config`
     - `chmod 777 ~/local_data/ -R`
 
-7. Init Odoo system
+7. Init BeanBakery v15 system for the first time
     - `python3 ./odoo-bin -c ./odoo.conf -d beanbakery -i base`
     - Exit to root user: `exit`
     
@@ -101,7 +102,7 @@ I use this project for my own bakery business with the following requirements:
     - *To check service status:*
       - `sudo systemctl status beanbakery.service`  
 
-Now, the Odoo is running on port 8069. You can test with command: `curl 127.0.0.1:8069`, if you get the following response that mean the Odoo is running properly.
+Now, the BeanBakery v15 is running on port 8069. You can test with command: `curl 127.0.0.1:8069`, if you get the following response that mean the BeanBakery v15 is running properly.
 ```
   ubuntu@ip-172-26-9-253:~$ curl 127.0.0.1:8069
       <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
@@ -121,76 +122,23 @@ Next we have to setup the Nginx proxy.
 - **Create nginx default without SSL config file** by following command:
   - `sudo cp /home/beanbakery/beanbakery_app/nginx/conf/nginx_bean.conf /etc/nginx/conf.d/` 
 - Or **Create nginx default with SSL config file**
-  - `sudo nano /etc/nginx/conf.d/beanbakery.conf`
-  - add following code:
-    ```
-    #odoo server
-    upstream odoo {
-      server 127.0.0.1:8069;
-    }
-    upstream odoochat {
-      server 127.0.0.1:8072;
-    }
-
-    # http -> https
-    server {
-      listen 80;
-      server_name yourdomain.name;
-      rewrite ^(.*) https://$host$1 permanent;
-    }
-
-    server {
-      listen 443 ssl;
-      server_name yourdomain.name;
-      proxy_read_timeout 720s;
-      proxy_connect_timeout 720s;
-      proxy_send_timeout 720s;
-
-      # Add Headers for odoo proxy mode
-      proxy_set_header X-Forwarded-Host $host;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header X-Real-IP $remote_addr;
-
-      # SSL parameters
-      ssl_certificate /etc/ssl/nginx/server.crt;
-      ssl_certificate_key /etc/ssl/nginx/server.key;
-      ssl_session_timeout 30m;
-      ssl_protocols TLSv1.2;
-      ssl_ciphers ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384;
-      ssl_prefer_server_ciphers off;
-
-      # log
-      access_log /var/log/nginx/odoo.access.log;
-      error_log /var/log/nginx/odoo.error.log;
-
-      # Redirect longpoll requests to odoo longpolling port
-      location /longpolling {
-        proxy_pass http://odoochat;
-      }
-
-      # Redirect requests to odoo backend server
-      location / {
-        proxy_redirect off;
-        proxy_pass http://odoo;
-      }
-
-      # common gzip
-      gzip_types text/css text/scss text/plain text/xml application/xml application/json application/javascript;
-      gzip on;
-    }
-    ```
+  - `sudo cp /home/beanbakery/beanbakery_app/nginx/conf/nginx_bean_ssl.conf /etc/nginx/conf.d/`
+  - Copy your SSL key to '/etc/ssl/nginx/' folder
+  
 - Test NGINX: `sudo nginx -t`
 - If everything is OK, then reload nginx: `sudo nginx -s reload`
 
+Now the Bean Bakery v15 system will run on port 80 / 443. 
+Next step, just config the domain DNS to connect with VPS via IP address and done.
+
 ## Note
-- If you want to change the DB password, edit the "odoo_pg_pass" file
-- All the odoo's custom module should put in the "beanbakery-addons" folder.
-- The odoo config file is in the `~/local_data/config` folder ***(docker setup)*** and in the `~/beanbakery_app/` folder ***(non-docker setup)***
-- All of the odoo running data are in the "~/local_data/share" folder ***(docker setup)***
-- All of the odoo databasse data are in the "~/local_data/db" folder ***(docker setup)***
-- All of the odoo databasse log are in the "~/local_data/log" folder 
+- If you want to change the DB password when install with **Docker**, edit the "odoo_pg_pass" file
+- All the BeanBakery v15's custom module should put in the "beanbakery-addons" folder.
+- The BeanBakery v15's config file is in the `~/local_data/config` folder ***(docker setup)*** and in the `~/beanbakery_app/` folder ***(non-docker setup)***
+- All of the BeanBakery v15's running data are in the "~/local_data/share" folder ***(docker setup)***
+- All of the BeanBakery v15's databasses data are in the "~/local_data/db" folder ***(docker setup)***
+- All of the BeanBakery v15's logs are in the "~/local_data/log" folder 
 - For production, need a security solution for "~/local_data" folder
 - **For SSL key**, should buy SSL key from ssls.com (about $7 for 1 years and $16 for 5 years per domain, link: https://www.ssls.com/ssl-certificates/comodo-positivessl).
 - **For email server**, should use Google Gsuite (about $6/month/account)
-- **For VPS**, should a "2 core,4GB Ram" VPS (about $20/month - ex: AWS lightsail)
+- **For VPS**, should a "2 core,4GB Ram, Ubuntu v20.04" VPS (about $20/month - ex: AWS lightsail)
