@@ -5,10 +5,10 @@
 # Translators:
 # Jairo Llopis <yajo.sk8@gmail.com>, 2021
 # Wilson Pujols <wpujols@capw.com.do>, 2021
-# Goffin Simon <simon.goffin@outlook.com>, 2021
 # Jose Carmona <jrcarmona@gmail.com>, 2021
 # Pauline Thiry <pth@odoo.com>, 2022
 # Martin Trigaux, 2022
+# Pedro M. Baeza <pedro.baeza@tecnativa.com>, 2022
 # marcescu, 2022
 # 
 msgid ""
@@ -478,14 +478,14 @@ msgstr ""
 "        <br/><br/>\n"
 "        Su\n"
 "        <t t-if=\"ctx.get('proforma')\">\n"
-"            factura proforma para <t t-out=\"doc_name or ''\">la cotización</t> <strong t-out=\"object.name or ''\">S00052</strong>\n"
+"            factura proforma para <t t-out=\"doc_name or ''\">el presupuesto</t> <strong t-out=\"object.name or ''\">S00052</strong>\n"
 "            <t t-if=\"object.origin\">\n"
 "                (con referencia: <t t-out=\"object.origin or ''\"/> )\n"
 "            </t>\n"
 "            por un importe de<strong t-out=\"format_amount(object.amount_total, object.pricelist_id.currency_id) or ''\">$ 10.00</strong> se encuentra disponible.\n"
 "        </t>\n"
 "        <t t-else=\"\">\n"
-"            <t t-out=\"doc_name or ''\">cotización</t> <strong t-out=\"object.name or ''\"/>\n"
+"            <t t-out=\"doc_name or ''\">presupuesto</t> <strong t-out=\"object.name or ''\"/>\n"
 "            <t t-if=\"object.origin\">\n"
 "                (con referencia: <t t-out=\"object.origin or ''\">S00052</t> )\n"
 "            </t>\n"
@@ -1789,7 +1789,7 @@ msgstr "Correo electrónico enviado al cliente una vez que se paga el pedido."
 #: model_terms:product.product,website_description:sale.product_product_4e
 #: model_terms:product.product,website_description:sale.product_product_4f
 msgid "Ergonomic"
-msgstr ""
+msgstr "Ergonómico"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__expected_date
@@ -2343,7 +2343,7 @@ msgstr "Conservemos la firma electrónica por ahora."
 #: model_terms:product.product,website_description:sale.product_product_4e
 #: model_terms:product.product,website_description:sale.product_product_4f
 msgid "Locally handmade"
-msgstr ""
+msgstr "Hecho a mano localmente"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_sales_order_auto_done_setting
@@ -2368,6 +2368,8 @@ msgid ""
 "Looking for a custom bamboo stain to match existing furniture? Contact us "
 "for a quote."
 msgstr ""
+"¿Está buscando bambú barnizado que combine con sus muebles? Contáctenos para"
+" una cotización."
 
 #. module: sale
 #. openerp-web
@@ -4137,7 +4139,7 @@ msgstr ""
 msgid ""
 "The minimum height is 65 cm, and for standing work the maximum height "
 "position is 125 cm."
-msgstr ""
+msgstr "La altura mínima es de 65 cm y de 125 cm para trabajar de pie."
 
 #. module: sale
 #: code:addons/sale/controllers/portal.py:0

@@ -29,6 +29,7 @@ const isBlock = OdooEditorLib.isBlock;
 const rgbToHex = OdooEditorLib.rgbToHex;
 const preserveCursor = OdooEditorLib.preserveCursor;
 const closestElement = OdooEditorLib.closestElement;
+const setSelection = OdooEditorLib.setSelection;
 
 var id = 0;
 const faZoomClassRegex = RegExp('fa-[0-9]x');
@@ -60,6 +61,7 @@ const Wysiwyg = Widget.extend({
         colors: customColors,
         recordInfo: {context: {}},
         document: document,
+        allowCommandVideo: true,
     },
     init: function (parent, options) {
         this._super.apply(this, arguments);
@@ -74,7 +76,11 @@ const Wysiwyg = Widget.extend({
         this.colorpickers = {};
         this._onDocumentMousedown = this._onDocumentMousedown.bind(this);
         this._onBlur = this._onBlur.bind(this);
-        this.customizableLinksSelector = 'a:not([data-toggle="tab"]):not([data-toggle="collapse"])';
+        this.customizableLinksSelector = 'a'
+            + ':not([data-toggle="tab"])'
+            + ':not([data-toggle="collapse"])'
+            + ':not([data-toggle="dropdown"])'
+            + ':not(.dropdown-item)';
         // navigator.onLine is sometimes a false positive, this._isOnline use
         // more heuristics to bypass the limitation.
         this._isOnline = true;
@@ -128,6 +134,7 @@ const Wysiwyg = Widget.extend({
             controlHistoryFromDocument: this.options.controlHistoryFromDocument,
             getContentEditableAreas: this.options.getContentEditableAreas,
             defaultLinkAttributes: this.options.userGeneratedContent ? {rel: 'ugc' } : {},
+            allowCommandVideo: this.options.allowCommandVideo,
             getYoutubeVideoElement: getYoutubeVideoElement,
             getContextFromParentRect: options.getContextFromParentRect,
             getPowerboxElement: () => {
@@ -276,9 +283,11 @@ const Wysiwyg = Widget.extend({
 
             if ($target.is(this.customizableLinksSelector)
                     && $target.is('a')
+                    && $target[0].isContentEditable
                     && !$target.attr('data-oe-model')
                     && !$target.find('> [data-oe-model]').length
-                    && !$target[0].closest('.o_extra_menu_items')) {
+                    && !$target[0].closest('.o_extra_menu_items')
+                    && $target[0].isContentEditable) {
                 this.linkPopover = $target.data('popover-widget-initialized');
                 if (!this.linkPopover) {
                     // TODO this code is ugly maybe the mutex should be in the
@@ -1014,7 +1023,7 @@ const Wysiwyg = Widget.extend({
      */
     toggleLinkTools(options = {}) {
         const linkEl = getInSelection(this.odooEditor.document, 'a');
-        if (linkEl && !linkEl.matches(this.customizableLinksSelector)) {
+        if (linkEl && (!linkEl.matches(this.customizableLinksSelector) || !linkEl.isContentEditable)) {
             return;
         }
         if (this.snippetsMenu && !options.forceDialog) {
@@ -1047,6 +1056,7 @@ const Wysiwyg = Widget.extend({
                 this.linkTools = undefined;
             }
         } else {
+            let link;
             const linkDialog = new weWidgets.LinkDialog(this, {
                 forceNewWindow: this.options.linkForceNewWindow,
                 wysiwyg: this,
@@ -1069,11 +1079,17 @@ const Wysiwyg = Widget.extend({
                 }
                 linkWidget.applyLinkToDom(data);
                 this.odooEditor.historyStep();
-                // At this point, the dialog is still open and prevents the
-                // focus in the editable, even though that is where the
-                // selection is. This waits so the dialog is destroyed when we
-                // set the focus.
-                setTimeout(() => this.odooEditor.document.getSelection().collapseToEnd(), 0);
+                link = linkWidget.$link[0];
+                this.odooEditor.setContenteditableLink(linkWidget.$link[0]);
+                setSelection(link, 0, link, link.childNodes.length, false);
+                // Focus the link after the dialog element is removed because
+                // if the dialog element is still in the DOM at the time of
+                // doing link.focus(), because there is the attribute tabindex
+                // on the dialog element, the focus cannot occurs.
+                // Using a microtask to set the focus is hackish and might break
+                // if another microtask wich focus an elemen in the dom occurs
+                // at the same time (but this case seems unlikely).
+                Promise.resolve().then(() => link.focus());
             });
             linkDialog.on('closed', this, function () {
                 // If the linkDialog content has been saved
@@ -1576,7 +1592,7 @@ const Wysiwyg = Widget.extend({
             this._updateFaResizeButtons();
         }
         const link = getInSelection(this.odooEditor.document, this.customizableLinksSelector);
-        if (isInMedia || link) {
+        if (isInMedia || (link && link.isContentEditable)) {
             // Handle the media/link's tooltip.
             this.showTooltip = true;
             setTimeout(() => {
@@ -1769,7 +1785,9 @@ const Wysiwyg = Widget.extend({
                     this.openMediaDialog();
                 },
             },
-            {
+        ];
+        if (options.allowCommandVideo) {
+            commands.push({
                 groupName: 'Medias',
                 title: 'Video',
                 description: 'Insert a video.',
@@ -1777,8 +1795,8 @@ const Wysiwyg = Widget.extend({
                 callback: () => {
                     this.openMediaDialog({noVideos: false, noImages: true, noIcons: true, noDocuments: true});
                 },
-            },
-        ];
+            });
+        }
         if (options.powerboxCommands) {
             commands.push(...options.powerboxCommands);
         }
@@ -1848,13 +1866,13 @@ const Wysiwyg = Widget.extend({
                     // the DOM regeneration. Add markings instead, and returns a
                     // new rejection with all relevant info
                     var id = _.uniqueId('carlos_danger_');
-                    $el.addClass('o_dirty oe_carlos_danger ' + id);
+                    $el.addClass('o_dirty o_editable oe_carlos_danger ' + id);
                     $('.o_editable.' + id)
                         .removeClass(id)
                         .popover({
                             trigger: 'hover',
                             content: response.message.data.message || '',
-                            placement: 'auto top',
+                            placement: 'auto',
                         })
                         .popover('show');
                 });
@@ -1864,8 +1882,7 @@ const Wysiwyg = Widget.extend({
             window.onbeforeunload = null;
         }).guardedCatch((failed) => {
             // If there were errors, re-enable edition
-            this.cancel();
-            this.start();
+            this.cancel(false);
         });
     },
     // TODO unused => remove or reuse as it should be

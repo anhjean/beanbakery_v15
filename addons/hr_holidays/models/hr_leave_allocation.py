@@ -255,13 +255,14 @@ class HolidaysAllocation(models.Model):
 
     @api.depends('holiday_type')
     def _compute_from_holiday_type(self):
+        default_employee_ids = self.env['hr.employee'].browse(self.env.context.get('default_employee_id')) or self.env.user.employee_id
         for allocation in self:
             if allocation.holiday_type == 'employee':
                 if not allocation.employee_ids:
                     allocation.employee_ids = self.env.user.employee_id
                 allocation.mode_company_id = False
                 allocation.category_id = False
-            if allocation.holiday_type == 'company':
+            elif allocation.holiday_type == 'company':
                 allocation.employee_ids = False
                 if not allocation.mode_company_id:
                     allocation.mode_company_id = self.env.company
@@ -274,7 +275,7 @@ class HolidaysAllocation(models.Model):
                 allocation.employee_ids = False
                 allocation.mode_company_id = False
             else:
-                allocation.employee_ids = self.env.context.get('default_employee_id') or self.env.user.employee_id
+                allocation.employee_ids = default_employee_ids
 
     @api.depends('holiday_type', 'employee_id')
     def _compute_department_id(self):
@@ -424,7 +425,7 @@ class HolidaysAllocation(models.Model):
                 period_end = current_level._get_next_date(allocation.lastcall)
                 # If accruals are lost at the beginning of year, skip accrual until beginning of this year
                 if current_level.action_with_unused_accruals == 'lost':
-                    this_year_first_day = (today + relativedelta(day=1, month=1)).date()
+                    this_year_first_day = today + relativedelta(day=1, month=1)
                     if period_end < this_year_first_day or period_start < period_end:
                         allocation.lastcall = allocation.nextcall
                         allocation.nextcall = nextcall
@@ -456,7 +457,7 @@ class HolidaysAllocation(models.Model):
         """
         # Get the current date to determine the start and end of the accrual period
         today = datetime.combine(fields.Date.today(), time(0, 0, 0))
-        this_year_first_day = (today + relativedelta(day=1, month=1)).date()
+        this_year_first_day = today + relativedelta(day=1, month=1)
         end_of_year_allocations = self.search(
         [('allocation_type', '=', 'accrual'), ('state', '=', 'validate'), ('accrual_plan_id', '!=', False), ('employee_id', '!=', False),
             '|', ('date_to', '=', False), ('date_to', '>', fields.Datetime.now()), ('lastcall', '<', this_year_first_day)])

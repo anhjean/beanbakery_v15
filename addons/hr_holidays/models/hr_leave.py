@@ -291,6 +291,12 @@ class HolidaysRequest(models.Model):
                            self._table, ['date_to', 'date_from'])
         return res
 
+    @api.constrains('holiday_status_id', 'number_of_days')
+    def _check_allocation_duration(self):
+        for holiday in self:
+            if holiday.holiday_status_id.requires_allocation == 'yes' and holiday.holiday_allocation_id and holiday.number_of_days > holiday.holiday_allocation_id.number_of_days:
+                raise ValidationError(_("You have several allocations for those type and period.\nPlease split your request to fit in their number of days."))
+
     @api.depends_context('uid')
     def _compute_description(self):
         self.check_access_rights('read')
@@ -344,7 +350,7 @@ class HolidaysRequest(models.Model):
                 '&',
                 ('date_to', '=', False),
                 ('date_from', '<=', max(self.mapped('date_from'))),
-            ], ['id', 'date_from', 'date_to', 'holiday_status_id', 'employee_id'], order="date_to, id"
+            ], ['id', 'date_from', 'date_to', 'holiday_status_id', 'employee_id', 'number_of_days'], order="number_of_days desc, date_to, id"
         )
         allocations_dict = defaultdict(lambda: [])
         for allocation in allocations:
@@ -959,11 +965,10 @@ class HolidaysRequest(models.Model):
     # Business methods
     ####################################################
 
-    def _create_resource_leave(self):
-        """ This method will create entry in resource calendar time off object at the time of holidays validated
-        :returns: created `resource.calendar.leaves`
+    def _prepare_resource_leave_vals_list(self):
+        """Hook method for others to inject data
         """
-        vals_list = [{
+        return [{
             'name': _("%s: Time Off", leave.employee_id.name),
             'date_from': leave.date_from,
             'holiday_id': leave.id,
@@ -972,6 +977,12 @@ class HolidaysRequest(models.Model):
             'calendar_id': leave.employee_id.resource_calendar_id.id,
             'time_type': leave.holiday_status_id.time_type,
         } for leave in self]
+
+    def _create_resource_leave(self):
+        """ This method will create entry in resource calendar time off object at the time of holidays validated
+        :returns: created `resource.calendar.leaves`
+        """
+        vals_list = self._prepare_resource_leave_vals_list()
         return self.env['resource.calendar.leaves'].sudo().create(vals_list)
 
     def _remove_resource_leave(self):

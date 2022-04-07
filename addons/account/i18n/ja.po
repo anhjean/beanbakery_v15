@@ -363,6 +363,8 @@ msgid ""
 "<i class=\"fa fa-arrow-right\"/>\n"
 "                                                    Preview"
 msgstr ""
+"<i class=\"fa fa-arrow-right\"/>\n"
+"                                                    プレビュー"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_analytic_default_kanban
@@ -13155,6 +13157,18 @@ msgid ""
 " There is nothing left to process."
 msgstr ""
 "銀行取引明細書の現在の状態：-新規：ドラフト仕訳で完全に編集可能。-処理：転記された仕訳で編集できなくなり、照合の準備ができました。-検証済み：すべての行が照合されます。何も処理するものはありません"
+
+#. module: account
+#: code:addons/account/wizard/account_automatic_entry_wizard.py:0
+#, python-format
+msgid "The date of some related entries is protected by a lock date"
+msgstr ""
+
+#. module: account
+#: code:addons/account/wizard/account_automatic_entry_wizard.py:0
+#, python-format
+msgid "The date selected is protected by a lock date"
+msgstr ""
 
 #. module: account
 #: code:addons/account/models/account_payment_term.py:0

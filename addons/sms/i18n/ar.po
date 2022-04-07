@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Martin Trigaux, 2021
+# Mustafa J. Kadhem <safi2266@gmail.com>, 2022
 # Malaz Abuidris <msea@odoo.com>, 2022
 # 
 msgid ""
@@ -286,7 +287,7 @@ msgstr "تجاهل فشل التسليم"
 #. module: sms
 #: model:ir.model,name:sms.model_sms_cancel
 msgid "Dismiss notification for resend by model"
-msgstr ""
+msgstr "رفض الإشعار لإعادة الإرسال بواسطة النموذج"
 
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_sms_cancel__display_name
@@ -327,7 +328,7 @@ msgstr "استنساخ"
 #. module: sms
 #: model_terms:ir.ui.view,arch_db:sms.sms_template_view_form
 msgid "Dynamic Placeholder Generator"
-msgstr ""
+msgstr "مولد العنصر النائب الديناميكي"
 
 #. module: sms
 #: model_terms:ir.ui.view,arch_db:sms.mail_resend_message_view_form
@@ -685,7 +686,7 @@ msgstr "الاسم"
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_sms_template_preview__no_record
 msgid "No Record"
-msgstr ""
+msgstr "لا يوجد سجل"
 
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_sms_resend_recipient__notification_id
@@ -695,7 +696,7 @@ msgstr "التنبيهات"
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_mail_notification__notification_type
 msgid "Notification Type"
-msgstr ""
+msgstr "نوع الإشعار"
 
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_sms_resend_recipient__sms_number
@@ -748,7 +749,7 @@ msgstr "عدد الرسائل الجديدة"
 #. module: sms
 #: model:ir.model.fields.selection,name:sms.selection__sms_sms__failure_type__sms_optout
 msgid "Opted Out"
-msgstr ""
+msgstr "انسحب "
 
 #. module: sms
 #: model:ir.model.fields,help:sms.field_sms_template__lang
@@ -801,7 +802,7 @@ msgstr "تعبير العنصر النائب"
 #. module: sms
 #: model:ir.model.fields.selection,name:sms.selection__sms_composer__composition_mode__comment
 msgid "Post on a document"
-msgstr ""
+msgstr "النشر على مستند"
 
 #. module: sms
 #: model_terms:ir.ui.view,arch_db:sms.sms_template_view_form
@@ -1175,7 +1176,7 @@ msgstr "استعراض القالب"
 #. module: sms
 #: model:ir.model.fields,field_description:sms.field_sms_template_preview__lang
 msgid "Template Preview Language"
-msgstr ""
+msgstr "لغة معاينة القالب"
 
 #. module: sms
 #: model:ir.actions.act_window,name:sms.sms_template_action

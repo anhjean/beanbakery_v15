@@ -9,6 +9,7 @@
 # Mustafa Rawi <mustafa@cubexco.com>, 2021
 # Talal Albahra <talal.albahra@outlook.com>, 2021
 # Hussain Hammad, 2021
+# Mustafa J. Kadhem <safi2266@gmail.com>, 2022
 # Malaz Abuidris <msea@odoo.com>, 2022
 # 
 msgid ""
@@ -10550,7 +10551,7 @@ msgstr ""
 #: code:addons/base/models/res_partner.py:0
 #, python-format
 msgid "An email is required for find_or_create to work"
-msgstr ""
+msgstr "مطلوب بريد إلكتروني لكي يعمل find_or_create"
 
 #. module: base
 #: code:addons/base/models/ir_mail_server.py:0
@@ -13655,7 +13656,7 @@ msgstr "كرواتيا - المحاسبة (RRIF 2012)"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_cron_trigger__cron_id
 msgid "Cron"
-msgstr ""
+msgstr "Cron"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.ir_cron_trigger_view_form
@@ -16282,7 +16283,7 @@ msgstr "تنسيق البريد الإلكتروني \"الاسم <email@domain>
 #: model:ir.model.fields,field_description:base.field_res_partner__email_formatted
 #: model:ir.model.fields,field_description:base.field_res_users__email_formatted
 msgid "Formatted Email"
-msgstr ""
+msgstr "البريد الإلكتروني المنسق"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:0
@@ -24805,7 +24806,7 @@ msgstr ""
 #: code:addons/models.py:0 code:addons/models.py:0
 #, python-format
 msgid "Records:"
-msgstr ""
+msgstr "السجلات:"
 
 #. module: base
 #: code:addons/base/models/ir_rule.py:0
@@ -24865,7 +24866,7 @@ msgstr "تاريخ رقم الإشارة"
 #. module: base
 #: model:ir.module.category,name:base.module_category_human_resources_referrals
 msgid "Referrals"
-msgstr ""
+msgstr "الإحالات "
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_partner__parent_id
@@ -30210,7 +30211,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_work_entry
 msgid "Work Entries"
-msgstr ""
+msgstr "قيود العمل "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_work_entry_contract

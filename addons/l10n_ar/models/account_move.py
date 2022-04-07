@@ -235,10 +235,18 @@ class AccountMove(models.Model):
     def _get_starting_sequence(self):
         """ If use documents then will create a new starting sequence using the document type code prefix and the
         journal document number with a 8 padding number """
-        if self.journal_id.l10n_latam_use_documents and self.env.company.country_id.code == "AR":
+        if self.journal_id.l10n_latam_use_documents and self.company_id.account_fiscal_country_id.code == "AR":
             if self.l10n_latam_document_type_id:
                 return self._get_formatted_sequence()
         return super()._get_starting_sequence()
+
+    def _get_last_sequence(self, relaxed=False, with_prefix=None):
+        """ If use share sequences we need to recompute the sequence to add the proper document code prefix """
+        res = super()._get_last_sequence(relaxed=relaxed, with_prefix=with_prefix)
+        if res and self.journal_id.l10n_ar_share_sequences and self.l10n_latam_document_type_id.doc_code_prefix not in res:
+            res = self._get_formatted_sequence(number=self._l10n_ar_get_document_number_parts(
+                res.split()[-1], self.l10n_latam_document_type_id.code)['invoice_number'])
+        return res
 
     def _get_last_sequence_domain(self, relaxed=False):
         where_string, param = super(AccountMove, self)._get_last_sequence_domain(relaxed)

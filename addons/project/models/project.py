@@ -440,6 +440,7 @@ class Project(models.Model):
 
     def map_tasks(self, new_project_id):
         """ copy and map tasks from old to new project """
+        self.ensure_one()
         project = self.browse(new_project_id)
         tasks = self.env['project.task']
         # We want to copy archived task, but do not propagate an active_test context key
@@ -451,6 +452,9 @@ class Project(models.Model):
             if task.parent_id:
                 # set the parent to the duplicated task
                 defaults['parent_id'] = old_to_new_tasks.get(task.parent_id.id, False)
+            elif task.display_project_id == self:
+                defaults['project_id'] = project.id
+                defaults['display_project_id'] = project.id
             new_task = task.copy(defaults)
             # If child are created before parent (ex sub_sub_tasks)
             new_child_ids = [old_to_new_tasks[child.id] for child in task.child_ids if child.id in old_to_new_tasks]
@@ -944,7 +948,7 @@ class Task(models.Model):
     # Second Many2many containing the actual personal stage for the current user
     # See project_task_stage_personal.py for the model defininition
     personal_stage_type_ids = fields.Many2many('project.task.type', 'project_task_user_rel', column1='task_id', column2='stage_id',
-        ondelete='restrict', group_expand='_read_group_personal_stage_type_ids',
+        ondelete='restrict', group_expand='_read_group_personal_stage_type_ids', copy=False,
         domain="[('user_id', '=', user.id)]", depends=['user_ids'], string='Personal Stage')
     # Personal Stage computed from the user
     personal_stage_id = fields.Many2one('project.task.stage.personal', string='Personal Stage State', compute_sudo=False,
@@ -1604,6 +1608,8 @@ class Task(models.Model):
 
     def copy_data(self, default=None):
         defaults = super().copy_data(default=default)
+        if self.env.user.has_group('project.group_project_user'):
+            return defaults
         return [{k: v for k, v in default.items() if k in self.SELF_READABLE_FIELDS} for default in defaults]
 
     @api.model
