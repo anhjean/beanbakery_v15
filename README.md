@@ -55,7 +55,7 @@ I use this project for my own bakery business with the following requirements:
     - *Create Postgres user:* 
       - `sudo su - postgres `
       - `psql -U postgres`
-      -  `CREATE ROLE beanbakery WITH CREATEDB LOGIN ENCRYPTED PASSWORD 'P@assword#@!321';`
+      -  `CREATE ROLE beanbakery WITH CREATEDB LOGIN ENCRYPTED PASSWORD 'P@assword#@!321';` #Should use your own password, instead of "P@assword#@!321"
   - **For Ubuntu** 
     - *Create the file repository configuration:*
       - `sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list' `

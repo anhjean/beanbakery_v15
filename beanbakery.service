@@ -9,7 +9,7 @@ Group=beanbakery
 Type=simple
 SyslogIdentifier=beanbakery
 PermissionsStartOnly=true
-ExecStart=/home/beanbakery/beanbakery_app/beanbakery-venv/bin/python3 /home/beanbakery/beanbakery_app/odoo-bin -c /home/beanbakery/beanbakery_app/odoo.conf -d beanbakery 
+ExecStart=/home/beanbakery/beanbakery_app/beanbakery-venv/bin/python3 /home/beanbakery/beanbakery_app/odoo-bin -c /home/beanbakery/beanbakery_app/odoo.conf 
 StandardOutput=journal+console
 
 [Install]
