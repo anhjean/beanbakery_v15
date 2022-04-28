@@ -1,0 +1,704 @@
+<odoo>
+  <data>
+    <template id="report_vehicle_order">
+      <!-- <t t-call="web.html_container"> -->
+        <t t-foreach="docs" t-as="o">
+          <t t-call="web.basic_layout">
+            <div class="page">
+              <div style="width:100%">
+                <p align="center" style="text-align: center; line-height: 150%">
+                  <b>
+                    <h3 >THƯ ĐỀ NGHỊ CUNG CẤP DỊCH VỤ CHẤP NHẬN THẺ</h3>
+                  </b>
+                </p>
+
+                <p style="text-align: center; line-height: 150%">
+                  <b>
+                      <span >Kính gửi: Ngân hàng Sài Gòn Thương Tín – Trung Tâm Thẻ (Sacombank)</span>
+                  </b>
+                </p>
+
+                <p>
+                  <span ></span>
+                </p>
+
+                <p style="text-align: justify; line-height: 130%">
+                  <span >Đề nghị Sacombank cung cấp dịch vụ chấp nhận thẻ cho ĐVCNTT theo
+                              thông tin chi tiết thể hiện như sau:</span>
+                </p>
+
+                <p style="text-align: justify; line-height: 130%">
+                  <span >POS </span>
+                  <span style="font-family: Wingdings"></span>
+                  <span >            Tap To Phone </span>
+                  <span style="font-family: Wingdings"></span>
+                  <span >         QRCode </span>
+                  <span style="font-family: Wingdings"></span>
+                  <span >     Thanh toán trực tuyến bằng QRCode </span>
+                  <span style="font-family: Wingdings"></span>
+                </p>
+
+                <p style="margin-left: 14.2pt; text-indent: -14.2pt; line-height: 130%">
+                  <b>
+                    <span>
+                      1. THÔNG TIN CHI TIẾT VỀ ĐVCNTT</span>
+                  </b>
+                </p>
+
+                <table border="1" cellspacing="0" cellpadding="0" width="100%" style="margin-left: 5.4pt; border-collapse: collapse; border: none">
+                  <tr style="height: 7.2pt">
+                    <td width="654" colspan="3" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <b>
+                          <span >Thông tin đơn vị</span>
+                        </b>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="310" valign="top" style="
+                                  width: 232.4pt;
+                                  border-top: none;
+                                  border-left: solid black 1pt;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Tên đơn vị:</span> <span t-field="o.name" />
+                      </p>
+                    </td>
+                    <td width="200" valign="top" style="
+                                  width: 150.35pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Tel:</span> <span t-field="o.phone" />
+                      </p>
+                    </td>
+                    <td width="144" valign="top" style="
+                                  width: 107.75pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Fax:</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="654" colspan="3" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Địa chỉ:</span><span t-field="o.street" /><span t-field="o.street2" />
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 17.25pt">
+                    <td width="654" colspan="3" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 17.25pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Loại hình doanh nghiệp: </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="654" colspan="3" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <b>
+                          <span>Thông tin người đại diện</span>
+                        </b>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="310" valign="top" style="
+                                  width: 232.4pt;
+                                  border-top: none;
+                                  border-left: solid black 1pt;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Tên người đại diện:</span>
+                      </p>
+                    </td>
+                    <td width="344" colspan="2" valign="top" style="
+                                  width: 258.1pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >CMND/HC:</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="310" valign="top" style="
+                                  width: 232.4pt;
+                                  border-top: none;
+                                  border-left: solid black 1pt;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Điện thoại</span>
+                      </p>
+                    </td>
+                    <td width="200" valign="top" style="
+                                  width: 150.35pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Email:</span><span t-field="o.email" />
+                      </p>
+                    </td>
+                    <td width="144" valign="top" style="
+                                  width: 107.75pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Tel:</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="654" colspan="3" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="line-height: 115%; text-autospace: ideograph-numeric">
+                        <span >Địa chỉ</span>
+                        <span style="font-family: 'Times New Roman', serif; color: black">:</span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="line-height: 115%">
+                  <b>
+                    <span ></span>
+                  </b>
+                </p>
+
+                <p style="margin-left: 14.2pt; text-indent: -14.2pt; line-height: 130%">
+                  <b>
+                    <span>
+                      2.
+                      <span style="font: 7pt 'Times New Roman'"></span>
+                    </span>
+                  </b>
+                  <b>
+                    <span>THÔNG TIN THỂ HIỆN TRÊN HÓA ĐƠN</span>
+                  </b>
+                </p>
+
+                <table  border="1" cellspacing="0" cellpadding="0" width="100%" style="margin-left: 5.4pt; border-collapse: collapse; border: none">
+                  <tr style="page-break-inside: avoid">
+                    <td width="312" valign="top" style="
+                                  width: 233.9pt;
+                                  border: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span  style="font-size: 12pt; line-height: 115%">Tên kinh doanh (thể hiện trên bảng hiệu)</span>
+                      </p>
+                    </td>
+                    <td width="338" colspan="2" valign="top" style="
+                                  width: 253.55pt;
+                                  border: solid windowtext 1pt;
+                                  border-left: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span t-field="o.name" />
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid">
+                    <td width="312" valign="top" style="
+                                  width: 233.9pt;
+                                  border: solid windowtext 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span  style="font-size: 12pt; line-height: 115%">Số điện thoại: </span><span t-field="o.phone" />
+                      </p>
+                    </td>
+                    <td width="198" valign="top" style="
+                                  width: 148.85pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid windowtext 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span  style="font-size: 12pt; line-height: 115%">Email: </span><span t-field="o.email" />
+                      </p>
+                    </td>
+                    <td width="140" valign="top" style="
+                                  width: 104.7pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid windowtext 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span  style="font-size: 12pt; line-height: 115%">Fax</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="page-break-inside: avoid">
+                    <td width="650" colspan="3" valign="top" style="
+                                  width: 487.45pt;
+                                  border: solid windowtext 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                ">
+                      <p class="MsoHeader" style="line-height: 115%; layout-grid-mode: char">
+                        <span  style="font-size: 12pt; line-height: 115%">Địa chỉ kinh doanh: </span><span t-field="o.street" /><span t-field="o.street2" />
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p class="text" style="
+                              margin-bottom: 0cm;
+                              line-height: 130%;
+                              punctuation-wrap: hanging;
+                              text-autospace: ideograph-numeric ideograph-other;
+                            ">
+                  <b>
+                    <span  style="
+                                  font-size: 12pt;
+                                  line-height: 130%;
+                                  font-family: 'Times New Roman', serif;
+                                "></span>
+                  </b>
+                </p>
+
+                <p style="margin-left: 14.2pt; text-indent: -14.2pt; line-height: 130%">
+                  <b>
+                    <span >
+                      3.
+                      <span style="font: 7pt 'Times New Roman'"></span>
+                    </span>
+                  </b>
+                  <b>
+                    <span >THÔNG TIN THẨM ĐỊNH (*)</span>
+                  </b>
+                </p>
+
+                <table  border="1" cellspacing="0" cellpadding="0" width="100%" style="margin-left: 5.4pt; border-collapse: collapse; border: none">
+                  <tr style="height: 16.5pt">
+                    <td width="425" rowspan="2" style="
+                                  width: 318.95pt;
+                                  border: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 16.5pt;
+                                ">
+                      <p style="text-autospace: ideograph-numeric">
+                        <span >Loại hình kinh doanh:</span>
+                      </p>
+                      <p style="text-autospace: ideograph-numeric">
+                        <span ></span>
+                      </p>
+                    </td>
+                    <td width="229" style="
+                                  width: 171.55pt;
+                                  border: solid black 1pt;
+                                  border-left: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 16.5pt;
+                                ">
+                      <p style="text-autospace: ideograph-numeric">
+                        <span >Thời gian hoạt động:</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 16.5pt">
+                    <td width="229" style="
+                                  width: 171.55pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 16.5pt;
+                                ">
+                      <p style="text-autospace: ideograph-numeric">
+                        <span >Doanh số dự kiến 1 năm:</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="425" valign="top" style="
+                                  width: 318.95pt;
+                                  border-top: none;
+                                  border-left: solid black 1pt;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span >ĐVCNTT cung cấp hàng hóa/dịch vụ có đúng với thông tin đã cung
+                                    cấp cho Ngân hàng và trên giấy phép đăng ký kinh doanh
+                                    không?</span>
+                      </p>
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span >Đơn vị có cơ sở kinh doanh đúng như khai báo trong hợp đồng hay
+                                    không?</span>
+                      </p>
+                    </td>
+                    <td width="229" valign="top" style="
+                                  width: 171.55pt;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span style="font-family: Wingdings"></span>
+                        <span >
+                                    Đúng             </span>
+                        <span style="font-family: Wingdings"></span>
+                        <span >
+                                    Không</span>
+                      </p>
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span ></span>
+                      </p>
+                      <p style="text-autospace: ideograph-numeric">
+                        <span style="font-family: Wingdings"></span>
+                        <span >
+                                    Có                 </span>
+                        <span style="font-family: Wingdings"></span>
+                        <span >
+                                    Không</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 7.2pt">
+                    <td width="654" colspan="2" valign="top" style="
+                                  width: 490.5pt;
+                                  border: solid black 1pt;
+                                  border-top: none;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 7.2pt;
+                                ">
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span >(*) Nếu kết quả kiểm tra là không (đúng) hoặc không (có) thì
+                                    Sacombank không đồng ý cung cấp dịch vụ cho đơn vị.</span>
+                      </p>
+                      <p style="margin-top: 6pt; text-autospace: ideograph-numeric">
+                        <span >Vui lòng đính kèm hình ảnh thẩm định đơn vị, hàng hoá, hoá đơn
+                                    bán lẻ mẫu</span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin-left: 14.2pt; line-height: 130%">
+                  <b>
+                    <span></span>
+                  </b>
+                </p>
+
+                <p style="margin-left: 14.2pt; text-indent: -14.2pt; line-height: 130%">
+                  <b>
+                    <span >
+                      4.
+                      <span style="font: 7pt 'Times New Roman'"></span>
+                    </span>
+                  </b>
+                  <b>
+                    <span >THIẾT BỊ CHẤP NHẬN THẺ</span>
+                  </b>
+                </p>
+
+                <table  border="1" cellspacing="0" cellpadding="0" width="100%" style="margin-left: 5.4pt; border-collapse: collapse; border: none">
+                  <tr style="height: 11.15pt">
+                    <td width="425" rowspan="2" style="
+                                  width: 318.95pt;
+                                  border-top: windowtext;
+                                  border-left: windowtext;
+                                  border-bottom: black;
+                                  border-right: black;
+                                  border-style: solid;
+                                  border-width: 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" align="center" style="
+                                    margin-bottom: 0cm;
+                                    text-align: center;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                  ">
+                        <b>
+                          <span  style="
+                                        font-size: 12pt;
+                                        line-height: 130%;
+                                        font-family: 'Times New Roman', serif;
+                                      ">Số lượng thiết bị yêu cầu lắp đặt</span>
+                        </b>
+                      </p>
+                    </td>
+                    <td width="227" colspan="2" valign="top" style="
+                                  width: 6cm;
+                                  border-top: solid windowtext 1pt;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" style="
+                                    margin-bottom: 0cm;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <b>
+                          <span  style="
+                                        font-size: 12pt;
+                                        line-height: 130%;
+                                        font-family: 'Times New Roman', serif;
+                                      ">Loại hình tiền tệ chấp nhận trên POS     
+                                    </span>
+                        </b>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 11.15pt">
+                    <td width="113" valign="top" style="
+                                  width: 3cm;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" align="center" style="
+                                    margin-bottom: 0cm;
+                                    text-align: center;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <span  style="
+                                      font-size: 12pt;
+                                      line-height: 130%;
+                                      font-family: 'Times New Roman', serif;
+                                    ">USD</span>
+                      </p>
+                    </td>
+                    <td width="113" valign="top" style="
+                                  width: 3cm;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid black 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" align="center" style="
+                                    margin-bottom: 0cm;
+                                    text-align: center;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <span  style="
+                                      font-size: 12pt;
+                                      line-height: 130%;
+                                      font-family: 'Times New Roman', serif;
+                                    ">VNĐ</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr style="height: 11.15pt">
+                    <td width="425" style="
+                                  width: 318.95pt;
+                                  border-top: none;
+                                  border-left: solid windowtext 1pt;
+                                  border-bottom: solid windowtext 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" style="
+                                    margin-bottom: 0cm;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <span  style="
+                                      font-size: 12pt;
+                                      line-height: 130%;
+                                      font-family: 'Times New Roman', serif;
+                                    "></span>
+                      </p>
+                    </td>
+                    <td width="113" valign="top" style="
+                                  width: 3cm;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid windowtext 1pt;
+                                  border-right: solid black 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" style="
+                                    margin-bottom: 0cm;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <span  style="
+                                      font-size: 12pt;
+                                      line-height: 130%;
+                                      font-family: 'Times New Roman', serif;
+                                    "></span>
+                      </p>
+                    </td>
+                    <td width="113" valign="top" style="
+                                  width: 3cm;
+                                  border-top: none;
+                                  border-left: none;
+                                  border-bottom: solid windowtext 1pt;
+                                  border-right: solid windowtext 1pt;
+                                  padding: 0cm 5.4pt 0cm 5.4pt;
+                                  height: 11.15pt;
+                                ">
+                      <p class="text" style="
+                                    margin-bottom: 0cm;
+                                    line-height: 130%;
+                                    layout-grid-mode: char;
+                                    punctuation-wrap: hanging;
+                                    text-autospace: ideograph-numeric ideograph-other;
+                                  ">
+                        <span  style="
+                                      font-size: 12pt;
+                                      line-height: 130%;
+                                      font-family: 'Times New Roman', serif;
+                                    "></span>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p class="text" style="
+                              margin-bottom: 0cm;
+                              line-height: 130%;
+                              punctuation-wrap: hanging;
+                              text-autospace: ideograph-numeric ideograph-other;
+                            ">
+                  <span  style="
+                                font-size: 12pt;
+                                line-height: 130%;
+                                font-family: 'Times New Roman', serif;
+                              "></span>
+                </p>
+
+                <p class="text" style="
+                              margin-bottom: 0cm;
+                              text-align: justify;
+                              punctuation-wrap: hanging;
+                              text-autospace: ideograph-numeric ideograph-other;
+                            ">
+                  <b>
+                    <span  style="font-size: 12pt; font-family: 'Times New Roman', serif">                                                                                           
+                                ĐẠI DIỆN BÊN B</span>
+                  </b>
+                  <i>
+                    <span  style="font-size: 12pt; font-family: 'Times New Roman', serif">       
+                              </span>
+                  </i>
+                </p>
+
+                <p style="text-align: justify">
+                  <i>
+                    <span >                                                                               
+                                (Ký tên, đóng dấu và ghi rõ họ/tên)       
+                              </span>
+                  </i>
+                </p>
+
+                <p>
+                  <span></span>
+                </p>
+              </div>
+            </div>
+
+          </t>
+        </t>
+      <!-- </t> -->
+    </template>
+  </data>
+</odoo>

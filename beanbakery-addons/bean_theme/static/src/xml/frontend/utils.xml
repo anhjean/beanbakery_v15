@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<templates>
+
+    <t t-name="tp_category_info">
+        <t t-if="widget._isActionEnabled('category_info')">
+            <p t-if="item.category_info" class="mb-0">
+                <a t-att-href="item.category_info.website_url">
+                    <small class="dr_category_lable mb-0" t-out="item.category_info.name"/>
+                </a>
+            </p>
+            <t t-else="">
+                <br/>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="dr_s_lable_tmpl">
+        <t t-if="widget._isActionEnabled('label') &amp;&amp; item.label_id">
+            <span t-out="item.label_template"/>
+        </t>
+    </t>
+
+    <t t-name="tp-snippet-product-price">
+        <div class="d-product-price">
+            <h6 class="d-inline-block mb-0 font-weight-light text-primary" t-out="item.price"/>
+            <h6 t-if="item.has_discounted_price" class="text-muted mb-0 d-inline-block small" style="text-decoration: line-through; white-space: nowrap;" t-out="item.list_price"/>
+        </div>
+    </t>
+
+</templates>

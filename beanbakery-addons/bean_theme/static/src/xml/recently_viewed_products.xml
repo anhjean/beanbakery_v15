@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates>
+
+    <t t-extend="website_sale.productsRecentlyViewed">
+        <t t-jquery="div.o_carousel_product_card" t-operation="replace">
+            <div class="o_carousel_product_card card h-100 position-relative">
+                <input type="hidden" name="product-id" t-att-data-product-id="product.id"/>
+                <a class="o_carousel_product_img_link" t-att-href="product.website_url">
+                    <img class="o_carousel_product_card_img_top card-img-top" t-attf-src="/web/image/product.product/#{product.id}#{productFrame == 1 ? '/image_256' : '/image_512'}" t-att-alt="product.display_name"/>
+                </a>
+                <i class="fa fa-trash o_carousel_product_remove js_remove" title="Remove from recently viewed"></i>
+                <div class="p-2">
+                    <h6 class="text-truncate mb-0" t-att-title="product.display_name">
+                        <a class="tp-link-dark" t-att-href="product.website_url">
+                            <span t-esc="product.display_name"/>
+                        </a>
+                    </h6>
+                    <h6 class="text-primary mt-1 mb-0" t-raw="product.price"/>
+                </div>
+                <button type="button" role="button" class="js_add_cart btn btn-secondary" title="Add to Cart">
+                    <i class="dri dri-cart"/>
+                </button>
+            </div>
+        </t>
+        <t t-jquery=".carousel-control-prev" t-operation="replace">
+            <a class="o_carousel_product_control carousel-control-prev" t-att-href="'#' + uniqueId" role="button" data-slide="prev">
+                <i class="fa fa-chevron-left"/>
+                <span class="sr-only">Previous</span>
+            </a>
+        </t>
+        <t t-jquery=".carousel-control-next" t-operation="replace">
+            <a class="o_carousel_product_control carousel-control-next" t-att-href="'#' + uniqueId" role="button" data-slide="next">
+                <i class="fa fa-chevron-right"/>
+                <span class="sr-only">Next</span>
+            </a>
+        </t>
+    </t>
+
+</templates>

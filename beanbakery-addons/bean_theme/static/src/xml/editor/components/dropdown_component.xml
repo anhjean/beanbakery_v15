@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<templates>
+    <t t-name="bean_theme.dropdown_component">
+        <div class="tp-dropdown-component tp-rounded-border dropdown">
+            <t t-value="widget._getRecordByID(widget.recordID)" t-set="record"/>
+            <button t-attf-class="btn tp-dropdown-placeholder tp-rounded-border dropdown-toggle shadow-sm #{widget.buttonClasses}" t-att-id="widget.uid" data-toggle="dropdown">
+                <t t-call="bean_theme.tp_dropdown_placeholder"/>
+            </button>
+            <div class="dropdown-menu tp-dropdown-menu tp-rounded-border" t-att-aria-labelledby="widget.uid">
+                <t t-call="bean_theme.dropdown_component_items">
+                    <t t-set="records" t-value="widget.records"/>
+                </t>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="bean_theme.dropdown_component_items">
+        <t t-foreach="records" t-as="record">
+            <a t-att-data-record-id="record.id" t-attf-class="dropdown-item #{widget.recordID === record.id ? 'text-primary' : ''}" href="#">
+                <t t-call="bean_theme.tp_dropdown_placeholder"/>
+            </a>
+        </t>
+    </t>
+
+    <t t-name="bean_theme.tp_dropdown_placeholder">
+        <span><i t-if="record.iconClass" t-att-class="record.iconClass"/> <t t-out="record.title"/></span>
+    </t>
+
+</templates>

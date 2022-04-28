@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<templates>
+    <t t-name="bean_theme.boolean_component">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" t-att-id="widget.uid" t-att-checked="widget.value || None"/>
+            <label class="custom-control-label" t-att-for="widget.uid"><t t-out="widget.title"/></label>
+        </div>
+    </t>
+</templates>

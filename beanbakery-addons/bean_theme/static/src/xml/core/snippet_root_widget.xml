@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="BeanBakery_default_loader">
+        <div class="d_spinner_loader align-items-center justify-content-center d-flex">
+            <div class="bounce1 d-inline-block mr-2 rounded-circle"></div>
+            <div class="bounce2 d-inline-block mr-2 rounded-circle"></div>
+            <div class="bounce3 d-inline-block mr-2 rounded-circle"></div>
+        </div>
+    </t>
+
+    <!-- Remove deprecated notice block in version 16.0 -->
+    <t t-name="tp_block_deprecated_notice">
+        <div class="alert alert-warning css_non_editable_mode_hidden text-center" role="alert">
+            <i class="fa fa-exclamation-triangle fa-2x d-block"/>
+            <p class="h6 my-2">Looks like you migrated to Odoo version 15.0 <i class="fa fa-smile-o"/></p>
+            <p class="font-weight-light">This block is depricated in Bean Theme version 15.0. We have more stunning blocks in this version.</p>
+        </div>
+    </t>
+    <t t-name="dr_all_products_loaded">
+        <div class="text-center my-3">
+            <i>All products are loaded.</i>
+        </div>
+    </t>
+
+    <t t-name="tp_load_more_products_template">
+        <div class="my-4 d-flex tp-load-more-products-container align-items-center justify-content-center">
+            <button class="btn tp-load-more-products btn-primary">Load More Products ...</button>
+        </div>
+    </t>
+
+    <t t-name="BeanBakery_default_no_data_templ">
+        <div class="d-flex d_default_no_data_templ align-items-center justify-content-center">
+            <div class="text-center">
+                <img t-if="widget.noDataTemplateImg" class="img img-fluid" style="max-height:300px;" t-att-src="widget.noDataTemplateImg"/>
+                <h4 t-if="widget.noDataTemplateString" t-esc="widget.noDataTemplateString" class="mt-3 text-center font-weight-bold"></h4>
+                <p t-if="widget.noDataTemplateSubString" t-esc="widget.noDataTemplateSubString" class="text-muted text-center"></p>
+                <a t-if="widget.displayAllProductsBtn" href="/shop" class="btn btn-primary">All products <span class="dri dri-chevron-right-l"></span></a>
+            </div>
+        </div>
+    </t>
+</template>

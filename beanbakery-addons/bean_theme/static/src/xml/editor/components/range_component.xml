@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<templates>
+    <t t-name="bean_theme.range_component">
+        <div class="row no-gutters">
+            <div class="col-7">
+                <h6 class="text-muted small font-weight-light"><t t-out="widget.title"/> </h6>
+            </div>
+            <div class="col-5 text-right">
+                <span class="tp-current-count small text-primary font-weight-bold p mb-0"><t t-out="widget.value"/></span> <span class="small font-weight-normal text-muted">/ <t t-out="widget.maxValue"/></span>
+            </div>
+            <div class="col-12">
+                <input class="tp-range-input w-100" type="range" t-att-value="widget.value" t-att-min="widget.minValue" t-att-max="widget.maxValue"/>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="s_team_1" name="Team - 1">
+        <section class="s_team_1 pb16 pt16">
+            <div class="container">
+                <div class="row">
+                    <t t-set="teams" t-value="{
+                        '01': {'name': 'Ralph Edwards', 'position': 'Chief Executive Officer', 'description': 'Pellentesque habitant morbi tristique senectus et netus et malesuada fames.'},
+                        '02': {'name': 'Robert Fox', 'position': 'Chief Technical Officer', 'description': 'Suspendisse eget pellentesque nisl. Sed in pretium nulla. Mauris sit amet sem.'},
+                        '03': {'name': 'Danny Bailey', 'position': 'Business Executive', 'description': 'Praesent ornare mi quis velit gravida auctor bibendum in neque. Nunc rutrum.'},
+                        '04': {'name': 'John Cooper', 'position': 'Developer', 'description': 'Pellentesque sollicitudin auctor dui, quis consectetur turpis pellentesque eget.'},
+                    }"/>
+                    <div t-foreach="teams" t-as="team" class="col-12 col-sm-6 col-lg-3 py-2">
+                        <div class="card border-0 h-100 bg-transparent">
+                            <img t-attf-src="/web/image/bean_theme.s_team_0#{team_index + 1}" class="card-img-top" t-attf-alt="Team Image #{team}"/>
+                            <div class="py-4">
+                                <h5 class="card-title mb-0"><t t-out="teams[team]['name']"/></h5>
+                                <div class="text-o-color-1 text-uppercase mt-1">
+                                    <font style="font-size: 12px;"><t t-out="teams[team]['position']"/></font>
+                                </div>
+                                <p class="mt-3"><t t-out="teams[team]['description']"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_2" name="Team - 2">
+        <section class="s_team_2 pb16 pt16">
+            <div class="container">
+                <div class="row">
+                    <t t-set="teams" t-value="{
+                        '01': {'name': 'Ralph Edwards', 'position': 'Founder'},
+                        '02': {'name': 'Robert Fox', 'position': 'Office manager'},
+                        '03': {'name': 'Danny Bailey', 'position': 'Partner'},
+                        '04': {'name': 'John Cooper', 'position': 'Receptionist'},
+                    }"/>
+                    <div t-foreach="teams" t-as="team" class="col-12 col-sm-6 col-lg-3 py-2">
+                        <div class="card border-0 h-100 bg-transparent">
+                            <img t-attf-src="/web/image/bean_theme.s_team_0#{team_index + 1}" class="card-img-top" t-attf-alt="Team Image #{team}"/>
+                            <div class="py-4">
+                                <div class="text-o-color-1 text-uppercase small">
+                                    <t t-out="teams[team]['position']"/>
+                                </div>
+                                <h5 class="card-title mt-1 mb-0"><t t-out="teams[team]['name']"/></h5>
+                                <p class="mt-1">Praesent ornare mi quis</p>
+                                <div class="pb4 pt4 s_hr text-300" data-snippet="s_hr" data-name="Separator">
+                                    <hr class="w-100 mx-auto"/>
+                                </div>
+                                <ul class="list-unstyled mb-0 mt-3">
+                                    <li class="list-item"><span class="fa fa-envelope p-1"/> information@mail.com</li>
+                                    <li class="list-item"><span class="fa fa-phone p-1"/> +12 345 6789 101</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_3" name="Team - 3">
+        <section class="s_team_3 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor s_nb_column_fixed">
+                    <t t-set="teams" t-value="{
+                        '01': {'name': 'Ralph Edwards', 'position': 'Founder'},
+                        '02': {'name': 'Robert Fox', 'position': 'Office manager'},
+                        '03': {'name': 'Danny Bailey', 'position': 'Partner'},
+                    }"/>
+                    <div t-foreach="teams" t-as="team" class="col-lg-4 py-2">
+                        <div class="card h-100 tp-editor-bg-color-n-shadow">
+                            <div class="media p-2">
+                                <img t-attf-src="/web/image/bean_theme.s_team_square_0#{team_index + 1}" class="img img-fluid tp-image-100-max mr-3" t-attf-alt="Team Image #{team}"/>
+                                <div class="media-body">
+                                    <h5 class="card-title mb-0"><t t-out="teams[team]['name']"/></h5>
+                                    <div class="text-o-color-1">
+                                        <t t-out="teams[team]['position']"/>
+                                    </div>
+                                    <ul class="list-unstyled mt-2 mb-0">
+                                        <li class="list-item"><i class="fa fa-envelope mr-1"></i> information@mail.com</li>
+                                        <li class="list-item"><i class="fa fa-phone mr-1"></i> +12 345 6789 101</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_4" name="Team 4">
+        <section class="s_team_4 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <t t-set="teams" t-value="{
+                        '01': {'name': 'Ralph Edwards', 'position': 'Founder', 'description': 'Pellentesque habitant morbi tristique senectus et netus et.'},
+                        '02': {'name': 'Robert Fox', 'position': 'Office manager', 'description': 'Suspendisse eget pellentesque nisl. Sed in pretium nulla.'},
+                        '03': {'name': 'Danny Bailey', 'position': 'Partner', 'description': 'Praesent ornare mi quis velit gravida auctor bibendum in.'},
+                        '04': {'name': 'John Cooper', 'position': 'Receptionist', 'description': 'Pellentesque sollicitudin auctor dui, quis consectetur turp.'},
+                    }"/>
+                    <div t-foreach="teams" t-as="team" class="col-12 col-sm-6 col-lg-3 py-3">
+                        <div class="card h-100 border-0 pt-3">
+                            <img t-attf-src="/web/image/bean_theme.s_team_square_#{team}" class="card-img-top tp-image-150-max rounded-circle img-thumbnail mx-auto" t-attf-alt="Team Image #{team}"/>
+                            <div class="card-body text-center">
+                                <h4 class="card-title mb-0"><t t-out="teams[team]['name']"/></h4>
+                                <div class="text-o-color-1 text-uppercase small mt-1">
+                                    <t t-out="teams[team]['position']"/>
+                                </div>
+                                <p class="mt-3"><t t-out="teams[team]['description']"/></p>
+                                <ul class="list-inline mb-0 mt-3 s_share">
+                                    <li class="list-inline-item tp-editor-copy-n-move" data-name="Icon">
+                                        <a class="d-inline-block" href="#" target="_blank"><i class="fa fa-facebook shadow rounded-circle s_share_facebook"/></a>
+                                    </li>
+                                    <li class="list-inline-item tp-editor-copy-n-move" data-name="Icon">
+                                        <a class="d-inline-block" href="#" target="_blank"><i class="fa fa-twitter shadow rounded-circle s_share_twitter"/></a>
+                                    </li>
+                                    <li class="list-inline-item tp-editor-copy-n-move" data-name="Icon">
+                                        <a class="d-inline-block" href="#" target="_blank"><i class="fa fa-pinterest shadow rounded-circle s_share_pinterest"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_5" name="Team 5">
+        <section class="s_team_5 pb16 pt16">
+            <div class="container">
+                <div class="row s_col_no_bgcolor">
+                    <t t-set="teams" t-value="{
+                        '01': {'name': 'Ralph Edwards', 'position': 'Founder'},
+                        '02': {'name': 'Robert Fox', 'position': 'Office manager'},
+                        '03': {'name': 'Danny Bailey', 'position': 'Receptionist'},
+                    }"/>
+                    <div t-foreach="teams" t-as="team" class="col-12 col-sm-6 col-lg-4 py-2">
+                        <div class="card h-100 tp-editor-bg-color-n-shadow bg-o-color-1" style="border-width: 0px !important;">
+                            <img t-attf-src="/web/image/bean_theme.s_team_square_#{team}" class="card-img-top mx-auto" t-attf-alt="Team Image #{team}"/>
+                            <div class="py-3 px-2 text-center">
+                                <h5 class="card-title"><t t-out="teams[team]['name']"/></h5>
+                                <p class="card-text"><t t-out="teams[team]['position']"/></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <template id="s_team_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div data-selector=".s_team_4 .list-inline-item" data-target="a">
+                <we-urlpicker string="URL" data-select-attribute="" placeholder="e.g. /my-awesome-page" data-attribute-name="href"/>
+            </div>
+        </xpath>
+    </template>
+
+</odoo>

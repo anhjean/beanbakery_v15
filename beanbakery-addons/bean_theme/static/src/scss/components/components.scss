@@ -1,0 +1,159 @@
+.tp-dropdown-component {
+    button {
+        font-size: 90%;
+        padding: 12px 20px;
+    }
+}
+
+.tp-selection-component {
+    .tp-search-input {
+        padding: 1.3rem 2.6rem;
+        &:disabled {
+            opacity: 0.7;
+        }
+    }
+    .tp-search-icon {
+        @include o-position-absolute($top:0.3rem, $left: 0.4rem);
+        background-color: transparent;
+    }
+    .tp-auto-complete-dropdown-menu {
+        @include o-position-absolute($top:45px, $left:10px);
+        &::after {
+            content: ' ';
+            @include o-position-absolute($top:-7px, $left: 13px);
+            height: 13px;
+            width: 13px;
+            transform: rotate(45deg);
+            background-color: white;
+        }
+    }
+    .dropdown-item {
+        &.tp-dropdown-item {
+            margin: 0.5rem;
+            background-color: rgba(242, 247, 255, 0.40);
+        }
+        &:focus,&:hover {
+            background-color: rgba(o-color('primary'), 0.03) !important;
+        }
+    }
+    .tp-selected-record-list {
+        .tp-record-item {
+            &:hover {
+                .tp-remove-item {
+                    opacity: 1;
+                    width: 35px;
+                }
+                .tp-sortable-handle {
+                    width: 15px;
+                    opacity: 1;
+                }
+            }
+        }
+        .tp-sortable-handle {
+            @include o-position-absolute($top:0px, $bottom: 0px);
+            cursor: ns-resize;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        .tp-remove-item {
+            @include o-position-absolute($top:0px, $right: 0);
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+        .tp-remove-item, .tp-sortable-handle {
+            width: 0px;
+            transition: all 0.4s;
+            -webkit-transition: all 0.4s;
+            opacity: 0;
+            z-index: 10;
+        }
+    }
+}
+.tp-drag-placeholder {
+    outline: 1px dashed o-color('primary');
+    height: 50px;
+}
+
+
+.tp-ui-component {
+    .tp-switch-to-selector {
+        &.o_animate {
+            @include o-position-absolute($top:15%, $left: 41%);
+            animation-iteration-count: infinite;
+            animation-duration: 3s;
+        }
+    }
+    .tp-action {
+        transition: all 0.8s;
+        &:hover, &.tp-action-active {
+            border-color: o-color('primary') !important;
+        }
+        &.tp-action-active {
+            background-color: rgba(o-color('primary'), .1);
+            .fa-check-circle {
+                display: block !important;
+                @include o-position-absolute($top:-7px, $right: -3px);
+                border-radius: 100%;
+            }
+        }
+        &.tp-action-disabled {
+            -webkit-filter: grayscale(1);
+            opacity: 0.5;
+        }
+        .tp-action-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+        }
+    }
+}
+
+
+// Domain Builder
+
+.drg_domain_builder {
+    .drg_rule_container {
+        width: 95%;
+        .form-row {
+            > div.dr_domain_input {
+                padding: 10px;
+            }
+            .dr_remove_btn {
+                opacity: 0;
+                transition: all 400ms;
+                right: -29px;
+                border: 1px solid #ffbec6ad;
+                border-left: 0px;
+                border-radius: 0px 5px 5px 0px;
+            }
+            &:hover {
+                .dr_remove_btn {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    .pill_container {
+        display: flex;
+        flex-wrap: wrap;
+        .badge {
+            border-radius: 4px;
+            .pill_remove {
+                @include o-position-absolute($top: 0, $right: 0, $bottom: 0);
+                background: rgba(0, 0, 0, 0.1);
+                padding: 6px 4px;
+                &:hover {
+                    background: rgba(0, 0, 0, 0.3);
+                    cursor: pointer;
+                }
+            }
+        }
+        .db_input_value{
+            &:focus {
+                outline: none;
+            }
+            flex: 1 0 60px;
+            width: 60px;
+        }
+    }
+}

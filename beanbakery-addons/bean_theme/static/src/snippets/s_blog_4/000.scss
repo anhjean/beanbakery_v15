@@ -1,0 +1,16 @@
+.s_blog_post_bean_layout_4 {
+    .tp-cover-image {
+        height: 270px;
+        background-size: cover;
+        background-position: center;
+    }
+    .tp-blog-avatar {
+        height: 22px;
+        width: 22px;
+    }
+    .tp-date {
+        @include o-position-absolute($top: 15px, $left: 15px);
+        min-width: 53px;
+        line-height: 1;
+    }
+}

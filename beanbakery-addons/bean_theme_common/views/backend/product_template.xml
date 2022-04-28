@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="product_template_form_view_inherit_bean_theme_common" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.BeanBakery.theme.common</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <page name="sales" position="after">
+                <page name="bean_theme" string="Bean Theme">
+                    <group>
+                        <group name="default">
+                            <!-- <field name="dr_brand_attribute_ids" invisible="1"/>
+                            <field name="dr_brand_value_id" options="{'no_create': True}" domain="[('attribute_id', 'in', dr_brand_attribute_ids)]" context="{'show_attribute': False}"/> -->
+                            <field name="dr_label_id" context="{'default_website_id': website_id}" domain="[('website_id', 'in', (False, website_id))]"/>
+                            <field name="dr_tag_ids" widget="many2many_tags" context="{'default_website_id': website_id}" domain="[('website_id', 'in', (False, website_id))]"/>
+                            <field name="dr_product_tab_ids" widget="many2many_tags" context="{'default_content_type': 'tab'}" domain="[('content_type', '=', 'tab')]"/>
+                            <field name="dr_product_offer_ids" widget="many2many_tags" context="{'default_content_type': 'offer_popup'}" domain="[('content_type', '=', 'offer_popup')]"/>
+                            <field name="dr_document_ids" widget="many2many_binary"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <record id="product_template_view_tree_inherit_bean_theme_common" model="ir.ui.view" >
+        <field name="name">product.template.view.tree.inherit.BeanBakery.theme.common</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="website_sale.product_template_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="website_id" position="after">
+                <field name="dr_label_id" options="{'no_create': True, 'no_open': True}" optional="hide"/>
+                <field name="dr_brand_value_id" options="{'no_create': True, 'no_open': True}" optional="hide"/>
+                <field name="dr_tag_ids" widget="many2many_tags" options="{'no_create': True, 'no_open': True}" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="s_tp_hierarchical_category_wrapper">
+        <div class="row">
+            <t t-foreach="data" t-as="category_data">
+                <t t-call="#{widget.uiConfigInfo.style}"/>
+            </t>
+        </div>
+    </t>
+
+    <div t-name="s_tp_hierarchical_category_style_1" class="col-12 py-3 col-md-3" >
+        <div class="s_tp_hierarchical_category_style_1">
+            <div class="tp-animation-scale">
+                <a t-att-href="category_data.category.website_url">
+                    <img loading="lazy" t-att-alt="category_data.category.name" class="img my-2 o_image_128_max img-fluid" t-att-src="category_data.category.image_url" />
+                </a>
+            </div>
+            <ul class="list-group mt-2">
+                <li class="list-group-item bg-transparent px-2 mb-1 py-1 font-weight-bold text-dark border-0">
+                    <span t-att-title="category_data.category.name" class="mb-1 w-75 text-uppercase text-truncate d-block tp-hover-color-primary">
+                        <a t-att-href="category_data.category.website_url"><t t-esc="category_data.category.name"/></a>
+                    </span>
+                </li>
+                <t t-foreach="category_data.child" t-as="child">
+                    <li class="list-group-item px-2 bg-transparent py-1 border-0">
+                        <span class="tp-hover-color-primary text-truncate d-block" t-att-title="child.name">
+                            <small class="dri dri-chevron-right-l mr-2"/><a class="text-600" t-att-href="child.website_url"><t t-esc="child.name"/> <small t-if="child.category_label_info" class="ml-2" t-attf-style="padding: 4px 4px 2px;border-radius:3px; background-color: #{child.category_label_info.background_color}; color: #{child.category_label_info.text_color};" t-esc="child.category_label_info.name"> </small></a>
+                        </span>
+                    </li>
+                </t>
+            </ul>
+        </div>
+    </div>
+
+    <div t-name="s_tp_hierarchical_category_style_2" class="col-12 py-3 col-md-3">
+        <div class="s_tp_hierarchical_category_style_2">
+            <ul class="list-group">
+                <li class="bg-transparent list-group-item px-2 mb-1 py-1 font-weight-bold text-dark border-0">
+                    <span t-att-title="category_data.category.name"  class="mb-1 pb-2 tp-underline-title text-uppercase tp-hover-color-primary">
+                        <a t-attf-href="category_data.category.website_url"><t t-esc="category_data.category.name"/></a>
+                    </span>
+                </li>
+                <t t-foreach="category_data.child" t-as="child">
+                    <li class="bg-transparent list-group-item px-2 py-1 border-0">
+                        <span class="tp-hover-color-primary" t-att-title="child.name">
+                            <a class="text-600" t-att-href="child.website_url"><t t-esc="child.name"/> <small t-if="child.category_label_info" class="ml-2" t-attf-style="padding: 4px 4px 2px;border-radius:3px; background-color: #{child.category_label_info.background_color}; color: #{child.category_label_info.text_color};" t-esc="child.category_label_info.name"> </small></a>
+                        </span>
+                    </li>
+                </t>
+            </ul>
+        </div>
+    </div>
+
+    <div t-name="s_tp_hierarchical_category_style_3" class="col-12 py-3 col-md-3">
+        <div class="s_tp_hierarchical_category_style_3">
+            <div class="tp-cate-3-img position-relative">
+                <a t-att-href="category_data.category.website_url">
+                    <img loading="lazy" class="img w-100 tp-category-cover-image img-fluid" t-att-src="category_data.category.cover_image"/>
+                    <p class="tp-category-name text-white d-block w-100 font-weight-bold text-center text-truncate mb-0" t-esc="category_data.category.name"></p>
+                </a>
+            </div>
+            <ul class="list-unstyled pt-2">
+                <t t-foreach="category_data.child" t-as="child">
+                    <li class="list-group-item px-2 py-1 border-0">
+                        <span class="tp-hover-color-primary" t-att-title="child.name">
+                            <small class="dri dri-chevron-right-l mr-2"/> <a class="text-600" t-att-href="child.website_url"><t t-esc="child.name"/> <small t-if="child.category_label_info" class="ml-2" t-attf-style="padding: 4px 4px 2px;border-radius:3px; background-color: #{child.category_label_info.background_color}; color: #{child.category_label_info.text_color};" t-esc="child.category_label_info.name"> </small></a>
+                        </span>
+                    </li>
+                </t>
+            </ul>
+        </div>
+    </div>
+
+    <div t-name="s_tp_hierarchical_category_style_4" class="col-lg-4 col-md-6 col-12">
+        <div class="s_tp_hierarchical_category_style_4 bg-white border p-4 mt-3" style="border-radius:4px;">
+            <div class="row no-gutters">
+                <div class="col-5">
+                    <div class="tp-animation-scale justify-content-center d-flex h-100 align-items-center">
+                        <a t-att-href="category_data.category.website_url">
+                            <img loading="lazy" t-att-alt="category_data.category.name" class="img img-fluid mx-auto" t-att-src="category_data.category.image_url" />
+                        </a>
+                    </div>
+                </div>
+                <div class="col-7">
+                    <span t-att-title="category_data.category.name" class="mb-1 h6 text-uppercase text-truncate d-block tp-hover-color-primary">
+                        <a t-att-href="category_data.category.website_url">
+                            <t t-esc="category_data.category.name"/>
+                        </a>
+                    </span>
+                    <ul class="list-unstyled py-1">
+                        <t t-foreach="category_data.child" t-as="child">
+                            <li class="list-group-item bg-transparent p-1 border-0">
+                                <span class="tp-hover-color-primary" t-att-title="child.name">
+                                    <a class="text-600" t-att-href="child.website_url">
+                                        <t t-esc="child.name"/>
+                                        <small t-if="child.category_label_info" class="ml-2" t-attf-style="padding: 4px 4px 2px;border-radius:3px; background-color: #{child.category_label_info.background_color}; color: #{child.category_label_info.text_color};" t-esc="child.category_label_info.name"></small>
+                                    </a>
+                                </span>
+                            </li>
+                        </t>
+                    </ul>
+                    <a class="text-primary p-1 font-weight-light" t-att-href="category_data.category.website_url">
+                        All <t t-esc="category_data.category.name"/> <i class="dri dri-arrow-right-l pl-2"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</template>

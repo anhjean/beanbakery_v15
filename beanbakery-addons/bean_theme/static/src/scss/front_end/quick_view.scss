@@ -1,0 +1,116 @@
+$tp-facebook-color: #3b5998;
+$tp-twitter-color: #00acee;
+$tp-envelope-color: o-color('primary');
+
+.tp-product-quick-view-layout {
+    .tp-share .fa {
+        transition: color 0.25s ease-in-out,background-color 0.25s ease-in-out;
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        &.fa-facebook {
+            color: $tp-facebook-color;
+            background-color: rgba($tp-facebook-color, 0.1);
+        }
+        &.fa-twitter {
+            color: $tp-twitter-color;
+            background-color: rgba($tp-twitter-color, 0.1);
+        }
+        &.fa-envelope {
+            color: $tp-envelope-color;
+            background-color: rgba($tp-envelope-color, 0.1);
+        }
+        &:hover {
+            color: white;
+            &.fa-facebook {
+                background-color: $tp-facebook-color;
+            }
+            &.fa-twitter {
+                background-color: $tp-twitter-color;
+            }
+            &.fa-envelope {
+                background-color: $tp-envelope-color;
+            }
+        }
+    }
+    // Solve conflit with main product detail layout
+    .tp-product-detail-carousel {
+        position: relative !important;
+        top: unset !important;
+        @include media-breakpoint-down(sm) {
+            .carousel-outer {
+                height: 370px !important;
+            }
+        }
+    }
+}
+
+.tp-custom-dialog {
+    .close {
+        @include o-position-absolute(8px, 8px);
+        font-size: 0.8rem;
+        width: 2rem;
+        height: 2rem;
+        opacity: 1;
+        z-index: 1;
+        border-radius: 100rem;
+        border: 1px solid $border-color;
+        &:focus {
+            outline: none;
+        }
+        &:hover {
+            color: o-color('danger');
+        }
+    }
+}
+
+// Cart Flow
+
+.d_product_quick_view_dialog {
+    &.is_mini {
+        @include dr-product-attribute-center($max-width: 450px);
+    }
+}
+
+.d_cart_confirmation_dialog {
+    .modal-body {
+        padding: 0px;
+        .dr-confim-col {
+            background-color: rgba(o-color('primary'), 0.17);
+        }
+        .dr-confirm-product-image {
+            position: relative;
+            margin-top: 14px;
+            img {
+                border: 2px solid rgba(2, 2, 2, 0.12);
+                object-fit: cover;
+                height: 140px;
+                width: 140px !important;
+            }
+            .fa {
+                color: #ffffff !important;
+                @include o-position-absolute($right: 12px, $bottom: -2px);
+                position: absolute;
+                background: #22c187;
+                padding: 7px 6px 6px 6px;
+                line-height: 1;
+                border-radius: 20px;
+                font-size: 18px;
+                border: 4px solid #fff;
+            }
+        }
+    }
+    .s_d_title_text p {
+        font-size: 1.3rem;
+    }
+    .s_d_product_small_block {
+        .card {
+            cursor: pointer;
+        }
+        .d_product_info {
+            button {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dr_theme_config_view_tree" model="ir.ui.view">
+        <field name="name">dr.theme.config.view.tree</field>
+        <field name="model">dr.theme.config</field>
+        <field name="arch" type="xml">
+            <tree string="BeanBakery Theme Config" editable="bottom">
+                <field name="website_id"/>
+                <field name="key"/>
+                <field name="value"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="dr_theme_config_action" model="ir.actions.act_window">
+        <field name="name">BeanBakery Theme Config</field>
+        <field name="res_model">dr.theme.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="dr_theme_config_menu" name="BeanBakery Theme Config" action="dr_theme_config_action" parent="base.menu_ir_property"/>
+
+</odoo>

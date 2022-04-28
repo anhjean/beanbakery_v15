@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates>
+    <!-- Card container -->
+    <t t-name="d_s_cards_listing_wrapper">
+        <div class="row">
+            <t t-foreach="data" t-as="collection">
+                <div t-attf-class="col-md-#{widget.numOfCol} col-sm-6 px-4">
+                    <t t-call="#{widget.uiConfigInfo.style}"/>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="tp_product_list_header_1">
+        <h6 class="tp_product_list_header_1 font-weight-light position-relative border-bottom pb-3 mb-4 mt-2" t-out="collection.title"/>
+    </t>
+
+    <t t-name="tp_product_list_header_2">
+        <h5 class="mb-4 mt-2 font-weight-light" t-out="collection.title"/>
+    </t>
+    <t t-name="tp_product_list_header_3">
+        <h6 class="mt-2 text-center font-weight-light" t-out="collection.title"/>
+        <div class="text-center mb-2">
+            <p class="dr_strike_line text-center">
+                <span class="fa fa-star-o"></span>
+            </p>
+        </div>
+    </t>
+
+    <t t-name="tp_product_list_cards_1">
+        <div class="tp_product_list_cards_1">
+            <t t-call="#{widget.uiConfigInfo.header}"/>
+            <t t-foreach="collection.products" t-as="product">
+                <div class="media mb-2 align-items-center">
+                    <a class="d-block mr-2 d_link" t-att-href="product.website_url">
+                        <img t-att-src="product.img_medium" class="o_image_64_contain"/>
+                    </a>
+                    <div class="media-body">
+                        <h6 class="d-product-name font-weight-light mb-0 mt-2">
+                            <a t-att-href="product.website_url">
+                                <t t-out="product.name"/>
+                            </a>
+                        </h6>
+                        <div class="mt-1" t-if="widget._isActionEnabled('rating')">
+                            <t t-out="product.rating"></t>
+                        </div>
+                        <div class="d-product-price">
+                            <h6 class="d-inline-block mb-0 font-weight-light text-primary" t-out="product.price"/>
+                            <h6 t-if="product.has_discounted_price" class="text-muted mb-0 d-inline-block small" style="text-decoration: line-through; white-space: nowrap;" t-out="product.list_price"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="tp_product_list_cards_2">
+        <div class="tp_product_list_cards_2">
+            <t t-call="#{widget.uiConfigInfo.header}"/>
+            <t t-foreach="collection.products" t-as="product">
+                <div t-attf-class="media align-items-center #{product_first ? 'pb-2' : 'py-2'} #{!product_last ? 'border-bottom' : ''}">
+                    <a class="d-block mr-2" t-att-href="product.website_url">
+                        <img t-att-src="product.img_medium" class="o_image_64_contain"/>
+                    </a>
+                    <div class="media-body">
+                        <h6 class="d-product-name font-weight-light mb-1 mt-1">
+                            <a t-att-href="product.website_url">
+                                <t t-out="product.name"/>
+                            </a>
+                        </h6>
+                        <div class="mt-1" t-if="widget._isActionEnabled('rating')">
+                            <t t-out="product.rating"></t>
+                        </div>
+                        <div class="d-product-price">
+                            <h6 class="d-inline-block mb-0 font-weight-light text-primary" t-out="product.price"/>
+                            <h6 t-if="product.has_discounted_price" class="text-muted mb-0 d-inline-block small" style="text-decoration: line-through; white-space: nowrap;" t-out="product.list_price"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+    <t t-name="tp_product_list_cards_3">
+        <div class="tp_product_list_cards_3">
+            <t t-call="#{widget.uiConfigInfo.header}"/>
+            <t t-foreach="collection.products" t-as="product">
+                <div t-attf-class="media p-2 mb-3 bg-white border tp-rounded-border position-relative">
+                    <a class="d-block mr-3" t-att-href="product.website_url">
+                        <img t-att-src="product.img_medium" class="o_image_64_contain tp-rounded-border"/>
+                    </a>
+                    <div class="media-body">
+                        <h6 class="font-weight-light mb-1">
+                            <a t-att-href="product.website_url">
+                                <t t-out="product.name"/>
+                            </a>
+                        </h6>
+                        <t t-if="widget._isActionEnabled('rating')">
+                            <t t-out="product.rating"></t>
+                        </t>
+                        <div class="d-product-price">
+                            <h6 class="d-inline-block mb-0 font-weight-light text-primary" t-out="product.price"/>
+                            <h6 t-if="product.has_discounted_price" class="text-muted mb-0 d-inline-block small" style="text-decoration: line-through; white-space: nowrap;" t-out="product.list_price"/>
+                        </div>
+                        <button t-if="widget._isActionEnabled('add_to_cart')" t-att-data-product-product-id="product.product_variant_id" data-toggle="tooltip" data-placement="bottom" class="d_action_btn d_add_to_cart_btn p-0 btn" title="Add to Cart">
+                            <i class="d_action_btn_icon dri dri-cart"></i>
+                        </button>
+                    </div>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>
