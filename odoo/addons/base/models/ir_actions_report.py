@@ -6,7 +6,7 @@ from odoo import api, fields, models, tools, SUPERUSER_ID, _
 from odoo.exceptions import UserError, AccessError
 from odoo.tools.safe_eval import safe_eval, time
 from odoo.tools.misc import find_in_path
-from odoo.tools import config, is_html_empty
+from odoo.tools import config, is_html_empty, parse_version
 from odoo.sql_db import TestCursor
 from odoo.http import request
 from odoo.osv.expression import NEGATIVE_TERM_OPERATORS, FALSE_DOMAIN
@@ -23,7 +23,6 @@ import json
 
 from lxml import etree
 from contextlib import closing
-from distutils.version import LooseVersion
 from reportlab.graphics.barcode import createBarcodeDrawing
 from PyPDF2 import PdfFileWriter, PdfFileReader, utils
 from collections import OrderedDict
@@ -65,12 +64,12 @@ else:
     match = re.search(b'([0-9.]+)', out)
     if match:
         version = match.group(0).decode('ascii')
-        if LooseVersion(version) < LooseVersion('0.12.0'):
+        if parse_version(version) < parse_version('0.12.0'):
             _logger.info('Upgrade Wkhtmltopdf to (at least) 0.12.0')
             wkhtmltopdf_state = 'upgrade'
         else:
             wkhtmltopdf_state = 'ok'
-        if LooseVersion(version) >= LooseVersion('0.12.2'):
+        if parse_version(version) >= parse_version('0.12.2'):
             wkhtmltopdf_dpi_zoom_ratio = True
 
         if config['workers'] == 1:
@@ -378,15 +377,20 @@ class IrActionsReport(models.Model):
             footer_node.append(node)
 
         # Retrieve bodies
+        layout_sections = None
         for node in root.xpath(match_klass.format('article')):
             layout_with_lang = layout
-            # set context language to body language
             if node.get('data-oe-lang'):
+                # context language to body language
                 layout_with_lang = layout_with_lang.with_context(lang=node.get('data-oe-lang'))
+                # set header/lang to body lang prioritizing current user language
+                if not layout_sections or node.get('data-oe-lang') == self.env.lang:
+                    layout_sections = layout_with_lang
             body = layout_with_lang._render({
                 'subst': False,
                 'body': Markup(lxml.html.tostring(node, encoding='unicode')),
-                'base_url': base_url
+                'base_url': base_url,
+                'report_xml_id': self.xml_id
             })
             bodies.append(body)
             if node.get('data-oe-model') == self.model:
@@ -405,12 +409,12 @@ class IrActionsReport(models.Model):
             if attribute[0].startswith('data-report-'):
                 specific_paperformat_args[attribute[0]] = attribute[1]
 
-        header = layout._render({
+        header = (layout_sections or layout)._render({
             'subst': True,
             'body': Markup(lxml.html.tostring(header_node, encoding='unicode')),
             'base_url': base_url
         })
-        footer = layout._render({
+        footer = (layout_sections or layout)._render({
             'subst': True,
             'body': Markup(lxml.html.tostring(footer_node, encoding='unicode')),
             'base_url': base_url

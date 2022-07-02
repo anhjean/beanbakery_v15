@@ -60,12 +60,10 @@ var MassMailingFieldHtml = FieldHtml.extend({
         }
 
         var $editable = this.wysiwyg.getEditable();
-        if (this.wysiwyg.snippetsMenu) {
-            await this.wysiwyg.snippetsMenu.cleanForSave();
-        }
-        return this.wysiwyg.saveModifiedImages(this.$content).then(function () {
+        await this.wysiwyg.cleanForSave();
+        return this.wysiwyg.saveModifiedImages(this.$content).then(async function () {
             self._isDirty = self.wysiwyg.isDirty();
-            self._doAction();
+            await self._doAction();
 
             const $editorEnable = $editable.closest('.editor_enable');
             $editorEnable.removeClass('editor_enable');
@@ -332,6 +330,9 @@ var MassMailingFieldHtml = FieldHtml.extend({
      * @override
      */
     _onLoadWysiwyg: function () {
+        // Let the global hotkey manager know about our iframe.
+        this.call('hotkey', 'registerIframe', this.wysiwyg.$iframe[0]);
+
         if (this.snippetsLoaded) {
             this._onSnippetsLoaded(this.snippetsLoaded);
         }

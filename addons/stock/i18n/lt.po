@@ -18,10 +18,11 @@
 # Antanas Muliuolis <an.muliuolis@gmail.com>, 2022
 # Rolandas <info@paninfo.lt>, 2022
 # Audrius Palenskis <audrius.palenskis@gmail.com>, 2022
-# Martin Trigaux, 2022
-# digitouch UAB <digitouchagencyeur@gmail.com>, 2022
-# Linas Versada <linaskrisiukenas@gmail.com>, 2022
 # Silvija Butko <silvija.butko@gmail.com>, 2022
+# Linas Versada <linaskrisiukenas@gmail.com>, 2022
+# digitouch UAB <digitouchagencyeur@gmail.com>, 2022
+# Martin Trigaux, 2022
+# Ramunė ViaLaurea <ramune.vialaurea@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
@@ -29,7 +30,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-16 13:18+0000\n"
 "PO-Revision-Date: 2021-09-14 12:26+0000\n"
-"Last-Translator: Silvija Butko <silvija.butko@gmail.com>, 2022\n"
+"Last-Translator: Ramunė ViaLaurea <ramune.vialaurea@gmail.com>, 2022\n"
 "Language-Team: Lithuanian (https://www.transifex.com/odoo/teams/41243/lt/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -953,9 +954,12 @@ msgid "As soon as possible"
 msgstr "Kaip įmanoma greičiau"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Assign"
-msgstr ""
+msgstr "Priskirti"
 
 #. module: stock
 #. openerp-web
@@ -1370,7 +1374,7 @@ msgstr ""
 #: code:addons/stock/models/stock_picking.py:0
 #, python-format
 msgid "Choose Labels Layout"
-msgstr ""
+msgstr "Pasirinkite etiketės išdėstymą"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quantity_history__inventory_datetime
@@ -2785,7 +2789,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:stock.selection__report_stock_quantity__state__forecast
 #: model_terms:ir.ui.view,arch_db:stock.stock_report_view_search
 msgid "Forecasted Stock"
-msgstr ""
+msgstr "Sandėlio prognozė"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__forecast_weight
@@ -2928,7 +2932,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock.field_stock_production_lot__has_message
 #: model:ir.model.fields,field_description:stock.field_stock_scrap__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Turi žinutę"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__move_line_exist
@@ -3239,6 +3243,12 @@ msgstr "Skubus perkėlimas?"
 #: model_terms:ir.ui.view,arch_db:stock.view_immediate_transfer
 msgid "Immediate transfer?"
 msgstr "Skubus pervedimas?"
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Import"
+msgstr "Importuoti"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse__in_type_id
@@ -4345,7 +4355,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:stock.field_stock_picking__my_activity_date_deadline
 #: model:ir.model.fields,field_description:stock.field_stock_production_lot__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Veiklos paskutinis terminas"
 
 #. module: stock
 #: model_terms:res.company,invoice_terms_html:stock.res_company_1
@@ -4507,7 +4517,7 @@ msgstr ""
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.product_template_action_product
 msgid "No product found. Let's create one!"
-msgstr ""
+msgstr "Nerastas joks produktas. Sukurkite naują!"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_picking_return.py:0
@@ -4546,6 +4556,12 @@ msgstr "Šaltinio vieta nenurodyta atsargų taisyklėje: %s!"
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.stock_move_action
 msgid "No stock move found"
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "No Stock On Hand"
 msgstr ""
 
 #. module: stock
@@ -5275,6 +5291,14 @@ msgid "Preferred route"
 msgstr "Pageidaujamas maršrutas"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Press the CREATE button to define quantity for each product in your stock or"
+" import them from a spreadsheet throughout Favorites"
+msgstr ""
+
+#. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 msgid "Print"
 msgstr "Spausdinti"
@@ -5290,7 +5314,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 #, python-format
 msgid "Print Labels"
-msgstr ""
+msgstr "Spausdinti etiketę"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__printed
@@ -5529,6 +5553,8 @@ msgstr "Produkto variantai"
 #, python-format
 msgid "Product model not defined, Please contact your administrator."
 msgstr ""
+"Produkto modelis neapibrėžtas. Prašau, susisiekite su Jūsų "
+"administratoriumi."
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_production_lot_form
@@ -6689,7 +6715,7 @@ msgstr ""
 #: model:ir.actions.server,name:stock.action_view_set_quants_tree
 #: model_terms:ir.ui.view,arch_db:stock.view_stock_quant_tree_inventory_editable
 msgid "Set"
-msgstr ""
+msgstr "Nustatyti"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_request_count__set_count__set
@@ -7657,6 +7683,14 @@ msgid "There's no product move yet"
 msgstr "Dar nėra produkto perkėlimo"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"This analysis gives you an overview of the current stock level of your "
+"products."
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,help:stock.field_stock_rule__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr "Šis laukas užpildys pakavimo kilmę ir jo perkėlimų pavadinimus"
@@ -8125,7 +8159,10 @@ msgid "USPS Connector"
 msgstr "USPS jungimas"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Unassign"
 msgstr ""
 
@@ -9088,6 +9125,12 @@ msgid ""
 "You'll find here smart replenishment propositions based on inventory forecasts.\n"
 "            Choose the quantity to buy or manufacture and launch orders in a click.\n"
 "            To save time in the future, set the rules as \"automated\"."
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Your stock is currently empty"
 msgstr ""
 
 #. module: stock

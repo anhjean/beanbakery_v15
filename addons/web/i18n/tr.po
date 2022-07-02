@@ -12,20 +12,20 @@
 # Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2021
 # Tugay Hatıl <tugayh@projetgrup.com>, 2021
 # Ayhan KIZILTAN <akiziltan76@hotmail.com>, 2021
-# Martin Trigaux, 2021
 # Levent Karakaş <levent@mektup.at>, 2021
-# Murat Kaplan <muratk@projetgrup.com>, 2021
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2021
 # Saban Yildiz <sabany@projetgrup.com>, 2021
 # Erdinç Akın, 2021
 # Gurkan Erdogdu <gurkan.erdogdu@mechsoft.com.tr>, 2021
 # Doğan Altunbay <doganaltunbay@gmail.com>, 2021
 # Umur Akın <umura@projetgrup.com>, 2021
-# Murat Durmuş <muratd@projetgrup.com>, 2021
 # ismail eski <ismaileski@gmail.com>, 2021
 # abc Def <hdogan1974@gmail.com>, 2021
 # Nadir Gazioglu <nadirgazioglu@gmail.com>, 2022
 # Ediz Duman <neps1192@gmail.com>, 2022
+# Murat Durmuş <muratd@projetgrup.com>, 2022
+# Murat Kaplan <muratk@projetgrup.com>, 2022
+# Martin Trigaux, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # 
 msgid ""
@@ -445,6 +445,13 @@ msgstr "Enterprise Uygulamaların Tümüne Erişim"
 #. openerp-web
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #, python-format
+msgid "Action"
+msgstr "Aksiyon"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/legacy/xml/base.xml:0
+#, python-format
 msgid "Action ID:"
 msgstr "İşlem ID:"
 
@@ -587,6 +594,13 @@ msgstr "Etiket ekle"
 #, python-format
 msgid "Add to Favorites"
 msgstr "Favorilerinize Ekleyin"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/legacy/xml/base.xml:0
+#, python-format
+msgid "Additional actions"
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -1383,7 +1397,7 @@ msgstr "Oluştur ve Düzenle..."
 #: code:addons/web/static/src/legacy/xml/kanban.xml:0
 #, python-format
 msgid "Create record"
-msgstr ""
+msgstr "Kayıt oluşturma"
 
 #. module: web
 #. openerp-web
@@ -1809,7 +1823,7 @@ msgstr "E-Posta"
 #: code:addons/web/static/src/core/debug/profiling/profiling_item.xml:0
 #, python-format
 msgid "Enable profiling"
-msgstr ""
+msgstr "Profil oluşturmayı etkinleştirme"
 
 #. module: web
 #: code:addons/web/controllers/main.py:0
@@ -2100,7 +2114,7 @@ msgstr "İşlemek"
 #. module: web
 #: model:ir.model.fields,help:web.field_base_document_layout__company_details
 msgid "Header text displayed at the top of all reports."
-msgstr ""
+msgstr "Tüm raporların en üstünde görüntülenen üstbilgi metni."
 
 #. module: web
 #. openerp-web
@@ -2664,8 +2678,8 @@ msgstr "Çok Satırlı Metin"
 #. openerp-web
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.js:0
 #, python-format
-msgid "My Odoo.com.account"
-msgstr "My Odoo.com.hesabı"
+msgid "My Odoo.com account"
+msgstr "Odoo.com hesabım"
 
 #. module: web
 #. openerp-web
@@ -3424,6 +3438,13 @@ msgstr "Yazdır"
 
 #. module: web
 #. openerp-web
+#: code:addons/web/static/src/legacy/xml/report.xml:0
+#, python-format
+msgid "Printing options"
+msgstr ""
+
+#. module: web
+#. openerp-web
 #: code:addons/web/static/src/legacy/js/fields/basic_fields.js:0
 #, python-format
 msgid "Priority"
@@ -3862,7 +3883,7 @@ msgstr "İkincil renk"
 #: code:addons/web/static/src/core/errors/error_dialogs.xml:0
 #, python-format
 msgid "See details"
-msgstr "Detayları gör."
+msgstr "Detayları görn."
 
 #. module: web
 #. openerp-web
@@ -4875,6 +4896,12 @@ msgid "Yesterday"
 msgstr "Dün"
 
 #. module: web
+#: code:addons/web/controllers/main.py:0
+#, python-format
+msgid "You are not allowed to upload an attachment here."
+msgstr "Buraya bir ek yüklemenize izin verilmiyor."
+
+#. module: web
 #. openerp-web
 #: code:addons/web/static/src/legacy/js/widgets/model_field_selector.js:0
 #, python-format
@@ -5352,7 +5379,7 @@ msgstr "mesaj: %s"
 #: code:addons/web/static/src/core/debug/profiling/profiling_qweb.xml:0
 #, python-format
 msgid "ms"
-msgstr ""
+msgstr "mili saniye"
 
 #. module: web
 #. openerp-web

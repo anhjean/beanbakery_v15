@@ -65,6 +65,10 @@ odoo.define('pos_restaurant.chrome', function (require) {
                 }
             }
             _actionAfterIdle() {
+                // We also need to check if the action still need to be triggered
+                if (!this._shouldResetIdleTimer()) {
+                    return;
+                }
                 if (this.tempScreen.isShown) {
                     this.trigger('close-temp-screen');
                 }
@@ -72,7 +76,7 @@ odoo.define('pos_restaurant.chrome', function (require) {
                 this.showScreen('FloorScreen', { floor: table ? table.floor : null });
             }
             _shouldResetIdleTimer() {
-                return this.env.pos.config.iface_floorplan && this.mainScreen.name !== 'FloorScreen';
+                return super._shouldResetIdleTimer() && this.env.pos.config.iface_floorplan && this.mainScreen.name !== 'FloorScreen';
             }
             __showScreen() {
                 super.__showScreen(...arguments);

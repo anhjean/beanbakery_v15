@@ -10,9 +10,10 @@
 # Yann Papouin <ypa@decgroupe.com>, 2021
 # Camille Dantinne <cmd@odoo.com>, 2021
 # Thomas Deleval <thd@odoo.com>, 2021
-# Grégory Schreiner <gregory@mokatourisme.fr>, 2022
+# Grégory Schreiner <gregory@mokatourisme.fr>, 2021
 # Martin Trigaux, 2022
 # Cécile Collart <cco@odoo.com>, 2022
+# Desausoi Laurent, 2022
 # 
 msgid ""
 msgstr ""
@@ -20,13 +21,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 08:20+0000\n"
 "PO-Revision-Date: 2021-09-14 12:26+0000\n"
-"Last-Translator: Cécile Collart <cco@odoo.com>, 2022\n"
+"Last-Translator: Desausoi Laurent, 2022\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: sale
 #. openerp-web
@@ -474,7 +475,7 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        <t t-set=\"doc_name\" t-value=\"'quotation' if object.state in ('draft', 'sent') else 'order'\"/>\n"
+"        <t t-set=\"doc_name\" t-value=\"'devis' if object.state in ('draft', 'sent') else 'commande'\"/>\n"
 "        Bonjour,\n"
 "        <br/><br/>\n"
 "        Votre\n"
@@ -582,6 +583,8 @@ msgid ""
 "<span attrs=\"{'invisible': [('advance_payment_method', '!=', "
 "'percentage')]}\" class=\"oe_inline\">%</span>"
 msgstr ""
+"<span attrs=\"{'invisible': [('advance_payment_method', '!=', "
+"'percentage')]}\" class=\"oe_inline\">%</span>"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.portal_my_orders
@@ -1008,7 +1011,7 @@ msgid ""
 "Are you sure you want to void the authorized transaction? This action can't "
 "be undone."
 msgstr ""
-"Êtes-vous sûr de vouloir annuler la transaction autorisée? Cette action ne "
+"Êtes-vous sûr de vouloir annuler la transaction autorisée ? Cette action ne "
 "peut pas être annulée."
 
 #. module: sale
@@ -1311,7 +1314,7 @@ msgstr "Créer un nouvel article"
 #: model_terms:ir.actions.act_window,help:sale.action_quotations_with_onboarding
 #: model_terms:ir.actions.act_window,help:sale.action_sale_order_form_view
 msgid "Create a new quotation, the first step of a new sale!"
-msgstr "Créez un nouveau devis, la première étape d'une vente!"
+msgstr "Créez un nouveau devis, la première étape d'une vente !"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_sale_advance_payment_inv
@@ -1714,6 +1717,12 @@ msgstr "Acompte : %s"
 #, python-format
 msgid "Down Payments"
 msgstr "Acomptes"
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:0
+#, python-format
+msgid "Down payment"
+msgstr ""
 
 #. module: sale
 #: model:ir.model.fields.selection,name:sale.selection__sale_advance_payment_inv__advance_payment_method__fixed
@@ -2389,7 +2398,7 @@ msgstr "Ca a l'air bien. Continuons."
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.onboarding_quotation_layout_step
 msgid "Looks great!"
-msgstr "Parfait!"
+msgstr "Parfait !"
 
 #. module: sale
 #: model:ir.model.fields,field_description:sale.field_sale_order__message_main_attachment_id
@@ -4702,6 +4711,15 @@ msgstr ""
 "Vous pouvez définir le type de communication qui apparaitra sur les bons de "
 "commande. La communication sera donnée au client quand il choisira la "
 "méthode de paiement."
+
+#. module: sale
+#: code:addons/sale/models/product_product.py:0
+#: code:addons/sale/models/product_template.py:0
+#, python-format
+msgid ""
+"You cannot change the product's type because it is already used in sales "
+"orders."
+msgstr ""
 
 #. module: sale
 #: code:addons/sale/models/sale_order_line.py:0

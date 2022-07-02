@@ -20,9 +20,9 @@
 # Zygimantus <zygimantus@gmail.com>, 2022
 # Rolandas <info@paninfo.lt>, 2022
 # Silvija Butko <silvija.butko@gmail.com>, 2022
-# Martin Trigaux, 2022
-# Linas Versada <linaskrisiukenas@gmail.com>, 2022
 # Vytautas Stanaitis <vytautas@basas.lt>, 2022
+# Linas Versada <linaskrisiukenas@gmail.com>, 2022
+# Martin Trigaux, 2022
 # digitouch UAB <digitouchagencyeur@gmail.com>, 2022
 # 
 msgid ""
@@ -434,6 +434,13 @@ msgstr "Prieiga prie visų Enterprise programų"
 #. openerp-web
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #, python-format
+msgid "Action"
+msgstr "Veiksmas"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/legacy/xml/base.xml:0
+#, python-format
 msgid "Action ID:"
 msgstr "Veiksmo ID:"
 
@@ -576,6 +583,13 @@ msgstr "Pridėti žymą"
 #, python-format
 msgid "Add to Favorites"
 msgstr "Pridėti prie mėgstamiausių"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/legacy/xml/base.xml:0
+#, python-format
+msgid "Additional actions"
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -2645,8 +2659,8 @@ msgstr ""
 #. openerp-web
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.js:0
 #, python-format
-msgid "My Odoo.com.account"
-msgstr ""
+msgid "My Odoo.com account"
+msgstr "Mano Odoo.com paskyra"
 
 #. module: web
 #. openerp-web
@@ -2719,7 +2733,7 @@ msgstr "Kitas"
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #, python-format
 msgid "Next page"
-msgstr ""
+msgstr "Kitas puslapis"
 
 #. module: web
 #. openerp-web
@@ -3210,6 +3224,8 @@ msgid ""
 "Pie chart cannot mix positive and negative numbers. Try to change your "
 "domain to only display positive results"
 msgstr ""
+"Skritulinė diagrama negali maišyti teigiamų ir neigiamų skaičių. Pabandykite"
+" pakeisti rezultatus tik į teigiamus."
 
 #. module: web
 #. openerp-web
@@ -3399,6 +3415,13 @@ msgstr ""
 #, python-format
 msgid "Print"
 msgstr "Spausdinti"
+
+#. module: web
+#. openerp-web
+#: code:addons/web/static/src/legacy/xml/report.xml:0
+#, python-format
+msgid "Printing options"
+msgstr ""
 
 #. module: web
 #. openerp-web
@@ -4843,6 +4866,12 @@ msgstr "Taip"
 #, python-format
 msgid "Yesterday"
 msgstr "Vakar"
+
+#. module: web
+#: code:addons/web/controllers/main.py:0
+#, python-format
+msgid "You are not allowed to upload an attachment here."
+msgstr ""
 
 #. module: web
 #. openerp-web

@@ -20,7 +20,7 @@ from odoo.tools.misc import formatLang, get_lang, format_amount
 
 class PurchaseOrder(models.Model):
     _name = "purchase.order"
-    _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
+    _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin']
     _description = "Purchase Order"
     _order = 'priority desc, id desc'
 
@@ -578,7 +578,7 @@ class PurchaseOrder(models.Model):
             raise UserError(_('Please define an accounting purchase journal for the company %s (%s).') % (self.company_id.name, self.company_id.id))
 
         partner_invoice_id = self.partner_id.address_get(['invoice'])['invoice']
-        partner_bank_id = self.partner_id.bank_ids.filtered_domain(['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
+        partner_bank_id = self.partner_id.commercial_partner_id.bank_ids.filtered_domain(['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)])[:1]
         invoice_vals = {
             'ref': self.partner_ref or '',
             'move_type': move_type,
@@ -1193,8 +1193,16 @@ class PurchaseOrderLine(models.Model):
             price_unit = seller.product_uom._compute_price(price_unit, self.product_uom)
 
         self.price_unit = price_unit
-        product_ctx = {'seller_id': seller.id, 'lang': get_lang(self.env, self.partner_id.lang).code}
-        self.name = self._get_product_purchase_description(self.product_id.with_context(product_ctx))
+
+        default_names = []
+        vendors = self.product_id._prepare_sellers({})
+        for vendor in vendors:
+            product_ctx = {'seller_id': vendor.id, 'lang': get_lang(self.env, self.partner_id.lang).code}
+            default_names.append(self._get_product_purchase_description(self.product_id.with_context(product_ctx)))
+
+        if (self.name in default_names or not self.name):
+            product_ctx = {'seller_id': seller.id, 'lang': get_lang(self.env, self.partner_id.lang).code}
+            self.name = self._get_product_purchase_description(self.product_id.with_context(product_ctx))
 
     @api.onchange('product_id', 'product_qty', 'product_uom')
     def _onchange_suggest_packaging(self):

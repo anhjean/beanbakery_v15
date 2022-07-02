@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-24 08:20+0000\n"
+"POT-Creation-Date: 2022-05-10 14:27+0000\n"
 "PO-Revision-Date: 2021-09-14 12:24+0000\n"
 "Last-Translator: marcescu, 2022\n"
 "Language-Team: Spanish (https://www.transifex.com/odoo/teams/41243/es/)\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_acquirer_onboarding_wizard___data_fetched
@@ -125,6 +125,9 @@ msgid ""
 "                        Wait a moment for it to be processed. If the refund is still pending in a\n"
 "                        few minutes, please check your payment acquirer configuration."
 msgstr ""
+"<strong>¡Advertencia!</strong> Hay un reembolso pendiente para este pago.\n"
+"                        Espere un momento a que se procese. Si el reembolso sigue pendiente en\n"
+"                        unos minutos, verifique la configuración de su método de pago."
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.payment_acquirer_form
@@ -132,6 +135,8 @@ msgid ""
 "<strong>Warning</strong> Creating a payment acquirer from the <em>CREATE</em> button is not supported.\n"
 "                        Please use the <em>Duplicate</em> action instead."
 msgstr ""
+"<strong>Advertencia</strong> No se puede crear un método de pago con el botón de <em>CREAR</em>.\n"
+"                        Utilice la acción de <em>Duplicar</em> en su lugar."
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.pay
@@ -139,6 +144,8 @@ msgid ""
 "<strong>Warning</strong> Make sure your are logged in as the right partner "
 "before making this payment."
 msgstr ""
+"<strong>Advertencia</strong> Asegúrese de que inició sesión como el partner "
+"adecuado antes de realizar el pago."
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.pay
@@ -148,13 +155,13 @@ msgstr "<strong>Advertencia</strong> La moneda falta o en incorrecta."
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.pay
 msgid "<strong>Warning</strong> You must be logged in to pay."
-msgstr ""
+msgstr "<strong>Advertencia</strong> Debe iniciar sesión para pagar."
 
 #. module: payment
 #: code:addons/payment/models/account_payment.py:0
 #, python-format
 msgid "A payment transaction with reference %s already exists."
-msgstr ""
+msgstr "Ya existe una transacción de pago con referencia %s."
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -163,6 +170,8 @@ msgid ""
 "A refund request of %(amount)s has been sent. The payment will be created "
 "soon. Refund transaction reference: %(ref)s (%(acq_name)s)."
 msgstr ""
+"Se envió una solicitud de reembolso por %(amount)s. Se creará el pago "
+"pronto. Referencia de transacción de reembolso: %(ref)s (%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/models/account_payment.py:0
@@ -175,7 +184,7 @@ msgstr "Se requiere un token para crear una nueva transacción de pago."
 #, python-format
 msgid ""
 "A transaction with reference %(ref)s has been initiated (%(acq_name)s)."
-msgstr ""
+msgstr "Se inició una transacción con referencia %(ref)s (%(acq_name)s)"
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -184,6 +193,8 @@ msgid ""
 "A transaction with reference %(ref)s has been initiated using the payment "
 "method %(token_name)s (%(acq_name)s)."
 msgstr ""
+"Se inició una transacción con referencia %(ref)s que utiliza el método de "
+"pago %(token_name)s (%(acq_name)s)."
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_link_wizard__access_token
@@ -448,6 +459,9 @@ msgid ""
 "Use this if you want to charge your customers cards only when\n"
 "you are sure you can ship the goods to them."
 msgstr ""
+"Capturar el importe de Odoo cuando la entrega se ha completado.\n"
+"Utilícelo si desea hacer el cargo a la tarjeta de sus clientes solo cuando\n"
+"seguro de que puede enviarles los artículos."
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.payment_acquirer_onboarding_wizard_form
@@ -908,6 +922,8 @@ msgid ""
 "In test mode, a fake payment is processed through a test payment interface.\n"
 "This mode is advised when setting up the acquirer."
 msgstr ""
+"En el modo de prueba, se procesa un pago falso a través de una interfaz de pago de prueba\n"
+"Este modo se recomienda al establecer el método de pago."
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_acquirer__inline_form_view_id
@@ -1377,7 +1393,7 @@ msgstr "Token de pago"
 #: model:ir.model.fields,field_description:payment.field_res_partner__payment_token_count
 #: model:ir.model.fields,field_description:payment.field_res_users__payment_token_count
 msgid "Payment Token Count"
-msgstr ""
+msgstr "Número de token de pago"
 
 #. module: payment
 #: model:ir.actions.act_window,name:payment.action_payment_token
@@ -1481,6 +1497,12 @@ msgstr "Por favor, elija solamente una opción de pago."
 #, python-format
 msgid "Please set an amount smaller than %s."
 msgstr "Establece una cantidad menor a %s."
+
+#. module: payment
+#: code:addons/payment/controllers/portal.py:0
+#, python-format
+msgid "Please switch to company '%s' to make this payment."
+msgstr "Por favor, cambie a la empresa '%s' para realizar este pago."
 
 #. module: payment
 #: model_terms:payment.acquirer,pending_msg:payment.payment_acquirer_transfer
@@ -1700,7 +1722,7 @@ msgstr "Sips"
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_account_payment__source_payment_id
 msgid "Source Payment"
-msgstr ""
+msgstr "Origen del pago"
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_transaction__source_transaction_id
@@ -1747,7 +1769,7 @@ msgstr "Contraseña secreta de Stripe"
 #: model:ir.model.fields,field_description:payment.field_account_payment__suitable_payment_token_ids
 #: model:ir.model.fields,field_description:payment.field_account_payment_register__suitable_payment_token_ids
 msgid "Suitable Payment Token"
-msgstr ""
+msgstr "Token de pago adecuado"
 
 #. module: payment
 #: model:ir.model.fields,field_description:payment.field_payment_acquirer__payment_icon_ids
@@ -1759,6 +1781,8 @@ msgstr "Íconos de pago compatibles"
 #: model:ir.model.fields,help:payment.field_account_payment_register__use_electronic_payment_method
 msgid "Technical field used to hide or show the payment_token_id if needed."
 msgstr ""
+"Campo técnico que se utiliza para ocultar o mostrar el payment_token si se "
+"requiere."
 
 #. module: payment
 #: model:payment.acquirer,name:payment.payment_acquirer_test
@@ -1826,11 +1850,13 @@ msgid ""
 "The countries for which this payment acquirer is available.\n"
 "If none is set, it is available for all countries."
 msgstr ""
+"Los países donde este método de pago está disponible.\n"
+"Si no hay ninguno establecido, está disponible para todos los países."
 
 #. module: payment
 #: model:ir.model.fields,help:payment.field_payment_acquirer__description
 msgid "The description shown in the card in kanban view "
-msgstr ""
+msgstr "La descripción que aparece en la tarjeta en la vista de kanban"
 
 #. module: payment
 #: model:ir.model.fields,help:payment.field_payment_transaction__fees
@@ -1927,12 +1953,16 @@ msgid ""
 "The template rendering a form submitted to redirect the user when making a "
 "payment"
 msgstr ""
+"La plantilla que representa un formulario enviado para redireccionar al "
+"usuario al realizar un pago"
 
 #. module: payment
 #: model:ir.model.fields,help:payment.field_payment_acquirer__inline_form_view_id
 msgid ""
 "The template rendering the inline payment form when making a direct payment"
 msgstr ""
+"La plantilla que muestra el formulario de pago en línea cuando se realiza un"
+" pago directo"
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -1941,6 +1971,8 @@ msgid ""
 "The transaction with reference %(ref)s for %(amount)s encountered an error "
 "(%(acq_name)s)."
 msgstr ""
+"Ocurrió un error en la transacción con referencia %(ref)s por %(amount)s "
+"(%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -1949,6 +1981,8 @@ msgid ""
 "The transaction with reference %(ref)s for %(amount)s has been authorized "
 "(%(acq_name)s)."
 msgstr ""
+"Se autorizó la transacción con referencia %(ref)s por %(amount)s "
+"(%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -1957,6 +1991,8 @@ msgid ""
 "The transaction with reference %(ref)s for %(amount)s has been confirmed "
 "(%(acq_name)s)."
 msgstr ""
+"Se confirmó la transacción con referencia %(ref)s por %(amount)s "
+"(%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -1965,6 +2001,8 @@ msgid ""
 "The transaction with reference %(ref)s for %(amount)s is canceled "
 "(%(acq_name)s)."
 msgstr ""
+"Se canceló la transacción con referencia %(ref)s por %(amount)s "
+"(%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/models/payment_transaction.py:0
@@ -1973,6 +2011,8 @@ msgid ""
 "The transaction with reference %(ref)s for %(amount)s is pending "
 "(%(acq_name)s)."
 msgstr ""
+"La transacción con referencia %(ref)s por %(amount)s esta pendiente "
+"(%(acq_name)s)."
 
 #. module: payment
 #: code:addons/payment/wizards/payment_link_wizard.py:0
@@ -1997,6 +2037,9 @@ msgid ""
 "A payment token is an anonymous link to the payment method details saved in the\n"
 "acquirer's database, allowing the customer to reuse it for a next purchase."
 msgstr ""
+"Controla si los clientes pueden guardar sus métodos de pago como tokens de pago\n"
+"Un token de pago es un enlace anónimo a los detalles de pago guardados en la\n"
+"base de datos del método de pago, lo que permite al cliente reutilizarlo para una próxima compra."
 
 #. module: payment
 #: model:ir.model.fields,help:payment.field_payment_icon__image
@@ -2026,7 +2069,7 @@ msgstr "Aún no se procesó este pago."
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.verified_token_checkmark
 msgid "This payment method has been verified by our system."
-msgstr "ste método de pago ha sido verificado por nuestro sistema."
+msgstr "Este método de pago ha sido verificado por nuestro sistema."
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.verified_token_checkmark
@@ -2213,12 +2256,20 @@ msgid ""
 "You can't delete a payment method that is linked to an acquirer in the enabled or test state.\n"
 "Linked acquirer(s): %s"
 msgstr ""
+"No puede eliminar un método de pago vinculado a un método en el estado habilitado o de prueba.\n"
+"Métodos vinculado(s): %s"
 
 #. module: payment
 #: code:addons/payment/models/ir_ui_view.py:0
 #, python-format
 msgid "You cannot delete a view that is used by a payment acquirer."
 msgstr "No puede eliminar una vista que se utiliza por un método de pago."
+
+#. module: payment
+#: code:addons/payment/controllers/portal.py:0
+#, python-format
+msgid "You do not have access to this payment token."
+msgstr "Usted no tiene acceso a esta ficha de pago."
 
 #. module: payment
 #. openerp-web
@@ -2366,7 +2417,7 @@ msgstr "C.P."
 #: model:ir.cron,cron_name:payment.cron_post_process_payment_tx
 #: model:ir.cron,name:payment.cron_post_process_payment_tx
 msgid "payment: post-process transactions"
-msgstr ""
+msgstr "pago: transacciones posprocesadas"
 
 #. module: payment
 #: model_terms:ir.ui.view,arch_db:payment.icon_list

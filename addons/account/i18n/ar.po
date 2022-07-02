@@ -10,6 +10,8 @@
 # Tariq Almutairi <tareq.s.m.79@gmail.com>, 2021
 # Paul Andrawes, 2021
 # jahzar <jahzar@gmail.com>, 2022
+# Walid Slim, 2022
+# Mohammad Ali, 2022
 # Malaz Abuidris <msea@odoo.com>, 2022
 # 
 msgid ""
@@ -165,7 +167,7 @@ msgstr "(object._get_report_base_filename())"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_journal
 msgid "- Posted Entries Only"
-msgstr ""
+msgstr "القيود المُرحلة فقط"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_journal
@@ -3876,7 +3878,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account.field_account_account_tag__color
 #: model:ir.model.fields,field_description:account.field_account_journal__color
 msgid "Color Index"
-msgstr "قائمة الألوان "
+msgstr "مؤشر اللون "
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__commercial_partner_id
@@ -3957,7 +3959,7 @@ msgstr "الشركة"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_form
 msgid "Company Bank Account"
-msgstr ""
+msgstr "الحساب البنكي للشركة"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_fiscal_position__company_country_id
@@ -5337,7 +5339,7 @@ msgstr "Disc.%"
 #: model_terms:ir.ui.view,arch_db:account.account_tour_upload_bill_email_confirm
 #: model_terms:ir.ui.view,arch_db:account.res_company_view_form_terms
 msgid "Discard"
-msgstr "طرح "
+msgstr "إهمال "
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_line__discount
@@ -5506,6 +5508,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "Documentation"
 msgstr "التوثيق"
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
+msgid "Domestic country of your accounting"
+msgstr "الدولة المحلية لمحاسبتك "
 
 #. module: account
 #: model:ir.model.fields.selection,name:account.selection__res_company__account_dashboard_onboarding_state__done
@@ -6268,7 +6275,7 @@ msgstr "من"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_journal
 msgid "From :"
-msgstr ""
+msgstr "من:"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
@@ -7761,6 +7768,13 @@ msgid "Journal Entry Date"
 msgstr "تاريخ قيد اليومية "
 
 #. module: account
+#. openerp-web
+#: code:addons/account/static/src/xml/account_payment.xml:0
+#, python-format
+msgid "Journal Entry Info"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields.selection,name:account.selection__account_print_journal__sort_selection__move_name
 #: model_terms:ir.ui.view,arch_db:account.report_journal
 msgid "Journal Entry Number"
@@ -7879,6 +7893,13 @@ msgstr "دفتر اليومية الذي تم فيه ترحيل القيد ال�
 #: model:ir.model.fields,help:account.field_account_automatic_entry_wizard__journal_id
 msgid "Journal where to create the entry."
 msgstr "اليومية التي يتم إنشاء القيد فيها "
+
+#. module: account
+#. openerp-web
+#: code:addons/account/static/src/xml/account_payment.xml:0
+#, python-format
+msgid "Journal:"
+msgstr ""
 
 #. module: account
 #: model:ir.actions.act_window,name:account.action_account_journal_form
@@ -12223,7 +12244,7 @@ msgstr "حالة خطوة مخططات الحساب التأهيلية "
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company__account_onboarding_create_invoice_state
 msgid "State of the onboarding create invoice step"
-msgstr "حالو خطوة إنشاء الفاتورة التمهيدية "
+msgstr "حالة خطوة إنشاء الفاتورة التمهيدية "
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_company__account_setup_fy_data_state
@@ -14554,6 +14575,15 @@ msgstr "يمكن استخدام ذلك فقط في عناصر اليومية "
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid ""
+"This entry contains one or more taxes that are incompatible with your fiscal"
+" country. Check company fiscal country in the settings and tax country in "
+"taxes configuration."
+msgstr ""
+
+#. module: account
+#: code:addons/account/models/account_move.py:0
+#, python-format
+msgid ""
 "This entry contains some tax from an unallowed country. Please check its "
 "fiscal position and your tax configuration."
 msgstr ""
@@ -14569,6 +14599,14 @@ msgid ""
 msgstr ""
 "تم إنشاء نسخة مطابقة لهذا القيد من <a href=# data-oe-model=account.move "
 "data-oe-id=%(id)d>%(title)s</a>"
+
+#. module: account
+#: code:addons/account/models/account_move.py:0
+#, python-format
+msgid ""
+"This entry contains taxes that are not compatible with your fiscal position."
+" Check the country set in fiscal position and in your tax configuration."
+msgstr ""
 
 #. module: account
 #: code:addons/account/wizard/account_automatic_entry_wizard.py:0
@@ -16469,6 +16507,12 @@ msgstr "مثال: INV"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
+msgid ""
+"for this customer. You can allocate them to mark this credit note as paid."
+msgstr ""
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.view_move_form
 msgid "for this customer. You can allocate them to mark this invoice as paid."
 msgstr "لهذا العميل. يمكنك تخصيصهم لتحديد حالة هذه الفاتورة إلى مدفوعة. "
 
@@ -16476,6 +16520,12 @@ msgstr "لهذا العميل. يمكنك تخصيصهم لتحديد حالة �
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
 msgid "for this vendor. You can allocate them to mark this bill as paid."
 msgstr "لهذا المورّد. يمكنك تخصيصهم لتحديد حالة هذه الفاتورة كمدفوعة. "
+
+#. module: account
+#: model_terms:ir.ui.view,arch_db:account.view_move_form
+msgid ""
+"for this vendor. You can allocate them to mark this credit note as paid."
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_position_form
@@ -16555,13 +16605,13 @@ msgstr "في"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
-msgid "outstanding debits"
-msgstr "الديون المستحقة"
+msgid "outstanding credits"
+msgstr ""
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_move_form
-msgid "outstanding payments"
-msgstr "مدفوعات مُستحقَّة "
+msgid "outstanding debits"
+msgstr "الديون المستحقة"
 
 #. module: account
 #: model:ir.model.fields.selection,name:account.selection__account_invoice_report__payment_state__paid
@@ -16643,7 +16693,7 @@ msgstr ""
 #: code:addons/account/models/account_move.py:0
 #, python-format
 msgid "user"
-msgstr ""
+msgstr "مستخدم"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_default_terms_and_conditions
@@ -16688,3 +16738,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.view_bank_statement_form
 msgid "→ Count"
 msgstr "← عدد"
+
+#. module: account
+#: code:addons/account/models/account_analytic_default.py:31
+#, python-format
+msgid ""
+"An analytic default requires an analytic account or an analytic tag used for"
+" analytic distribution."
+msgstr ""

@@ -25,9 +25,9 @@ export const CTGROUPS = {
 };
 
 export const URL_REGEX =
-    /((?:(?:https?:\/\/)|(?:[-a-zA-Z0-9@:%._\+~#=]{1,64}\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,63}\b(?:[^\s]*))/gi;
+    /((?:(?:https?:\/\/)|(?:[-a-zA-Z0-9@:%._\+~#=]{1,64}\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,63}\b(?:(?!\.)[^\s]*))/gi;
 export const URL_REGEX_WITH_INFOS =
-    /((?:(https?:\/\/)|(?:[-a-zA-Z0-9@:%._\+~#=]{1,64}\.))[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,63}\b(?:[^\s]*))/gi;
+    /((?:(https?:\/\/)|(?:[-a-zA-Z0-9@:%._\+~#=]{1,64}\.))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-zA-Z0-9()]{2,63}\b(?:(?!\.)[^\s]*))/gi;
 export const YOUTUBE_URL_GET_VIDEO_ID =
     /^(?:(?:https?:)?\/\/)?(?:(?:www|m)\.)?(?:youtube\.com|youtu\.be)(?:\/(?:[\w-]+\?v=|embed\/|v\/)?)([^\s?&#]+)(?:\S+)?$/i;
 
@@ -908,11 +908,27 @@ export function isStrikeThrough(node) {
     }
     return false;
 }
+/**
+ * Return true if the given node appears in a different direction than that of
+ * the editable ('ltr' or 'rtl').
+ *
+ * Note: The direction of the editable is set on its "dir" attribute, to the
+ * value of the "direction" option on instantiation of the editor.
+ *
+ * @param {Node} node
+ * @param {Element} editable
+ * @returns {boolean}
+ */
+ export function isDirectionSwitched(node, editable) {
+    const defaultDirection = editable.getAttribute('dir');
+    return getComputedStyle(closestElement(node)).direction !== defaultDirection;
+}
 export const isFormat = {
     bold: isBold,
     italic: isItalic,
     underline: isUnderline,
     strikeThrough: isStrikeThrough,
+    switchDirection: isDirectionSwitched,
 };
 /**
  * Return true if the current selection on the editable appears as the given
@@ -920,16 +936,16 @@ export const isFormat = {
  * node in it appears as that format.
  *
  * @param {Element} editable
- * @param {String} format 'bold'|'italic'|'underline'|'strikeThrought'
+ * @param {String} format 'bold'|'italic'|'underline'|'strikeThrough'|'switchDirection'
  * @returns {boolean}
  */
 export function isSelectionFormat(editable, format) {
     const selectedText = getSelectedNodes(editable)
         .filter(n => n.nodeType === Node.TEXT_NODE && n.nodeValue.trim().length);
     if (selectedText.length) {
-        return selectedText.every(n => isFormat[format](n.parentElement));
+        return selectedText.every(n => isFormat[format](n.parentElement, editable))
     } else {
-        return isFormat[format](closestElement(editable.ownerDocument.getSelection().anchorNode));
+        return isFormat[format](closestElement(editable.ownerDocument.getSelection().anchorNode), editable);
     }
 }
 
@@ -962,15 +978,10 @@ export function isUnremovable(node) {
     if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.TEXT_NODE) {
         return true;
     }
-    const isEditableRoot =
-        node.isContentEditable &&
-        node.parentElement &&
-        !node.parentElement.isContentEditable &&
-        node.nodeName !== 'A'; // links can be their own contenteditable but should be removable by default.
     return (
-        isEditableRoot ||
+        node.oid === 'root' ||
         (node.nodeType === Node.ELEMENT_NODE &&
-            (node.getAttribute('t-set') || node.getAttribute('t-call'))) ||
+            (node.classList.contains('o_editable') || node.getAttribute('t-set') || node.getAttribute('t-call'))) ||
         (node.classList && node.classList.contains('oe_unremovable'))
     );
 }
@@ -1444,7 +1455,7 @@ export function splitAroundUntil(elements, limitAncestor) {
 }
 
 export function insertText(sel, content) {
-    if (sel.anchorNode.nodeType == Node.TEXT_NODE) {
+    if (sel.anchorNode.nodeType === Node.TEXT_NODE) {
         const pos = [sel.anchorNode.parentElement, splitTextNode(sel.anchorNode, sel.anchorOffset)];
         setSelection(...pos, ...pos, false);
     }

@@ -56,7 +56,7 @@ MockServer.include({
     async _performFetch(resource, init) {
         if (resource === '/mail/attachment/upload') {
             const ufile = init.body.get('ufile');
-            const is_pending = init.body.get('is_pending');
+            const is_pending = init.body.get('is_pending') === 'true';
             const model = is_pending ? 'mail.compose.message' : init.body.get('thread_model');
             const id = is_pending ? 0 : parseInt(init.body.get('thread_id'));
             const attachmentId = this._mockCreate('ir.attachment', {
@@ -1870,7 +1870,7 @@ MockServer.include({
             ['res_id', 'in', ids],
             ['partner_id', 'in', partner_ids || []],
         ]);
-        this._mockUnlink(model, [followers.map(follower => follower.id)]);
+        this._mockUnlink('mail.followers', [followers.map(follower => follower.id)]);
     },
     /**
      * Simulates `_get_channels_as_member` on `res.partner`.

@@ -17,13 +17,14 @@
 # yacov mosbacher <ymosba@gmail.com>, 2021
 # Yihya Hugirat <hugirat@gmail.com>, 2021
 # hed shefer <hed@laylinetech.com>, 2021
-# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2021
 # Lilach Gilliam <lilach@apprcase.com>, 2021
 # david danilov, 2021
 # דודי מלכה <Dudimalka6@gmail.com>, 2021
 # Jonathan Spier, 2021
 # MichaelHadar, 2021
 # Sagi Ahiel, 2022
+# ZVI BLONDER <ZVIBLONDER@gmail.com>, 2022
+# Netta Waizer, 2022
 # Lilach Gilliam <lilach.gilliam@gmail.com>, 2022
 # 
 msgid ""
@@ -81,6 +82,9 @@ msgid ""
 "\n"
 "Transfers %s: You need to supply a Lot/Serial number for products %s."
 msgstr ""
+"\n"
+"\n"
+"העברות%s: עליך לספק מגש/מספר סידורי עבור מוצרים%s."
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:0
@@ -89,6 +93,8 @@ msgid ""
 "\n"
 "(%s) exists in location %s"
 msgstr ""
+"\n"
+"%sקיים במקום (%s)"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking__state
@@ -143,7 +149,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.view_backorder_confirmation
 #: model_terms:ir.ui.view,arch_db:stock.view_immediate_transfer
 msgid "&gt;"
-msgstr ""
+msgstr "&gt;"
 
 #. module: stock
 #: model:ir.actions.report,print_report_name:stock.action_report_inventory
@@ -240,7 +246,7 @@ msgstr ""
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_orderpoint_snooze__predefined_date__day
 msgid "1 Day"
-msgstr ""
+msgstr "יום 1"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_orderpoint_snooze__predefined_date__month
@@ -353,6 +359,8 @@ msgid ""
 "<span attrs=\"{'invisible': ['|', ('state', '=', 'done'), "
 "('from_immediate_transfer', '=', True)]}\"> / </span>"
 msgstr ""
+"<span attrs=\"{'invisible': ['|', ('state', '=', 'done'), "
+"('from_immediate_transfer', '=', True)]}\">/</span>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
@@ -360,6 +368,8 @@ msgid ""
 "<span class=\"d-none d-sm-block o_print_label_text\">Print Label</span>\n"
 "                                        <span class=\"d-block d-sm-none fa fa-print\"/>"
 msgstr ""
+"<span class=\"d-none d-sm-block o_print_label_text\">הדפס תוית</span>\n"
+"<span class=\"d-block d-sm-none fa fa-print\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
@@ -367,6 +377,8 @@ msgid ""
 "<span class=\"d-none d-sm-block o_print_label_text\">Print Labels</span>\n"
 "                                        <span class=\"d-block d-sm-none fa fa-print\"/>"
 msgstr ""
+"<span class=\"d-none d-sm-block o_print_label_text\">הדפס חוית</span>\n"
+"<span class=\"d-block d-sm-none fa fa-print\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -390,6 +402,8 @@ msgid ""
 "<span class=\"o_stat_text\">In:</span>\n"
 "                                <span class=\"o_stat_text\">Out:</span>"
 msgstr ""
+"<span class=\"o_stat_text\">נכנס</span>\n"
+"<span class=\"o_stat_text\">יוצא:</span>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.product_form_view_procurement_button
@@ -835,7 +849,7 @@ msgstr "הכל בבת אחת"
 msgid ""
 "All our contractual relations will be governed exclusively by United States "
 "law."
-msgstr ""
+msgstr "כל היחסים החוזיים שלנו יהיו כפופים באופן בלעדי לחוק ארצות הברית."
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__returned_move_ids
@@ -954,9 +968,12 @@ msgid "As soon as possible"
 msgstr "בהקדם האפשרי"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Assign"
-msgstr ""
+msgstr "שייך"
 
 #. module: stock
 #. openerp-web
@@ -964,7 +981,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
 #, python-format
 msgid "Assign All"
-msgstr ""
+msgstr "שייך כל "
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__owner_id
@@ -1084,12 +1101,12 @@ msgstr "אישור הזמנה חוזרת"
 #. module: stock
 #: model:ir.model,name:stock.model_stock_backorder_confirmation_line
 msgid "Backorder Confirmation Line"
-msgstr ""
+msgstr "שורת הזמנה מאושרת (Backorder)"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_backorder_confirmation__backorder_confirmation_line_ids
 msgid "Backorder Confirmation Lines"
-msgstr ""
+msgstr "שורות הזמנה מאושרת (Backorder)"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_backorder_confirmation
@@ -2696,13 +2713,13 @@ msgstr "תחזית"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__forecast_availability
 msgid "Forecast Availability"
-msgstr ""
+msgstr "זמינות תחזית"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_warehouse_orderpoint_form
 #: model_terms:ir.ui.view,arch_db:stock.view_warehouse_orderpoint_tree_editable_config
 msgid "Forecast Description"
-msgstr ""
+msgstr "תיאור תחזית"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_product_product__virtual_available
@@ -2736,7 +2753,7 @@ msgstr "חזוי"
 #: code:addons/stock/static/src/xml/stock_orderpoint.xml:0
 #, python-format
 msgid "Forecasted Date"
-msgstr ""
+msgstr "צפי תאריך"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__report_stock_quantity__state__out
@@ -2747,7 +2764,7 @@ msgstr "משלוחים חזויים"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move__forecast_expected_date
 msgid "Forecasted Expected date"
-msgstr ""
+msgstr "צפי תאריך קבלה"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.report_stock_quantity_action
@@ -2781,7 +2798,7 @@ msgstr "קבלות חזויות"
 #: model:ir.actions.report,name:stock.stock_replenishment_report_product_template_action
 #, python-format
 msgid "Forecasted Report"
-msgstr ""
+msgstr "דוח תחזיות"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__report_stock_quantity__state__forecast
@@ -2792,17 +2809,17 @@ msgstr "מלאי חזוי"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__forecast_weight
 msgid "Forecasted Weight"
-msgstr ""
+msgstr "תחזית משקל"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_product_product_replenishment
 msgid "Forecasted with Pending"
-msgstr ""
+msgstr "צפי ובהמתנה"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_replenishment_header
 msgid "Forecasted<br/>+ Pending"
-msgstr ""
+msgstr "תחזית <br/> + בהמתנה"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_product_label_layout__print_format
@@ -3237,6 +3254,12 @@ msgid "Immediate transfer?"
 msgstr "העברה מיידית?"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Import"
+msgstr "ייבא"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse__in_type_id
 msgid "In Type"
 msgstr "בסוג"
@@ -3526,7 +3549,7 @@ msgstr "נעול"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__is_signed
 msgid "Is Signed"
-msgstr ""
+msgstr "נחתם "
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__return_location
@@ -4542,6 +4565,12 @@ msgid "No stock move found"
 msgstr ""
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "No Stock On Hand"
+msgstr ""
+
+#. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_picking_form
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_all
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_backorder
@@ -5264,6 +5293,14 @@ msgstr "מסלולים מועדפים"
 #: model:ir.model.fields,help:stock.field_stock_move__route_ids
 msgid "Preferred route"
 msgstr "מסלול מועדף"
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Press the CREATE button to define quantity for each product in your stock or"
+" import them from a spreadsheet throughout Favorites"
+msgstr ""
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -6796,7 +6833,7 @@ msgstr "הצג פעולות מפורטות"
 #: model:ir.model.fields,field_description:stock.field_product_product__show_forecasted_qty_status_button
 #: model:ir.model.fields,field_description:stock.field_product_template__show_forecasted_qty_status_button
 msgid "Show Forecasted Qty Status Button"
-msgstr ""
+msgstr "הצג לחצן תחזית סטטוס כמות"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_package_level__show_lots_m2o
@@ -7626,6 +7663,14 @@ msgid "There's no product move yet"
 msgstr "אין עדיין תנועת מוצר"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"This analysis gives you an overview of the current stock level of your "
+"products."
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,help:stock.field_stock_rule__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr "שדה זה ימלא את מקור האריזה ואת שם המהלכים שלה"
@@ -8088,7 +8133,10 @@ msgid "USPS Connector"
 msgstr "חיבור ל USPS"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Unassign"
 msgstr ""
 
@@ -9012,15 +9060,6 @@ msgid "You should update this document to reflect your T&amp;C."
 msgstr "עליך לעדכן מסמך זה כך שישקף את התנאים וההגבלות שלך."
 
 #. module: stock
-#: code:addons/stock/models/stock_picking.py:0
-#, python-format
-msgid ""
-"You should not use a planned internal transfer to move some products between"
-" two warehouses. Instead, use an immediate internal transfer or the resupply"
-" route."
-msgstr ""
-
-#. module: stock
 #: code:addons/stock/models/stock_warehouse.py:0
 #, python-format
 msgid "You still have ongoing operations for picking types %s in warehouse %s"
@@ -9048,6 +9087,12 @@ msgid ""
 "You'll find here smart replenishment propositions based on inventory forecasts.\n"
 "            Choose the quantity to buy or manufacture and launch orders in a click.\n"
 "            To save time in the future, set the rules as \"automated\"."
+msgstr ""
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Your stock is currently empty"
 msgstr ""
 
 #. module: stock

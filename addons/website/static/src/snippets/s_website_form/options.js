@@ -385,14 +385,6 @@ options.registry.WebsiteFormEditor = FormEditor.extend({
             this.$target.removeClass('d-none');
             this.$message.addClass("d-none");
         }
-
-        // Clear default values coming from data-for/data-values attributes
-        this.$target.find('input[name],textarea[name]').each(function () {
-            var original = $(this).data('website_form_original_default_value');
-            if (original !== undefined && $(this).val() === original) {
-                $(this).val('').removeAttr('value');
-            }
-        });
     },
     /**
      * @override
@@ -623,6 +615,12 @@ options.registry.WebsiteFormEditor = FormEditor.extend({
                     // get default value or for many2one fields the first option.
                     const currentValue = this.$target.find(`.s_website_form_dnone input[name="${field.name}"]`).val();
                     const defaultValue = field.defaultValue || field.records[0].id;
+                    // TODO this code is not rightfully placed (even maybe
+                    // from the original form feature in older versions). It
+                    // changes the $target while this method is only about
+                    // declaring the option UI. This for example forces the
+                    // 'email_to' value to a dummy value on contact us form just
+                    // by clicking on it.
                     this._addHiddenField(currentValue || defaultValue, field.name);
                 }
                 uiFragment.insertBefore(option, firstOption);
@@ -1172,6 +1170,8 @@ options.registry.WebsiteFieldEditor = FieldEditor.extend({
                 return dependencyEl && dependencyEl.dataset.target && dependencyEl.dataset.target.includes('#datepicker');
             case 'hidden_condition_datetime_opt':
                 return dependencyEl && dependencyEl.dataset.target && dependencyEl.dataset.target.includes('#datetimepicker');
+            case 'hidden_condition_file_opt':
+                return dependencyEl && dependencyEl.type === 'file';
             case 'hidden_condition_opt':
                 return this.$target[0].classList.contains('s_website_form_field_hidden_if');
             case 'char_input_type_opt':
@@ -1207,6 +1207,14 @@ options.registry.WebsiteFieldEditor = FieldEditor.extend({
      * @override
      */
     _renderCustomXML: async function (uiFragment) {
+        // Create the file visibility selector.
+        uiFragment.querySelector('we-row[data-name="hidden_condition_opt"]').append($(`
+            <we-select data-name="hidden_condition_file_opt" data-attribute-name="visibilityComparator" data-no-preview="true">
+                <we-button data-select-data-attribute="fileSet">${_t("Is set")}</we-button>
+                <we-button data-select-data-attribute="!fileSet">${_t("Is not set")}</we-button>
+            </we-select>
+        `)[0]);
+
         // Update available visibility dependencies
         const selectDependencyEl = uiFragment.querySelector('we-select[data-name="hidden_condition_opt"]');
         if (selectDependencyEl) {
@@ -1267,6 +1275,8 @@ options.registry.WebsiteFieldEditor = FieldEditor.extend({
                     } else if (['text', 'email', 'tel', 'url', 'search', 'password', 'number'].includes(dependencyEl.type)
                             || dependencyEl.nodeName === 'TEXTAREA') {
                         this.$target[0].dataset.visibilityComparator = 'equal';
+                    } else if (dependencyEl.type === 'file') {
+                        this.$target[0].dataset.visibilityComparator = 'fileSet';
                     }
                 }
             }
@@ -1338,6 +1348,8 @@ options.registry.WebsiteFieldEditor = FieldEditor.extend({
      * @param {HTMLElement} fieldEl
      */
     _replaceFieldElement(fieldEl) {
+        const inputEl = this.$target[0].querySelector('input');
+        const dataFillWith = inputEl ? inputEl.dataset.fillWith : undefined;
         const hasConditionalVisibility = this.$target[0].classList.contains('s_website_form_field_hidden_if');
         const previousName = this.$target[0].querySelector('.s_website_form_input').name;
         [...this.$target[0].childNodes].forEach(node => node.remove());
@@ -1357,6 +1369,10 @@ options.registry.WebsiteFieldEditor = FieldEditor.extend({
             for (const fieldEl of dependentFieldEls) {
                 this._deleteConditionalVisibility(fieldEl);
             }
+        }
+        const newInputEl = this.$target[0].querySelector('input');
+        if (newInputEl) {
+            newInputEl.dataset.fillWith = dataFillWith;
         }
     },
     /**

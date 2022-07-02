@@ -473,10 +473,12 @@ class TestPointOfSaleFlow(TestPointOfSaleCommon):
             pos_make_payment.with_context(context_payment).check()
 
             self.assertEqual(pos_order.state, 'paid')
-            self.assertEqual(pos_order.picking_ids.move_line_ids[0].lot_id, lot)
-            self.assertFalse(pos_order.picking_ids.move_line_ids[1].lot_id)
-            self.assertEqual(pos_order.picking_ids.move_line_ids[0].location_id, shelf1_location)
-            self.assertEqual(pos_order.picking_ids.move_line_ids[1].location_id, shelf1_location)
+            tracked_line = pos_order.picking_ids.move_line_ids.filtered(lambda ml: ml.product_id.id == tracked_product.id)
+            untracked_line = pos_order.picking_ids.move_line_ids - tracked_line
+            self.assertEqual(tracked_line.lot_id, lot)
+            self.assertFalse(untracked_line.lot_id)
+            self.assertEqual(tracked_line.location_id, shelf1_location)
+            self.assertEqual(untracked_line.location_id, shelf1_location)
 
         self.pos_config.current_session_id.action_pos_session_closing_control()
 
@@ -1013,76 +1015,52 @@ class TestPointOfSaleFlow(TestPointOfSaleCommon):
         diff_line = pos_session.move_id.line_ids.filtered(lambda line: line.name == 'Difference at closing PoS session')
         self.assertAlmostEqual(diff_line.credit, 5.0, msg="Missing amount of 5.0")
 
-    def test_order_and_ship_later(self):
-        """ In case the product is tracked and the "Ship Later" feature is enabled, this test ensures
-        that the lots defined on the POS order are the same that the ones on the SMLs of the associated
-        picking"""
-        self.env['stock.picking.type'].search([('code', '=', 'outgoing')]).write({
-            'use_create_lots': True,
-            'use_existing_lots': True,
-        })
-
-        tracked_product = self.env['product.product'].create({
-            'name': 'SuperProduct Tracked',
-            'type': 'product',
-            'tracking': 'lot',
-            'available_in_pos': True,
-        })
-
-        lot01, lot02 = self.env['stock.production.lot'].create([{
-            'name': name,
-            'product_id': tracked_product.id,
+    def test_order_refund_picking(self):
+        self.pos_config.open_session_cb(check_coa=False)
+        current_session = self.pos_config.current_session_id
+        current_session.update_stock_at_closing = True
+        # I create a new PoS order with 1 line
+        order = self.PosOrder.create({
             'company_id': self.env.company.id,
-        } for name in ['Lot01', 'Lot02']])
-        stock_location = self.company_data['default_warehouse'].lot_stock_id
-        self.env['stock.quant']._update_available_quantity(tracked_product, stock_location, 10, lot_id=lot01)
-        self.env['stock.quant']._update_available_quantity(tracked_product, stock_location, 10, lot_id=lot02)
-
-        self.pos_config.ship_later = True
-        self.pos_config.open_session_cb()
-
-        # Create a POS order with:
-        #   1 x Lot01
-        #   1 x Lot02
-        #   1 x Lot03 (-> nonexistent lot!)
-        pos_order = self.PosOrder.create({
-            'company_id': self.env.company.id,
-            'session_id': self.pos_config.current_session_id.id,
-            'pricelist_id': self.partner1.property_product_pricelist.id,
+            'session_id': current_session.id,
             'partner_id': self.partner1.id,
+            'pricelist_id': self.partner1.property_product_pricelist.id,
             'lines': [(0, 0, {
                 'name': "OL/0001",
-                'product_id': tracked_product.id,
-                'price_unit': 5,
-                'discount': 0.0,
-                'qty': 1.0,
-                'tax_ids': [(6, 0, [])],
-                'price_subtotal': 5,
-                'price_subtotal_incl': 5,
-                'pack_lot_ids': [[0, 0, {'lot_name': lot_name}]],
-            }) for lot_name in [lot01.name, lot02.name, 'Lot03']],
-            'amount_tax': 10,
-            'amount_total': 10,
-            'amount_paid': 0,
-            'amount_return': 0,
-            'to_ship': True,
+                'product_id': self.product3.id,
+                'price_unit': 450,
+                'discount': 5.0,
+                'qty': 2.0,
+                'tax_ids': [(6, 0, self.product3.taxes_id.ids)],
+                'price_subtotal': 450 * (1 - 5/100.0) * 2,
+                'price_subtotal_incl': 450 * (1 - 5/100.0) * 2,
+            })],
+            'amount_total': 1710.0,
+            'amount_tax': 0.0,
+            'amount_paid': 0.0,
+            'amount_return': 0.0,
+            'to_invoice': True
         })
 
-        context_make_payment = {
-            "active_ids": [pos_order.id],
-            "active_id": pos_order.id,
-        }
-        pos_make_payment = self.PosMakePayment.with_context(context_make_payment).create({
-            'amount': 10,
+        payment_context = {"active_ids": order.ids, "active_id": order.id}
+        order_payment = self.PosMakePayment.with_context(**payment_context).create({
+            'amount': order.amount_total,
+            'payment_method_id': self.cash_payment_method.id
         })
-        pos_make_payment.with_context(active_id=pos_order.id).check()
+        order_payment.with_context(**payment_context).check()
 
-        picking = pos_order.picking_ids
-        picking_mls = picking.move_line_ids
-        lot01_ml = picking_mls.filtered(lambda ml: ml.lot_id == lot01)
-        lot02_ml = picking_mls.filtered(lambda ml: ml.lot_id == lot02)
-        lot03_ml = picking_mls - lot01_ml - lot02_ml
-        self.assertEqual(lot01_ml.product_qty, 1)
-        self.assertEqual(lot02_ml.product_qty, 1)
-        self.assertEqual(lot03_ml.product_qty, 1)
-        self.assertEqual(lot03_ml.lot_id.name, "Lot03")
+        # I create a refund
+        refund_action = order.refund()
+        refund = self.PosOrder.browse(refund_action['res_id'])
+
+        payment_context = {"active_ids": refund.ids, "active_id": refund.id}
+        refund_payment = self.PosMakePayment.with_context(**payment_context).create({
+            'amount': refund.amount_total,
+            'payment_method_id': self.cash_payment_method.id,
+        })
+
+        # I click on the validate button to register the payment.
+        refund_payment.with_context(**payment_context).check()
+
+        refund.action_pos_order_invoice()
+        self.assertEqual(refund.picking_count, 1)

@@ -252,12 +252,27 @@ class MrpWorkorder(models.Model):
             workorder.date_planned_finished = workorder.leave_id.date_to
 
     def _set_dates_planned(self):
-        if self.leave_id and (not self[0].date_planned_start or not self[0].date_planned_finished):
+        if not self[0].date_planned_start or not self[0].date_planned_finished:
+            if not self.leave_id:
+                return
             raise UserError(_("It is not possible to unplan one single Work Order. "
                               "You should unplan the Manufacturing Order instead in order to unplan all the linked operations."))
         date_from = self[0].date_planned_start
         date_to = self[0].date_planned_finished
-        self.mapped('leave_id').sudo().write({
+        to_write = self.env['mrp.workorder']
+        for wo in self.sudo():
+            if wo.leave_id:
+                to_write |= wo
+            else:
+                wo.leave_id = wo.env['resource.calendar.leaves'].create({
+                    'name': wo.display_name,
+                    'calendar_id': wo.workcenter_id.resource_calendar_id.id,
+                    'date_from': date_from,
+                    'date_to': date_to,
+                    'resource_id': wo.workcenter_id.resource_id.id,
+                    'time_type': 'other',
+                })
+        to_write.leave_id.write({
             'date_from': date_from,
             'date_to': date_to,
         })
@@ -436,6 +451,8 @@ class MrpWorkorder(models.Model):
         # Auto-confirm manually added workorders.
         # We need to go through `_action_confirm` for all workorders of the current productions to
         # make sure the links between them are correct.
+        if self.env.context.get('skip_confirm'):
+            return res
         to_confirm = res.filtered(lambda wo: wo.production_id.state in ("confirmed", "progress", "to_close"))
         to_confirm = to_confirm.production_id.workorder_ids
         to_confirm._action_confirm()
@@ -538,6 +555,8 @@ class MrpWorkorder(models.Model):
 
     def button_start(self):
         self.ensure_one()
+        if any(not time.date_end for time in self.time_ids.filtered(lambda t: t.user_id.id == self.env.user.id)):
+            return True
         # As button_start is automatically called in the new view
         if self.state in ('done', 'cancel'):
             return True
@@ -647,6 +666,7 @@ class MrpWorkorder(models.Model):
 
     def action_cancel(self):
         self.leave_id.unlink()
+        self.end_all()
         return self.write({'state': 'cancel'})
 
     def action_replan(self):
@@ -719,7 +739,8 @@ class MrpWorkorder(models.Model):
             duration_expected_working = (self.duration_expected - self.workcenter_id.time_start - self.workcenter_id.time_stop) * self.workcenter_id.time_efficiency / (100.0 * cycle_number)
             if duration_expected_working < 0:
                 duration_expected_working = 0
-            return alternative_workcenter.time_start + alternative_workcenter.time_stop + cycle_number * duration_expected_working * 100.0 / alternative_workcenter.time_efficiency
+            alternative_wc_cycle_nb = float_round(qty_production / alternative_workcenter.capacity, precision_digits=0, rounding_method='UP')
+            return alternative_workcenter.time_start + alternative_workcenter.time_stop + alternative_wc_cycle_nb * duration_expected_working * 100.0 / alternative_workcenter.time_efficiency
         time_cycle = self.operation_id.time_cycle
         return self.workcenter_id.time_start + self.workcenter_id.time_stop + cycle_number * time_cycle * 100.0 / self.workcenter_id.time_efficiency
 

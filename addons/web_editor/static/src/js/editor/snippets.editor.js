@@ -439,6 +439,7 @@ var SnippetEditor = Widget.extend({
         // If it is an invisible element, we must close it before deleting it
         // (e.g. modal).
         await this.toggleTargetVisibility(!this.$target.hasClass('o_snippet_invisible'));
+        this.trigger_up('will_remove_snippet', {$target: this.$target});
 
         // Call the onRemove of all internal options
         await new Promise(resolve => {
@@ -1260,7 +1261,7 @@ var SnippetsMenu = Widget.extend({
             this.$('.o_we_customize_snippet_btn').addClass('active').prop('disabled', false);
             this.$('o_we_ui_loading').addClass('d-none');
             $(this.customizePanel).removeClass('d-none');
-            return Promise.all(defs).then(this._addToolbar.bind(this));
+            return Promise.all(defs);
         }
         this.invisibleDOMPanelEl = document.createElement('div');
         this.invisibleDOMPanelEl.classList.add('o_we_invisible_el_panel');
@@ -1317,8 +1318,9 @@ var SnippetsMenu = Widget.extend({
             if ($oeStructure.length && !$oeStructure.children().length && this.$snippets) {
                 // If empty oe_structure, encourage using snippets in there by
                 // making them "wizz" in the panel.
-                this._updateRightPanelContent({content: [], tab: this.tabs.BLOCKS});
-                this.$snippets.odooBounce();
+                this._activateSnippet(false).then(() => {
+                    this.$snippets.odooBounce();
+                });
                 return;
             }
             this._activateSnippet($target);
@@ -2108,6 +2110,23 @@ var SnippetsMenu = Widget.extend({
             var target = $style.data('target');
             var noCheck = $style.data('no-check');
             var optionID = $style.data('js') || $style.data('option-name'); // used in tour js as selector
+            // TODO: adapt in master - used to hide XML 'img' options when image
+            // is not supported.
+            const xmlImageOption = !$style[0].hasAttribute('data-js') && (selector.indexOf('img') !== -1);
+            const nonSupportedImageSelector = '[data-oe-type="image"] > img, [data-oe-xpath]';
+            if (xmlImageOption && !noCheck) {
+                exclude = [exclude, nonSupportedImageSelector].filter(value => !!value).join(', ');
+            } else if (['ReplaceMedia', 'FontawesomeTools', 'WebsiteAnimate'].includes(optionID)) {
+                // TODO adapt in master: editable root elements are technically
+                // *potentially* supported (if the edited attributes are not
+                // computed inside the related view, they could technically be
+                // saved... but as we cannot tell the computed ones apart from
+                // the "static" ones, we choose to not support edition at all in
+                // those "root" cases). Here we explicitely exclude some options
+                // but we could exclude them all or do something smarter in
+                // future versions.
+                exclude = [exclude, '[data-oe-xpath]'].filter(value => !!value).join(', ');
+            }
             var option = {
                 'option': optionID,
                 'base_selector': selector,
@@ -2414,6 +2433,9 @@ var SnippetsMenu = Widget.extend({
                     const prom = new Promise(resolve => dragAndDropResolve = () => resolve());
                     self._mutex.exec(() => prom);
 
+                    const doc = self.options.wysiwyg.odooEditor.document;
+                    $(doc.body).addClass('oe_dropzone_active');
+
                     self.options.wysiwyg.odooEditor.automaticStepUnactive();
 
                     self.$el.find('.oe_snippet_thumbnail').addClass('o_we_already_dragging');
@@ -2502,6 +2524,7 @@ var SnippetsMenu = Widget.extend({
                 },
                 stop: async function (ev, ui) {
                     const doc = self.options.wysiwyg.odooEditor.document;
+                    $(doc.body).removeClass('oe_dropzone_active');
                     self.options.wysiwyg.odooEditor.automaticStepUnactive();
                     self.options.wysiwyg.odooEditor.automaticStepSkipStack();
                     $toInsert.removeClass('oe_snippet_body');
@@ -2730,6 +2753,10 @@ var SnippetsMenu = Widget.extend({
     /**
      * Update the options pannel as being empty.
      *
+     * TODO review the utility of that function and how to call it (it was not
+     * called inside a mutex then we had to do it... there must be better things
+     * to do).
+     *
      * @private
      */
     _activateEmptyOptionsTab() {
@@ -2922,19 +2949,17 @@ var SnippetsMenu = Widget.extend({
      * @private
      */
     _onBlocksTabClick: function (ev) {
-        this._activateSnippet(false).then(() => {
-            this._updateRightPanelContent({
-                content: [],
-                tab: this.tabs.BLOCKS,
-            });
-        });
+        this._activateSnippet(false);
     },
     /**
      * @private
      */
     _onOptionsTabClick: function (ev) {
         if (!ev.currentTarget.classList.contains('active')) {
-            this._activateEmptyOptionsTab();
+            this._activateSnippet(false);
+            this._mutex.exec(() => {
+                this._activateEmptyOptionsTab();
+            });
         }
     },
     /**
@@ -3299,7 +3324,8 @@ var SnippetsMenu = Widget.extend({
         const range = selection && selection.rangeCount && selection.getRangeAt(0);
         if (!range ||
             !$(range.commonAncestorContainer).parents('#wrapwrap, .iframe-editor-wrapper .o_editable').length ||
-            $(range.commonAncestorContainer).parent('[data-oe-model]:not([data-oe-type="html"]):not([data-oe-field="arch"])').length ||
+            $(selection.anchorNode).parent('[data-oe-model]:not([data-oe-type="html"]):not([data-oe-field="arch"])').length ||
+            $(selection.focusNode).parent('[data-oe-model]:not([data-oe-type="html"]):not([data-oe-field="arch"])').length ||
             (e && $(e.target).closest('.fa, img').length ||
             this.options.wysiwyg.lastMediaClicked && $(this.options.wysiwyg.lastMediaClicked).is('.fa, img')) ||
             (this.options.wysiwyg.lastElement && !this.options.wysiwyg.lastElement.isContentEditable)

@@ -3,11 +3,11 @@
 # 	* stock
 # 
 # Translators:
-# Martin Trigaux, 2021
 # Cécile Collart <cco@odoo.com>, 2021
 # Lucia Pacheco <lpo@odoo.com>, 2021
 # Patricia Gutiérrez Capetillo <pagc@odoo.com>, 2021
 # Jose Carmona <jrcarmona@gmail.com>, 2021
+# Martin Trigaux, 2022
 # Braulio D. López Vázquez <bdl@odoo.com>, 2022
 # 
 msgid ""
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:0
@@ -1037,7 +1037,10 @@ msgid "As soon as possible"
 msgstr "Lo antes posible"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Assign"
 msgstr "Asignar"
 
@@ -3406,6 +3409,12 @@ msgid "Immediate transfer?"
 msgstr "¿Traslado inmediato?"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Import"
+msgstr "Importar"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse__in_type_id
 msgid "In Type"
 msgstr "En tipo"
@@ -4747,6 +4756,12 @@ msgid "No stock move found"
 msgstr "No se encontró ningún movimiento de existencias"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "No Stock On Hand"
+msgstr "No hay existencias a la mano"
+
+#. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_picking_form
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_all
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_backorder
@@ -5488,6 +5503,16 @@ msgstr "Rutas preferidas"
 #: model:ir.model.fields,help:stock.field_stock_move__route_ids
 msgid "Preferred route"
 msgstr "Ruta preferida"
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Press the CREATE button to define quantity for each product in your stock or"
+" import them from a spreadsheet throughout Favorites"
+msgstr ""
+"Haga clic en el botón de CREAR para definir una cantidad para cada producto "
+"en sus existencias o impórtelos de una hoja de cálculo a través de Favoritos"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -7955,6 +7980,16 @@ msgid "There's no product move yet"
 msgstr "No hay movimiento de producto todavía"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"This analysis gives you an overview of the current stock level of your "
+"products."
+msgstr ""
+"Este análisis le da un resumen del nivel de existencias actual de sus "
+"productos."
+
+#. module: stock
 #: model:ir.model.fields,help:stock.field_stock_rule__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr ""
@@ -8449,7 +8484,10 @@ msgid "USPS Connector"
 msgstr "Conector con USPS"
 
 #. module: stock
+#. openerp-web
+#: code:addons/stock/static/src/js/report_stock_reception.js:0
 #: model_terms:ir.ui.view,arch_db:stock.report_reception_body
+#, python-format
 msgid "Unassign"
 msgstr "Desasignar"
 
@@ -9463,6 +9501,12 @@ msgstr ""
 "Aquí encontrará propuestas de reabastecimiento inteligentes con base en pronósticos de inventario.\n"
 "            Elija la cantidad a comprar o fabricar y lance órdenes con un clic.\n"
 "            Para ahorrar tiempo en el futuro, establezca las reglas como \"automatizadas\"."
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Your stock is currently empty"
+msgstr "Sus existencias están actualmente vacías"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__product_label_layout__print_format__zpl

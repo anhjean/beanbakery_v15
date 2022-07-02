@@ -22,6 +22,7 @@
 # Ozlem Cikrikci <ozlemc@eskayazilim.com.tr>, 2021
 # abc Def <hdogan1974@gmail.com>, 2021
 # Ediz Duman <neps1192@gmail.com>, 2021
+# Erdal Mutlu, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # 
 msgid ""
@@ -2338,7 +2339,7 @@ msgstr ""
 #. module: survey
 #: model:survey.question.answer,value:survey.survey_demo_quiz_p4_q2_sug1
 msgid "Japan"
-msgstr "Japon"
+msgstr "Japonya"
 
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.survey_session_code
@@ -4728,7 +4729,7 @@ msgstr ""
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.gamification_badge_form_view_simplified
 msgid "e.g. Problem Solver"
-msgstr ""
+msgstr "örn. Sorun Çözücü"
 
 #. module: survey
 #: model_terms:ir.ui.view,arch_db:survey.survey_form

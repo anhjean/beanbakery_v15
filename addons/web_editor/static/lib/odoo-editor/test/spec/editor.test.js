@@ -13,6 +13,7 @@ import {
     testEditor,
     undo,
     unformat,
+    triggerEvent,
 } from '../utils.js';
 
 async function twoDeleteForward(editor) {
@@ -84,6 +85,34 @@ describe('Editor', () => {
                         contentBefore: '<p>[]<br></p><p>abc</p>',
                         stepFunction: deleteForward,
                         contentAfter: '<p>[]abc</p>',
+                    });
+                });
+                it('should merge P node correctly ', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: '<div>a<p>b[]</p><p>c</p>d</div>',
+                        stepFunction: deleteForward,
+                        contentAfter: '<div>a<p>b[]c</p>d</div>',
+                    });
+                });
+                it('should merge node correctly', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: '<div>a<span>b[]</span><p>c</p>d</div>',
+                        stepFunction: deleteForward,
+                        contentAfter: '<div>a<span>b[]</span>c<br>d</div>',
+                    });
+                });
+                it('should merge SPAN node correctly ', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: '<div>a<span>bc[]</span><span>de</span>f</div>',
+                        stepFunction: deleteForward,
+                        contentAfter: '<div>a<span>bc[]e</span>f</div>',
+                    });
+                });
+                it('should merge diferent element correctly', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: '<div>a<span>b[]</span><p>c</p>d</div>',
+                        stepFunction: deleteForward,
+                        contentAfter: '<div>a<span>b[]</span>c<br>d</div>',
                     });
                 });
                 it('should ignore ZWS', async () => {
@@ -829,6 +858,27 @@ X[]
                     contentAfter: '<p>ab[]ef</p>',
                 });
             });
+            it('should merge node correctly', async () => {
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<span>b[c</span><p>d]e</p>f</div>',
+                    stepFunction: deleteForward,
+                    contentAfter: '<div>a<span>b[]</span>e<br>f</div>',
+                });
+            });
+            it('should delete part of the text across two paragraphs', async () => {
+                // Forward selection
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<p>b[c</p><p>d]e</p>f</div>',
+                    stepFunction: deleteForward,
+                    contentAfter: '<div>a<p>b[]e</p>f</div>',
+                });
+                // Backward selection
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<p>b]c</p><p>d[e</p>f</div>',
+                    stepFunction: deleteForward,
+                    contentAfter: '<div>a<p>b[]e</p>f</div>',
+                });
+            });
             it('should delete empty nodes ', async () => {
                 // Forward selection
                 await testEditor(BasicEditor, {
@@ -1089,6 +1139,13 @@ X[]
                         contentAfter: '<p>[]abc</p>',
                     });
                 });
+                it('should merge node correctly', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: '<div>a<span>b</span><p>[]c</p>d</div>',
+                        stepFunction: deleteBackward,
+                        contentAfter: '<div>a<span>b[]</span>c<br>d</div>',
+                    });
+                });
                 it('should ignore ZWS', async () => {
                     await testEditor(BasicEditor, {
                         contentBefore: '<p>ab\u200B[]c</p>',
@@ -1298,6 +1355,33 @@ X[]
                             await deleteBackward(editor);
                         },
                         contentAfter: `<div>[]def</div>`,
+                    });
+                });
+                it('should remove contenteditable="false" at the beggining of a P', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: `<p>abc</p><div contenteditable="false">def</div><p>[]ghi</p>`,
+                        stepFunction: async editor => {
+                            await deleteBackward(editor);
+                        },
+                        contentAfter: `<p>abc</p><p>[]ghi</p>`,
+                    });
+                });
+                it('should remove a fontawesome', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: `<p>abc</p><span class="fa"></span><p>[]def</p>`,
+                        stepFunction: async editor => {
+                            await deleteBackward(editor);
+                        },
+                        contentAfter: `<p>abc</p><p>[]def</p>`,
+                    });
+                });
+                it('should remove a media element', async () => {
+                    await testEditor(BasicEditor, {
+                        contentBefore: `<p>abc</p><div class="o_image"></div><p>[]def</p>`,
+                        stepFunction: async editor => {
+                            await deleteBackward(editor);
+                        },
+                        contentAfter: `<p>abc</p><p>[]def</p>`,
                     });
                 });
             });
@@ -1750,7 +1834,7 @@ X[]
                     await testEditor(BasicEditor, {
                         contentBefore: 'ab<p>[]cd</p>ef',
                         stepFunction: deleteBackward,
-                        contentAfter: 'ab[]cdef', // FIXME for me this is wrong, I would expect ab[]cd<p>ef</p> or something like that ?
+                        contentAfter: 'ab[]cd<br>ef',
                     });
                 });
             });
@@ -2042,6 +2126,23 @@ X[]
                     contentAfter: '<div><p>ab <span class="style">x[]</span> f</p></div>',
                 });
             });
+            it('should merge node correctly (1)', async () => {
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<span>b[c</span><p>d]e</p>f<br>g</div>',
+                    stepFunction: deleteBackward,
+                    // FIXME ?? : Maybe this should bing the content inside the <p>
+                    // Instead of removing the <p>,
+                    // ex : <div><p>a<span>b[]</span>e</p>f<br>g</div>
+                    contentAfter: '<div>a<span>b[]</span>e<br>f<br>g</div>',
+                });
+            });
+            it('should merge node correctly (2)', async () => {
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<p>b[c</p><span>d]e</span>f<p>xxx</p></div>',
+                    stepFunction: deleteBackward,
+                    contentAfter: '<div>a<p>b[]<span>e</span>f</p><p>xxx</p></div>',
+                });
+            });
             it('should delete part of the text within a paragraph', async () => {
                 // Forward selection
                 await testEditor(BasicEditor, {
@@ -2068,6 +2169,20 @@ X[]
                     contentBefore: '<p>ab]cd</p><p>ef[gh</p>',
                     stepFunction: deleteBackward,
                     contentAfter: '<p>ab[]gh</p>',
+                });
+            });
+            it('should delete part of the text across two paragraphs', async () => {
+                // Forward selection
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<p>b[c</p><p>d]e</p>f</div>',
+                    stepFunction: deleteBackward,
+                    contentAfter: '<div>a<p>b[]e</p>f</div>',
+                });
+                // Backward selection
+                await testEditor(BasicEditor, {
+                    contentBefore: '<div>a<p>b]c</p><p>d[e</p>f</div>',
+                    stepFunction: deleteBackward,
+                    contentAfter: '<div>a<p>b[]e</p>f</div>',
                 });
             });
             it('should delete all the text in a paragraph', async () => {
@@ -2242,6 +2357,33 @@ X[]
                     stepFunction: deleteBackward,
                     contentAfter: '<p>ab<b class="oe_unremovable">[]\u200B</b>ef</p>',
                 });
+            });
+        });
+    });
+
+    describe('deleterange', () => {
+        it('should remove element which is contenteditable=true even if their parent is contenteditable=false', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: unformat(`
+                    <p>before[o</p>
+                    <div contenteditable="false">
+                        <div contenteditable="true"><p>intruder</p></div>
+                    </div>
+                    <p>o]after</p>`),
+                stepFunction: async editor => {
+                    await deleteBackward(editor);
+                },
+                contentAfter: unformat(`
+                    <p>before[]after</p>`),
+            });
+        });
+        it('should transform the last space of a container to an &nbsp; after removing the last word through deleteRange', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: `<p>a [b]</p>`,
+                stepFunction: async editor => {
+                    await deleteBackward(editor);
+                },
+                contentAfter: `<p>a&nbsp;[]</p>`,
             });
         });
     });
@@ -3062,6 +3204,47 @@ X[]
         });
     });
 
+    describe('automatic link creation when typing a space after an url', () => {
+        it('should transform url after space', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: '<p>a http://test.com b http://test.com[] c http://test.com d</p>',
+                stepFunction: async (editor) => {
+                    editor.testMode = false;
+                    const selection = document.getSelection();
+                    const anchorOffset = selection.anchorOffset;
+                    const p = editor.editable.querySelector('p');
+                    const textNode = p.childNodes[0];
+                    triggerEvent(editor.editable, 'keydown', {key: ' ', code: 'Space'});
+                    textNode.textContent = "a http://test.com b http://test.com\u00a0 c http://test.com d";
+                    selection.extend(textNode, anchorOffset + 1);
+                    selection.collapseToEnd();
+                    triggerEvent(editor.editable, 'input', {data: ' ', inputType: 'insertText' });
+                    triggerEvent(editor.editable, 'keyup', {key: ' ', code: 'Space'});
+                },
+                contentAfter: '<p>a http://test.com b <a href="http://test.com">http://test.com</a>&nbsp;[] c http://test.com d</p>',
+            });
+        });
+        it('should not transform url after two space', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: '<p>a http://test.com b http://test.com [] c http://test.com d</p>',
+                stepFunction: async (editor) => {
+                    editor.testMode = false;
+                    const selection = document.getSelection();
+                    const anchorOffset = selection.anchorOffset;
+                    const p = editor.editable.querySelector('p');
+                    const textNode = p.childNodes[0];
+                    triggerEvent(editor.editable, 'keydown', {key: ' ', code: 'Space'});
+                    textNode.textContent = "a http://test.com b http://test.com \u00a0 c http://test.com d";
+                    selection.extend(textNode, anchorOffset + 1);
+                    selection.collapseToEnd();
+                    triggerEvent(editor.editable, 'input', {data: ' ', inputType: 'insertText' });
+                    triggerEvent(editor.editable, 'keyup', {key: ' ', code: 'Space'});
+                },
+                contentAfter: '<p>a http://test.com b http://test.com &nbsp;[] c http://test.com d</p>',
+            });
+        });
+    })
+
     describe('history', () => {
         describe('undo', () => {
             it('should undo a backspace', async () => {
@@ -3207,6 +3390,19 @@ X[]
                         editor.historyRevertCurrentStep(); // back to initial state
                     },
                     contentAfter: '<p>a[b<span style="color: tomato;">c</span>d]e</p>',
+                });
+            });
+        });
+        describe('step', () => {
+            it('should allow insertion of nested contenteditable="true"', async () => {
+                await testEditor(BasicEditor, {
+                    contentBefore: `<div contenteditable="false"></div>`,
+                    stepFunction: async editor => {
+                        const editable = '<div contenteditable="true">abc</div>';
+                        editor.editable.querySelector('div').innerHTML = editable;
+                        editor.historyStep();
+                    },
+                    contentAfter: `<div contenteditable="false"><div contenteditable="true">abc</div></div>`,
                 });
             });
         });

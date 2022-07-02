@@ -5,7 +5,7 @@ from collections import Counter, defaultdict
 
 from odoo import _, api, fields, tools, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import OrderedSet
+from odoo.tools import OrderedSet, groupby
 from odoo.tools.float_utils import float_compare, float_is_zero, float_round
 from odoo.addons.base.models.ir_model import MODULE_UNINSTALL_FLAG
 
@@ -202,10 +202,36 @@ class StockMoveLine(models.Model):
         if not self.id and self.user_has_groups('stock.group_stock_multi_locations') and self.product_id and self.qty_done:
             qty_done = self.product_uom_id._compute_quantity(self.qty_done, self.product_id.uom_id)
             default_dest_location = self._get_default_dest_location()
-            additional_qty = self._get_putaway_additional_qty()
-            self.location_dest_id = default_dest_location._get_putaway_strategy(
+            self.location_dest_id = default_dest_location.with_context(exclude_sml_ids=self.ids)._get_putaway_strategy(
                 self.product_id, quantity=qty_done, package=self.result_package_id,
-                packaging=self.move_id.product_packaging_id, additional_qty=additional_qty)
+                packaging=self.move_id.product_packaging_id)
+
+    def _apply_putaway_strategy(self):
+        self = self.with_context(do_not_unreserve=True)
+        for package, smls in groupby(self, lambda sml: sml.result_package_id):
+            smls = self.env['stock.move.line'].concat(*smls)
+            excluded_smls = smls
+            if package.package_type_id:
+                best_loc = smls.move_id.location_dest_id.with_context(exclude_sml_ids=excluded_smls.ids)._get_putaway_strategy(self.env['product.product'], package=package)
+                smls.location_dest_id = smls.package_level_id.location_dest_id = best_loc
+            elif package:
+                used_locations = set()
+                for sml in smls:
+                    if len(used_locations) > 1:
+                        break
+                    sml.location_dest_id = sml.move_id.location_dest_id.with_context(exclude_sml_ids=excluded_smls.ids)._get_putaway_strategy(sml.product_id, quantity=sml.product_uom_qty)
+                    excluded_smls -= sml
+                    used_locations.add(sml.location_dest_id)
+                if len(used_locations) > 1:
+                    smls.location_dest_id = smls.move_id.location_dest_id
+                else:
+                    smls.package_level_id.location_dest_id = smls.location_dest_id
+            else:
+                for sml in smls:
+                    sml.location_dest_id = sml.move_id.location_dest_id.with_context(exclude_sml_ids=excluded_smls.ids)._get_putaway_strategy(
+                        sml.product_id, quantity=sml.product_uom_qty, packaging=sml.move_id.product_packaging_id,
+                    )
+                    excluded_smls -= sml
 
     def _get_default_dest_location(self):
         if not self.user_has_groups('stock.group_stock_storage_categories'):
@@ -342,14 +368,7 @@ class StockMoveLine(models.Model):
 
                 # Unreserve the old charateristics of the move line.
                 if not ml.move_id._should_bypass_reservation(ml.location_id):
-                    try:
-                        Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
-                    except UserError:
-                        # If we were not able to unreserve on tracked quants, we can use untracked ones.
-                        if ml.lot_id:
-                            Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=False, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
-                        else:
-                            raise
+                    Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
 
                 # Reserve the maximum available of the new charateristics of the move line.
                 if not ml.move_id._should_bypass_reservation(updates.get('location_id', ml.location_id)):
@@ -359,14 +378,7 @@ class StockMoveLine(models.Model):
                                                              package_id=updates.get('package_id', ml.package_id), owner_id=updates.get('owner_id', ml.owner_id), strict=True)
                         reserved_qty = sum([x[1] for x in q])
                     except UserError:
-                        if updates.get('lot_id'):
-                            # If we were not able to reserve on tracked quants, we can use untracked ones.
-                            try:
-                                q = Quant._update_reserved_quantity(ml.product_id, updates.get('location_id', ml.location_id), new_product_uom_qty, lot_id=False,
-                                                                     package_id=updates.get('package_id', ml.package_id), owner_id=updates.get('owner_id', ml.owner_id), strict=True)
-                                reserved_qty = sum([x[1] for x in q])
-                            except UserError:
-                                pass
+                        pass
                     if reserved_qty != new_product_uom_qty:
                         new_product_uom_qty = ml.product_id.uom_id._compute_quantity(reserved_qty, ml.product_uom_id, rounding_method='HALF-UP')
                         moves_to_recompute_state |= ml.move_id
@@ -454,13 +466,7 @@ class StockMoveLine(models.Model):
         for ml in self:
             # Unlinking a move line should unreserve.
             if ml.product_id.type == 'product' and not ml.move_id._should_bypass_reservation(ml.location_id) and not float_is_zero(ml.product_qty, precision_digits=precision):
-                try:
-                    self.env['stock.quant']._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
-                except UserError:
-                    if ml.lot_id:
-                        self.env['stock.quant']._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=False, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
-                    elif not self.env.context.get(MODULE_UNINSTALL_FLAG, False):
-                        raise   # pylint: disable=raise-unlink-override
+                self.env['stock.quant']._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
         moves = self.mapped('move_id')
         res = super(StockMoveLine, self).unlink()
         if moves:
@@ -561,10 +567,7 @@ class StockMoveLine(models.Model):
                     ml._free_reservation(ml.product_id, ml.location_id, extra_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, ml_ids_to_ignore=ml_ids_to_ignore)
                 # unreserve what's been reserved
                 if not ml.move_id._should_bypass_reservation(ml.location_id) and ml.product_id.type == 'product' and ml.product_qty:
-                    try:
-                        Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
-                    except UserError:
-                        Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=False, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
+                    Quant._update_reserved_quantity(ml.product_id, ml.location_id, -ml.product_qty, lot_id=ml.lot_id, package_id=ml.package_id, owner_id=ml.owner_id, strict=True)
 
                 # move what's been actually done
                 quantity = ml.product_uom_id._compute_quantity(ml.qty_done, ml.move_id.product_id.uom_id, rounding_method='HALF-UP')

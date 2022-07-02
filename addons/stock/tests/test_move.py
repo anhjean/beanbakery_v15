@@ -354,10 +354,10 @@ class StockMove(TransactionCase):
 
         # no changes on quants, even if i made some move lines with a lot id whom reserved on untracked quants
         self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, strict=True)), 1.0)  # with a qty of 2
-        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot1, strict=True)), 1.0)
-        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot2, strict=True)), 1.0)
-        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot3, strict=True)), 0)
-        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot4, strict=True)), 0)
+        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot1, strict=True).filtered(lambda q: q.lot_id)), 1.0)
+        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot2, strict=True).filtered(lambda q: q.lot_id)), 1.0)
+        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot3, strict=True).filtered(lambda q: q.lot_id)), 0)
+        self.assertEqual(len(self.gather_relevant(self.product_serial, self.stock_location, lot_id=lot4, strict=True).filtered(lambda q: q.lot_id)), 0)
 
         move1.move_line_ids.write({'qty_done': 1.0})
 
@@ -667,7 +667,7 @@ class StockMove(TransactionCase):
         self.assertEqual(move1.reserved_availability, 0.0)
         self.assertEqual(len(move1.move_line_ids), 0)
         self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product_serial, self.stock_location, strict=True), 1.0)
-        self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product_serial, self.stock_location, lot_id=lot1, strict=True), 1.0)
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product_serial, self.stock_location, lot_id=lot1, strict=True), 2.0)
 
     def test_putaway_1(self):
         """ Receive products from a supplier. Check that putaway rules are rightly applied on
@@ -4655,6 +4655,68 @@ class StockMove(TransactionCase):
         self.assertEqual(list(warning.keys())[0], 'warning', 'Warning message was not returned')
         self.assertEqual(scrap.location_id, child_loc1, 'Location was not auto-corrected')
 
+    def test_scrap_8(self):
+        """
+        Suppose a user wants to scrap some products thanks to internal moves.
+        This test checks the state of the picking based on few cases
+        """
+        scrap_location = self.env['stock.location'].search([('company_id', '=', self.env.company.id), ('scrap_location', '=', True)], limit=1)
+        internal_operation = self.env['stock.picking.type'].with_context(active_test=False).search([('code', '=', 'internal'), ('company_id', '=', self.env.company.id)], limit=1)
+        internal_operation.active = True
+
+        product01 = self.product
+        product02 = self.env['product.product'].create({
+            'name': 'SuperProduct',
+            'type': 'product',
+        })
+
+        self.env['stock.quant']._update_available_quantity(product01, self.stock_location, 3)
+        self.env['stock.quant']._update_available_quantity(product02, self.stock_location, 1)
+
+        scrap_picking01, scrap_picking02, scrap_picking03 = self.env['stock.picking'].create([{
+            'location_id': self.stock_location.id,
+            'location_dest_id': scrap_location.id,
+            'picking_type_id': internal_operation.id,
+            'move_lines': [(0, 0, {
+                'name': 'Scrap %s' % product.display_name,
+                'location_id': self.stock_location.id,
+                'location_dest_id': scrap_location.id,
+                'product_id': product.id,
+                'product_uom': product.uom_id.id,
+                'product_uom_qty': 1.0,
+                'picking_type_id': internal_operation.id,
+            }) for product in products],
+        } for products in [(product01,), (product01,), (product01, product02)]])
+
+        (scrap_picking01 + scrap_picking02 + scrap_picking03).action_confirm()
+
+        # All SM are processed
+        scrap_picking01.move_lines.quantity_done = 1
+        scrap_picking01.button_validate()
+
+        # All SM are cancelled
+        scrap_picking02.action_cancel()
+
+        # Process one SM and cancel the other one
+        pick03_prod01_move = scrap_picking03.move_lines.filtered(lambda sm: sm.product_id == product01)
+        pick03_prod02_move = scrap_picking03.move_lines - pick03_prod01_move
+        pick03_prod01_move.quantity_done = 1
+        pick03_prod02_move._action_cancel()
+        scrap_picking03.button_validate()
+
+        self.assertEqual(scrap_picking01.move_lines.state, 'done')
+        self.assertEqual(scrap_picking01.state, 'done')
+
+        self.assertEqual(scrap_picking02.move_lines.state, 'cancel')
+        self.assertEqual(scrap_picking02.state, 'cancel')
+
+        self.assertEqual(pick03_prod01_move.state, 'done')
+        self.assertEqual(pick03_prod02_move.state, 'cancel')
+        self.assertEqual(scrap_picking03.state, 'done')
+
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(product01, self.stock_location), 1)
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(product02, self.stock_location), 1)
+
     def test_in_date_1(self):
         """ Check that moving a tracked quant keeps the incoming date.
         """
@@ -5661,3 +5723,21 @@ class StockMove(TransactionCase):
                 line.qty_done = 1
 
         self.assertEqual(picking.move_line_ids_without_package.location_dest_id, self.stock_location.child_ids[0])
+
+    def test_inter_wh_and_forecast_availability(self):
+        dest_wh = self.env['stock.warehouse'].create({
+            'name': 'Second Warehouse',
+            'code': 'WH02',
+        })
+
+        move = self.env['stock.move'].create({
+            'name': 'test_interwh',
+            'location_id': self.stock_location.id,
+            'location_dest_id': dest_wh.lot_stock_id.id,
+            'product_id': self.product.id,
+            'product_uom': self.uom_unit.id,
+            'product_uom_qty': 1.0,
+        })
+        self.assertEqual(move.forecast_availability, -1)
+        move._action_confirm()
+        self.assertEqual(move.forecast_availability, -1)

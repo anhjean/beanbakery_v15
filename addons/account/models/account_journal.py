@@ -279,7 +279,7 @@ class AccountJournal(models.Model):
             else:
                 journal.default_account_type = False
 
-    @api.depends('type')
+    @api.depends('type', 'currency_id')
     def _compute_inbound_payment_method_line_ids(self):
         for journal in self:
             pay_method_line_ids_commands = [Command.clear()]
@@ -291,7 +291,7 @@ class AccountJournal(models.Model):
                 }) for pay_method in default_methods]
             journal.inbound_payment_method_line_ids = pay_method_line_ids_commands
 
-    @api.depends('type')
+    @api.depends('type', 'currency_id')
     def _compute_outbound_payment_method_line_ids(self):
         for journal in self:
             pay_method_line_ids_commands = [Command.clear()]
@@ -458,10 +458,22 @@ class AccountJournal(models.Model):
         self.refund_sequence = self.type in ('sale', 'purchase')
 
     def _get_alias_values(self, type, alias_name=None):
+        """ This function verifies that the user-given mail alias (or its fallback) doesn't contain non-ascii chars.
+            The fallbacks are the journal's name, code, or type - these are suffixed with the
+            company's name or id (in case the company's name is not ascii either).
+        """
+        def get_company_suffix():
+            if self.company_id != self.env.ref('base.main_company'):
+                try:
+                    remove_accents(self.company_id.name).encode('ascii')
+                    return '-' + str(self.company_id.name)
+                except UnicodeEncodeError:
+                    return '-' + str(self.company_id.id)
+            return ''
+
         if not alias_name:
             alias_name = self.name
-            if self.company_id != self.env.ref('base.main_company'):
-                alias_name += '-' + str(self.company_id.name)
+            alias_name += get_company_suffix()
         try:
             remove_accents(alias_name).encode('ascii')
         except UnicodeEncodeError:
@@ -470,6 +482,7 @@ class AccountJournal(models.Model):
                 safe_alias_name = self.code
             except UnicodeEncodeError:
                 safe_alias_name = self.type
+            safe_alias_name += get_company_suffix()
             _logger.warning("Cannot use '%s' as email alias, fallback to '%s'",
                 alias_name, safe_alias_name)
             alias_name = safe_alias_name
@@ -929,3 +942,23 @@ class AccountJournal(models.Model):
             return self.inbound_payment_method_line_ids
         else:
             return self.outbound_payment_method_line_ids
+
+    def _is_payment_method_available(self, payment_method_code):
+        """ Check if the payment method is available on this journal. """
+        self.ensure_one()
+        pm_info = self.env['account.payment.method']._get_payment_method_information().get(payment_method_code)
+        if not pm_info:
+            return False
+        currency_ids = pm_info.get('currency_ids')
+        country_id = pm_info.get('country_id')
+        domain = pm_info.get('domain', [('type', 'in', ('bank', 'cash'))])
+        journal_types = next(right for left, operator, right in domain if left == 'type' and operator in ('in', '='))
+
+        journal_currency_id = self.currency_id.id or self.company_id.currency_id.id
+        if currency_ids and journal_currency_id not in currency_ids:
+            return False
+        if country_id and self.company_id.account_fiscal_country_id.id != country_id:
+            return False
+        if self.type not in journal_types:
+            return False
+        return True

@@ -514,6 +514,8 @@ class Picking(models.Model):
                 'any_draft': picking_moves_state_map[picking_id.id].get('any_draft', False) or move_state == 'draft',
                 'all_cancel': picking_moves_state_map[picking_id.id].get('all_cancel', True) and move_state == 'cancel',
                 'all_cancel_done': picking_moves_state_map[picking_id.id].get('all_cancel_done', True) and move_state in ('cancel', 'done'),
+                'all_done_are_scrapped': picking_moves_state_map[picking_id.id].get('all_done_are_scrapped', True) and (move.scrapped if move_state == 'done' else True),
+                'any_cancel_and_not_scrapped': picking_moves_state_map[picking_id.id].get('any_cancel_and_not_scrapped', False) or (move_state == 'cancel' and not move.scrapped),
             })
             picking_move_lines[picking_id.id].add(move.id)
         for picking in self:
@@ -525,7 +527,10 @@ class Picking(models.Model):
             elif picking_moves_state_map[picking_id]['all_cancel']:
                 picking.state = 'cancel'
             elif picking_moves_state_map[picking_id]['all_cancel_done']:
-                picking.state = 'done'
+                if picking_moves_state_map[picking_id]['all_done_are_scrapped'] and picking_moves_state_map[picking_id]['any_cancel_and_not_scrapped']:
+                    picking.state = 'cancel'
+                else:
+                    picking.state = 'done'
             else:
                 relevant_move_state = self.env['stock.move'].browse(picking_move_lines[picking_id])._get_relevant_state_among_moves()
                 if picking.immediate_transfer and relevant_move_state not in ('draft', 'cancel', 'done'):
@@ -699,15 +704,6 @@ class Picking(models.Model):
 
     @api.onchange('location_id', 'location_dest_id', 'picking_type_id')
     def _onchange_locations(self):
-        from_wh = self.location_id.warehouse_id
-        to_wh = self.location_dest_id.warehouse_id
-        is_immediate = self.immediate_transfer if self._origin else self._context.get('default_immediate_transfer')
-        if self.picking_type_id.code == 'internal' and not is_immediate and from_wh and to_wh and from_wh != to_wh:
-            return {'warning': {
-                'title': _("Warning"),
-                'message': _("You should not use a planned internal transfer to move some products between two warehouses. "
-                             "Instead, use an immediate internal transfer or the resupply route.")
-            }}
         (self.move_lines | self.move_ids_without_package).update({
             "location_id": self.location_id,
             "location_dest_id": self.location_dest_id

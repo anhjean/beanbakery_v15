@@ -349,7 +349,7 @@
                             <field name="package_level_ids_details"
                                    context="{'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id}"
                                    attrs="{'readonly': [('state', '=', 'done')], 'invisible': ['|', ('picking_type_entire_packs', '=', False), ('show_operations', '=', False)]}" />
-                            <button class="oe_highlight" name="action_put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('draft', 'done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
+                            <button class="oe_highlight" name="action_put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('draft', 'done', 'cancel'))]}" groups="stock.group_tracking_lot" data-hotkey="shift+g"/>
                         </page>
 
                         <page string="Operations" name="operations">
@@ -386,9 +386,9 @@
                                     <field name="product_packaging_id" groups="product.group_stock_packaging"/>
                                     <field name="product_uom_qty" string="Demand" attrs="{'column_invisible': [('parent.immediate_transfer', '=', True)], 'readonly': ['|', ('is_initial_demand_editable', '=', False), '&amp;', '&amp;', ('show_operations', '=', True), ('is_locked', '=', True), ('is_initial_demand_editable', '=', False)]}"/>
                                     <button type="object" name="action_product_forecast_report" icon="fa-area-chart" 
-                                        attrs="{'invisible': ['|', ('forecast_availability', '&lt;=', 0), '|', ('parent.immediate_transfer', '=', True), '&amp;', ('parent.picking_type_code', '=', 'outgoing'), ('state', '!=', 'draft')]}"/>
+                                        attrs="{'invisible': ['|', ('forecast_availability', '&lt;', 0), '|', ('parent.immediate_transfer', '=', True), '&amp;', ('parent.picking_type_code', '=', 'outgoing'), ('state', '!=', 'draft')]}"/>
                                     <button type="object" name="action_product_forecast_report" icon="fa-area-chart text-danger" 
-                                        attrs="{'invisible': ['|', ('forecast_availability', '&gt;', 0), '|', ('parent.immediate_transfer', '=', True), '&amp;', ('parent.picking_type_code', '=', 'outgoing'), ('state', '!=', 'draft')]}"/>
+                                        attrs="{'invisible': ['|', ('forecast_availability', '&gt;=', 0), '|', ('parent.immediate_transfer', '=', True), '&amp;', ('parent.picking_type_code', '=', 'outgoing'), ('state', '!=', 'draft')]}"/>
                                     <field name="forecast_expected_date" invisible="1"/>
                                     <field name="forecast_availability" string="Reserved"
                                         attrs="{'column_invisible': ['|', '|', ('parent.state', 'in', ['draft', 'done']), ('parent.picking_type_code', '!=', 'outgoing'), ('parent.immediate_transfer', '=', True)]}" widget="forecast_widget"/>
@@ -438,7 +438,7 @@
                             </field>
                             <field name="id" invisible="1"/>
                             <field name="package_level_ids" context="{'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id}" attrs="{'readonly': [('state', '=', 'done')], 'invisible': ['|', ('picking_type_entire_packs', '=', False), ('show_operations', '=', True)]}" />
-                            <button class="oe_highlight" name="action_put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('draft', 'done', 'cancel'))]}" groups="stock.group_tracking_lot"/>
+                            <button class="oe_highlight" name="action_put_in_pack" type="object" string="Put in Pack" attrs="{'invisible': [('state', 'in', ('draft', 'done', 'cancel'))]}" groups="stock.group_tracking_lot" data-hotkey="shift+g"/>
                         </page>
                         <page string="Additional Info" name="extra">
                             <group>

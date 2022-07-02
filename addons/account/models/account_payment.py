@@ -52,7 +52,7 @@ class AccountPayment(models.Model):
         help="QR-code report URL to use to generate the QR-code to scan with a banking app to perform this payment.")
     paired_internal_transfer_payment_id = fields.Many2one('account.payment',
         help="When an internal transfer is posted, a paired payment is created. "
-        "They are cross referenced trough this field")
+        "They are cross referenced trough this field", copy=False)
 
     # == Payment methods fields ==
     payment_method_line_id = fields.Many2one('account.payment.method.line', string='Payment Method',
@@ -380,11 +380,13 @@ class AccountPayment(models.Model):
             else:
                 payment.amount_signed = payment.amount
 
-    @api.depends('partner_id', 'company_id', 'payment_type')
+    @api.depends('partner_id', 'company_id', 'payment_type', 'destination_journal_id', 'is_internal_transfer')
     def _compute_available_partner_bank_ids(self):
         for pay in self:
             if pay.payment_type == 'inbound':
                 pay.available_partner_bank_ids = pay.journal_id.bank_account_id
+            elif pay.is_internal_transfer:
+                pay.available_partner_bank_ids = pay.destination_journal_id.bank_account_id
             else:
                 pay.available_partner_bank_ids = pay.partner_id.bank_ids\
                         .filtered(lambda x: x.company_id.id in (False, pay.company_id.id))._origin
@@ -402,13 +404,13 @@ class AccountPayment(models.Model):
                                            and payment.partner_id == payment.journal_id.company_id.partner_id \
                                            and payment.destination_journal_id
 
-    @api.depends('payment_type', 'journal_id')
+    @api.depends('available_payment_method_line_ids')
     def _compute_payment_method_line_id(self):
         ''' Compute the 'payment_method_line_id' field.
-        This field is not computed in '_compute_payment_method_fields' because it's a stored editable one.
+        This field is not computed in '_compute_payment_method_line_fields' because it's a stored editable one.
         '''
         for pay in self:
-            available_payment_method_lines = pay.journal_id._get_available_payment_method_lines(pay.payment_type)
+            available_payment_method_lines = pay.available_payment_method_line_ids
 
             # Select the first available one by default.
             if pay.payment_method_line_id in available_payment_method_lines:
@@ -422,7 +424,7 @@ class AccountPayment(models.Model):
     def _compute_payment_method_line_fields(self):
         for pay in self:
             pay.available_payment_method_line_ids = pay.journal_id._get_available_payment_method_lines(pay.payment_type)
-            to_exclude = self._get_payment_method_codes_to_exclude()
+            to_exclude = pay._get_payment_method_codes_to_exclude()
             if to_exclude:
                 pay.available_payment_method_line_ids = pay.available_payment_method_line_ids.filtered(lambda x: x.code not in to_exclude)
             if pay.payment_method_line_id.id not in pay.available_payment_method_line_ids.ids:

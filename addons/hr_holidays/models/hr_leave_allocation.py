@@ -328,12 +328,13 @@ class HolidaysAllocation(models.Model):
 
     def _end_of_year_accrual(self):
         # to override in payroll
-        today = fields.Date.today()
+        first_day_this_year = fields.Date.today() + relativedelta(month=1, day=1)
         for allocation in self:
-            current_level = allocation._get_current_accrual_plan_level_id(today)[0]
+            current_level = allocation._get_current_accrual_plan_level_id(first_day_this_year)[0]
+            nextcall = current_level._get_next_date(first_day_this_year)
             if current_level and current_level.action_with_unused_accruals == 'lost':
                 # Allocations are lost but number_of_days should not be lower than leaves_taken
-                allocation.write({'number_of_days': allocation.leaves_taken, 'lastcall': today, 'nextcall': False})
+                allocation.write({'number_of_days': allocation.leaves_taken, 'lastcall': first_day_this_year, 'nextcall': nextcall})
 
     def _get_current_accrual_plan_level_id(self, date, level_ids=False):
         """
@@ -426,7 +427,7 @@ class HolidaysAllocation(models.Model):
                 # If accruals are lost at the beginning of year, skip accrual until beginning of this year
                 if current_level.action_with_unused_accruals == 'lost':
                     this_year_first_day = today + relativedelta(day=1, month=1)
-                    if period_end < this_year_first_day or period_start < period_end:
+                    if period_end < this_year_first_day:
                         allocation.lastcall = allocation.nextcall
                         allocation.nextcall = nextcall
                         continue
@@ -443,11 +444,9 @@ class HolidaysAllocation(models.Model):
                 allocation.lastcall = allocation.nextcall
                 allocation.nextcall = nextcall
             if days_added_per_level:
-                number_of_days_to_add = 0
-                for value in days_added_per_level.values():
-                    number_of_days_to_add += value
+                number_of_days_to_add = allocation.number_of_days + sum(days_added_per_level.values())
                 # Let's assume the limit of the last level is the correct one
-                allocation.write({'number_of_days': min(allocation.number_of_days + number_of_days_to_add, current_level.maximum_leave)})
+                allocation.number_of_days = min(number_of_days_to_add, current_level.maximum_leave + allocation.leaves_taken) if current_level.maximum_leave > 0 else number_of_days_to_add
 
     @api.model
     def _update_accrual(self):
@@ -518,7 +517,7 @@ class HolidaysAllocation(models.Model):
             partners_to_subscribe = set()
             if holiday.employee_id.user_id:
                 partners_to_subscribe.add(holiday.employee_id.user_id.partner_id.id)
-            if holiday.validation_type == 'hr':
+            if holiday.validation_type == 'officer':
                 partners_to_subscribe.add(holiday.employee_id.parent_id.user_id.partner_id.id)
                 partners_to_subscribe.add(holiday.employee_id.leave_manager_id.partner_id.id)
             holiday.message_subscribe(partner_ids=tuple(partners_to_subscribe))
@@ -543,6 +542,11 @@ class HolidaysAllocation(models.Model):
         state_description_values = {elem[0]: elem[1] for elem in self._fields['state']._description_selection(self.env)}
         for holiday in self.filtered(lambda holiday: holiday.state not in ['draft', 'cancel', 'confirm']):
             raise UserError(_('You cannot delete an allocation request which is in %s state.') % (state_description_values.get(holiday.state),))
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_no_leaves(self):
+        if any(allocation.holiday_status_id.requires_allocation == 'yes' and allocation.leaves_taken > 0 for allocation in self):
+            raise UserError(_('You cannot delete an allocation request which has some validated leaves.'))
 
     def _get_mail_redirect_suggested_company(self):
         return self.holiday_status_id.company_id
@@ -672,17 +676,6 @@ class HolidaysAllocation(models.Model):
             if holiday.employee_id == current_employee and not is_manager and not val_type == 'no':
                 raise UserError(_('Only a time off Manager can approve its own requests.'))
 
-            if (state == 'validate1' and val_type == 'both') or (state == 'validate' and val_type == 'manager'):
-                if self.env.user == holiday.employee_id.leave_manager_id and self.env.user != holiday.employee_id.user_id:
-                    continue
-                manager = holiday.employee_id.parent_id or holiday.employee_id.department_id.manager_id
-                if (manager != current_employee) and not is_manager:
-                    raise UserError(_('You must be either %s\'s manager or time off manager to approve this time off') % (holiday.employee_id.name))
-
-            if state == 'validate' and val_type == 'both':
-                if not is_officer:
-                    raise UserError(_('Only a Time off Approver can apply the second approval on allocation requests.'))
-
     @api.onchange('allocation_type')
     def _onchange_allocation_type(self):
         if self.allocation_type == 'accrual':
@@ -698,10 +691,7 @@ class HolidaysAllocation(models.Model):
         self.ensure_one()
         responsible = self.env.user
 
-        if self.validation_type == 'manager' or (self.validation_type == 'both' and self.state == 'confirm'):
-            if self.employee_id.leave_manager_id:
-                responsible = self.employee_id.leave_manager_id
-        elif self.validation_type == 'hr' or (self.validation_type == 'both' and self.state == 'validate1'):
+        if self.validation_type == 'officer' or self.validation_type == 'set':
             if self.holiday_status_id.responsible_id:
                 responsible = self.holiday_status_id.responsible_id
 

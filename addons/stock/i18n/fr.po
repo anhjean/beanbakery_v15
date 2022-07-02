@@ -7,9 +7,9 @@
 # f477e7ae9c75a2428d6113663a8354fe_bcd021c <0ff4ce060a36f446722508a48e99c22a_347081>, 2021
 # RHTodoo, 2021
 # Sebastien LANGE, 2021
-# Martin Trigaux, 2021
 # Thomas Deleval <thd@odoo.com>, 2021
 # Cécile Collart <cco@odoo.com>, 2022
+# Martin Trigaux, 2022
 # 
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-16 13:18+0000\n"
 "PO-Revision-Date: 2021-09-14 12:26+0000\n"
-"Last-Translator: Cécile Collart <cco@odoo.com>, 2022\n"
+"Last-Translator: Martin Trigaux, 2022\n"
 "Language-Team: French (https://www.transifex.com/odoo/teams/41243/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1749,7 +1749,7 @@ msgstr "Créer un reliquat "
 #: code:addons/stock/models/stock_picking.py:0
 #, python-format
 msgid "Create Backorder?"
-msgstr "Créer un reliquat? "
+msgstr "Créer un reliquat ? "
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_move_line__picking_type_use_create_lots
@@ -3384,6 +3384,12 @@ msgid "Immediate transfer?"
 msgstr "Transfert immédiat ?"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Import"
+msgstr "Importer"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_warehouse__in_type_id
 msgid "In Type"
 msgstr "Type d'entrée"
@@ -3683,7 +3689,7 @@ msgstr "Is Signed"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__return_location
 msgid "Is a Return Location?"
-msgstr "Est un emplacement de retour?"
+msgstr "Est un emplacement de retour ?"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__scrap_location
@@ -4674,12 +4680,12 @@ msgstr "Aucune opération faite sur ce lot"
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_get_picking_type_operations
 msgid "No operations found. Let's create a tranfer !"
-msgstr "Aucun transfert trouvé, créez-en un!"
+msgstr "Aucun transfert trouvé, créez-en un !"
 
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.product_template_action_product
 msgid "No product found. Let's create one!"
-msgstr "Aucun article trouvé. Créons-en un!"
+msgstr "Aucun article trouvé. Créons-en un !"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_picking_return.py:0
@@ -4723,6 +4729,12 @@ msgid "No stock move found"
 msgstr "Aucun mouvement de stock trouvé"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "No Stock On Hand"
+msgstr ""
+
+#. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_picking_form
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_all
 #: model_terms:ir.actions.act_window,help:stock.action_picking_tree_backorder
@@ -4732,7 +4744,7 @@ msgstr "Aucun mouvement de stock trouvé"
 #: model_terms:ir.actions.act_window,help:stock.action_picking_type_list
 #: model_terms:ir.actions.act_window,help:stock.stock_picking_action_picking_type
 msgid "No transfer found. Let's create one!"
-msgstr "Pas de transfert trouvé. Créons-en un!"
+msgstr "Pas de transfert trouvé. Créons-en un !"
 
 #. module: stock
 #: code:addons/stock/report/report_stock_reception.py:0
@@ -5463,6 +5475,14 @@ msgstr "Routes préférées"
 #: model:ir.model.fields,help:stock.field_stock_move__route_ids
 msgid "Preferred route"
 msgstr "Route préférée"
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"Press the CREATE button to define quantity for each product in your stock or"
+" import them from a spreadsheet throughout Favorites"
+msgstr ""
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -7167,7 +7187,7 @@ msgid ""
 "don't want to specify a serial or lot number for them?"
 msgstr ""
 "Certains articles de l'ajustement d'inventaire sont trackés. Etes-vous sûrs "
-"de ne pas vouloir ajouter un numéro de série ou de lot?"
+"de ne pas vouloir ajouter un numéro de série ou de lot ?"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.inventory_warning_set_view
@@ -7919,6 +7939,14 @@ msgid "There's no product move yet"
 msgstr "Il n'y a pas encore de mouvement d'article"
 
 #. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"This analysis gives you an overview of the current stock level of your "
+"products."
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,help:stock.field_stock_rule__name
 msgid "This field will fill the packing origin and the name of its moves"
 msgstr "Ce champ remplira l'origine du colisage et le nom de ses mouvements"
@@ -8134,7 +8162,7 @@ msgstr ""
 msgid "This will discard all unapplied counts, do you want to proceed?"
 msgstr ""
 "Ceci va effacer tous les comptages non appliqués, est-ce vraiment ce que "
-"vous voulez faire?"
+"vous voulez faire ?"
 
 #. module: stock
 #: model:digest.tip,name:stock.digest_tip_stock_0
@@ -8818,7 +8846,7 @@ msgstr "Avertissement sur les Colisages"
 #: code:addons/stock/models/product.py:0 code:addons/stock/models/product.py:0
 #, python-format
 msgid "Warning!"
-msgstr "Avertissement!"
+msgstr "Avertissement !"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
@@ -9015,7 +9043,7 @@ msgstr "Ecrire vos numéros de lot/série un par un ou copier/coller une liste."
 #. module: stock
 #: model_terms:ir.actions.act_window,help:stock.action_orderpoint_replenish
 msgid "You are good, no replenishment to perform!"
-msgstr "Vous êtes bons, pas de réapprovisionnement à effectuer!"
+msgstr "Vous êtes bons, pas de réapprovisionnement à effectuer !"
 
 #. module: stock
 #: code:addons/stock/models/stock_production_lot.py:0
@@ -9405,6 +9433,15 @@ msgid "You should update this document to reflect your T&amp;C."
 msgstr "Vous devriez mettre à jour ce document pour refléter vos CGV."
 
 #. module: stock
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You should not use a planned internal transfer to move some products between"
+" two warehouses. Instead, use an immediate internal transfer or the resupply"
+" route."
+msgstr ""
+
+#. module: stock
 #: code:addons/stock/models/stock_warehouse.py:0
 #, python-format
 msgid "You still have ongoing operations for picking types %s in warehouse %s"
@@ -9438,6 +9475,12 @@ msgstr ""
 "Vous trouverez ici des propositions basées sur vos projections d'inventaire.\n"
 "             Choisissez la quantité à acheter ou produire et créez des commandes en un click.\n"
 "              Pour gagner du temps à l'avenir, automatisez les règles."
+
+#. module: stock
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Your stock is currently empty"
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__product_label_layout__print_format__zpl

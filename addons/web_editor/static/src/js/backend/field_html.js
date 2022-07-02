@@ -44,7 +44,6 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
         wysiwyg_change: '_onChange',
         wysiwyg_attachment: '_onAttachmentChange',
     },
-
     /**
      * @override
      */
@@ -93,14 +92,14 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
      *
      * @override
      */
-    commitChanges: function () {
+    commitChanges: async function () {
         if (this.mode == "readonly" || !this.isRendered) {
             return this._super();
         }
         var _super = this._super.bind(this);
-        this.wysiwyg.odooEditor.clean();
-        return this.wysiwyg.saveModifiedImages(this.$content).then(async () => {
-            await this.wysiwyg.preSavePromise;
+        await this.wysiwyg.cleanForSave();
+        this._setValue(this._getValue());
+        return this.wysiwyg.saveModifiedImages(this.$content).then(() => {
             this._isDirty = this.wysiwyg.isDirty();
             _super();
         });
@@ -203,6 +202,9 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
             allowCommandVideo: Boolean(this.nodeOptions.allowCommandVideo) && (!this.field.sanitize || !this.field.sanitize_tags),
             mediaModalParams: {
                 noVideos: 'noVideos' in this.nodeOptions ? this.nodeOptions.noVideos : true,
+                res_model: this.model,
+                res_id: this.res_id,
+                useMediaLibrary: true,
             },
             linkForceNewWindow: true,
             tabsize: 0,
@@ -399,7 +401,9 @@ var FieldHtml = basic_fields.DebouncedField.extend(TranslatableFieldMixin, {
         }
 
         def.then(function () {
-            self.$content.on('click', 'ul.o_checklist > li', self._onReadonlyClickChecklist.bind(self));
+            if (!self.hasReadonlyModifier) {
+                self.$content.on('click', 'ul.o_checklist > li', self._onReadonlyClickChecklist.bind(self));
+            }
             if (self.$iframe) {
                 // Iframe is hidden until fully loaded to avoid glitches.
                 self.$iframe.removeClass('d-none');

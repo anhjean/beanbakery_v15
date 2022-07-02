@@ -142,6 +142,37 @@ class ProjectTaskType(models.Model):
             else:
                 stage.disabled_rating_warning = False
 
+    def remove_personal_stage(self):
+        """
+        Remove a personal stage, tasks using that stage will move to the first
+        stage with a lower priority if it exists higher if not.
+        This method will not allow to delete the last personal stage.
+        Having no personal_stage_type_id makes the task not appear when grouping by personal stage.
+        """
+        self.ensure_one()
+        assert self.user_id == self.env.user or self.env.su
+
+        users_personal_stages = self.env['project.task.type']\
+            .search([('user_id', '=', self.user_id.id)], order='sequence DESC')
+        if len(users_personal_stages) == 1:
+            raise ValidationError(_("You should at least have one personal stage. Create a new stage to which the tasks can be transferred after this one is deleted."))
+
+        # Find the most suitable stage, they are already sorted by sequence
+        new_stage = self.env['project.task.type']
+        for stage in users_personal_stages:
+            if stage == self:
+                continue
+            if stage.sequence > self.sequence:
+                new_stage = stage
+            elif stage.sequence <= self.sequence:
+                new_stage = stage
+                break
+
+        self.env['project.task.stage.personal'].search([('stage_id', '=', self.id)]).write({
+            'stage_id': new_stage.id,
+        })
+        self.unlink()
+
 class Project(models.Model):
     _name = "project.project"
     _description = "Project"
@@ -287,12 +318,17 @@ class Project(models.Model):
         ],
         string='Visibility', required=True,
         default='portal',
-        help="Defines the visibility of the tasks of the project:\n"
-            "- Invited employees: employees may only see the followed project and tasks.\n"
-            "- All employees: employees may see all project and tasks.\n"
-            "- Invited portal users and all employees: employees may see everything."
-            "   Invited portal users may see project and tasks followed by.\n"
-            "   them or by someone of their company.")
+        help="People to whom this project and its tasks will be visible.\n\n"
+            "- Invited internal users: when following a project, internal users will get access to all of its tasks without distinction. "
+            "Otherwise, they will only get access to the specific tasks they are following.\n "
+            "A user with the project > administrator access right level can still access this project and its tasks, even if they are not explicitly part of the followers.\n\n"
+            "- All internal users: all internal users can access the project and all of its tasks without distinction.\n\n"
+            "- Invited portal users and all internal users: all internal users can access the project and all of its tasks without distinction.\n"
+            "When following a project, portal users will get access to all of its tasks without distinction. Otherwise, they will only get access to the specific tasks they are following.\n\n"
+            "When a project is shared in read-only, the portal user is redirected to their portal. They can view the tasks, but not edit them.\n"
+            "When a project is shared in edit, the portal user is redirected to the kanban and list views of the tasks. They can modify a selected number of fields on the tasks.\n\n"
+            "In any case, an internal user with no project access rights can still access a task, "
+            "provided that they are given the corresponding URL (and that they are part of the followers if the project is private).")
     doc_count = fields.Integer(compute='_compute_attached_docs_count', string="Number of documents attached")
     date_start = fields.Date(string='Start Date')
     date = fields.Date(string='Expiration Date', index=True, tracking=True)
@@ -446,7 +482,8 @@ class Project(models.Model):
         # We want to copy archived task, but do not propagate an active_test context key
         task_ids = self.env['project.task'].with_context(active_test=False).search([('project_id', '=', self.id)], order='parent_id').ids
         old_to_new_tasks = {}
-        for task in self.env['project.task'].browse(task_ids):
+        all_tasks = self.env['project.task'].browse(task_ids)
+        for task in all_tasks:
             # preserve task name and stage, normally altered during copy
             defaults = self._map_tasks_default_valeus(task, project)
             if task.parent_id:
@@ -460,6 +497,13 @@ class Project(models.Model):
             new_child_ids = [old_to_new_tasks[child.id] for child in task.child_ids if child.id in old_to_new_tasks]
             tasks.browse(new_child_ids).write({'parent_id': new_task.id})
             old_to_new_tasks[task.id] = new_task.id
+            if task.allow_task_dependencies:
+                depend_on_ids = [t.id if t not in all_tasks else old_to_new_tasks.get(t.id, None) for t in
+                                 task.depend_on_ids]
+                new_task.write({'depend_on_ids': [Command.link(tid) for tid in depend_on_ids if tid]})
+                dependent_ids = [t.id if t not in all_tasks else old_to_new_tasks.get(t.id, None) for t in
+                                 task.dependent_ids]
+                new_task.write({'dependent_ids': [Command.link(tid) for tid in dependent_ids if tid]})
             tasks += new_task
 
         return project.write({'tasks': [(6, 0, tasks.ids)]})
@@ -1007,10 +1051,10 @@ class Task(models.Model):
     allow_task_dependencies = fields.Boolean(related='project_id.allow_task_dependencies')
     # Tracking of this field is done in the write function
     depend_on_ids = fields.Many2many('project.task', relation="task_dependencies_rel", column1="task_id",
-                                     column2="depends_on_id", string="Blocked By", tracking=True,
+                                     column2="depends_on_id", string="Blocked By", tracking=True, copy=False,
                                      domain="[('allow_task_dependencies', '=', True), ('id', '!=', id)]")
     dependent_ids = fields.Many2many('project.task', relation="task_dependencies_rel", column1="depends_on_id",
-                                     column2="task_id", string="Block",
+                                     column2="task_id", string="Block", copy=False,
                                      domain="[('allow_task_dependencies', '=', True), ('id', '!=', id)]")
     dependent_tasks_count = fields.Integer(string="Dependent Tasks", compute='_compute_dependent_tasks_count')
 

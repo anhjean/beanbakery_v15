@@ -20,22 +20,23 @@
 # Christelle Wehbe <libanon_cristelle@hotmail.com>, 2021
 # Martin Trigaux, 2021
 # lasch a <bmail440@gmail.com>, 2021
-# Kim Asplund <kim.asplund@gmail.com>, 2021
 # Anders Wallenquist <anders.wallenquist@vertel.se>, 2021
 # Victor Ekström, 2021
 # Daniel Osser <danielosser@gmail.com>, 2021
 # Robin Calvin, 2022
-# Simon S, 2022
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2022
-# Emanuel Bergsten, 2022
+# emavertel, 2022
+# Simon S, 2022
+# Mikael Åkerberg <mikael.akerberg@mariaakerberg.com>, 2022
+# Kim Asplund <kim.asplund@gmail.com>, 2022
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-16 13:42+0000\n"
+"POT-Creation-Date: 2022-01-24 09:03+0000\n"
 "PO-Revision-Date: 2021-09-14 12:18+0000\n"
-"Last-Translator: Emanuel Bergsten, 2022\n"
+"Last-Translator: Kim Asplund <kim.asplund@gmail.com>, 2022\n"
 "Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -587,7 +588,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        - Låter supportteamet ange ett projekt\n"
+"        - Låter kundtjänstteamet ange ett projekt\n"
 "        - Spåra tidrapport för en uppgift från ett ärende\n"
 "    "
 
@@ -653,6 +654,14 @@ msgstr ""
 "\n"
 "        Bokföringsrapporter för Holland\n"
 "    "
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_pk_reports
+msgid ""
+"\n"
+"        Accounting reports for Pakistan\n"
+"    "
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_es_reports
@@ -735,6 +744,9 @@ msgid ""
 "        Allow clients to Schedule Appointments through the Portal\n"
 "    "
 msgstr ""
+"\n"
+"        Tillåt kunder att boka möten via portalen\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_mx_reports_closing
@@ -796,6 +808,8 @@ msgid ""
 "        Bridge between Helpdesk and Industry FSM Sale\n"
 "    "
 msgstr ""
+"\n"
+"        Brygga mellan Kundtjänst och Industri FSM Försäljning"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_reports_base_address_extended
@@ -921,7 +935,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"        Konvertera supportärenden till uppgifter för fältservice.\n"
+"        Konvertera Kundtjänstärenden till uppgifter för fältservice.\n"
 "    "
 
 #. module: base
@@ -1143,6 +1157,9 @@ msgid ""
 "        Manage your mailing lists from Odoo.\n"
 "    "
 msgstr ""
+"\n"
+"        Hantera dina e-postlistor från Odoo.\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_fr_fec_import
@@ -1599,13 +1616,23 @@ msgid ""
 "    Adds workcenters to Quality Control\n"
 msgstr ""
 "\n"
-"    Tillägger arbetscentra till kvalitetskontrollen\n"
+"   Lägger till Produktionsgrupper till Kvalitetskontroll\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_gcc_invoice
 msgid ""
 "\n"
 "    Arabic/English for GCC\n"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_mx_edi_stock_extended
+msgid ""
+"\n"
+"    Bridge module to extend the delivery guide (Complemento XML Carta de Porte)\n"
+"    - exported goods (COMEX)\n"
+"    - extended address fields\n"
+"    "
 msgstr ""
 
 #. module: base
@@ -1641,7 +1668,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"    Gantt-vy för instrumentpanelen för ledighet\n"
+"    Gantt-vy för anslagstavla för ledighet\n"
 "    "
 
 #. module: base
@@ -1801,6 +1828,18 @@ msgstr ""
 msgid ""
 "\n"
 "    Support for invoice Export/Import in Factur-x format (1.0.04).\n"
+"    "
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_mx_edi_stock
+msgid ""
+"\n"
+"    The delivery guide (Complemento XML Carta de Porte) is needed as a proof\n"
+"    that you are sending goods between A and B.\n"
+"\n"
+"    It is only when a delivery order is validated that you can create the delivery\n"
+"    guide.\n"
 "    "
 msgstr ""
 
@@ -2932,7 +2971,7 @@ msgstr ""
 "\n"
 "* Rapport om kostnadsstrukturen\n"
 "\n"
-"Gör det också möjligt att beräkna kostnaden för produkten utifrån dess BoM, med hjälp av kostnaderna för dess komponenter och arbetscenterverksamhet.\n"
+"Gör det också möjligt att beräkna kostnaden för produkten utifrån dess BoM, med hjälp av kostnaderna för dess komponenter och produktionsgrupp.\n"
 "En knapp läggs till på själva produkten, men också en åtgärd i listvyn över produkterna.\n"
 "Om den automatiska lagervärderingen är aktiv skapas de nödvändiga bokföringsposterna.\n"
 "\n"
@@ -3733,6 +3772,9 @@ msgid ""
 "or generate a ticket from a business inquiry\n"
 "        "
 msgstr ""
+"\n"
+"Konvertera affärsförfrågningar som har hamnat i Kundtjänst-kanalen av misstag,\n"
+"eller generera ett ärende från en affärsförfrågning"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_holidays_attendance
@@ -3750,7 +3792,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Skapa kreditnotor från supportärenden\n"
+"Skapa kreditnotor från Kundtjänstärenden\n"
 "    "
 
 #. module: base
@@ -4614,6 +4656,15 @@ msgid ""
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,description:base.module_l10n_gcc_pos
+msgid ""
+"\n"
+"GCC POS Localization\n"
+"=======================================================\n"
+"    "
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,description:base.module_gamification
 msgid ""
 "\n"
@@ -4665,7 +4716,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Generera kuponger från supportärenden\n"
+"Generera kuponger från Kundtjänstärenden\n"
 "    "
 
 #. module: base
@@ -4710,6 +4761,8 @@ msgid ""
 "Generate tickets in Helpdesk app from a form published on your website. This form can be customized thanks to the *Website Builder*.\n"
 "    "
 msgstr ""
+"\n"
+"Skapa ärenden i Kundtjänst-appen från ett formulär som publiceras på din webbplats. Detta formulär kan anpassas tack vare *Website Builder*"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_be_intrastat
@@ -4819,15 +4872,15 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Supportapp för ärendehantering\n"
+"Kundtjänstapp för ärendehantering\n"
 "================================\n"
 "\n"
 "Funktioner:\n"
 "\n"
-"    - Bearbeta ärenden genom olika steg för att lösa dem.\n"
+"    - Bearbeta ärenden genom olika etapper för att lösa dem.\n"
 "    - Lägg till prioriteringar, typer, beskrivningar och taggar för att definiera dina ärenden.\n"
 "    - Använd chatter för att kommunicera ytterligare information och skicka ut meddelanden till kollegor om ärenden.\n"
-"    - Njut av en anpassad instrumentpanel och en lättanvänd Kanban-vy för att hantera dina ärenden.\n"
+"    - Njut av en anpassad anslagstavla och en lättanvänd Kanban-vy för att hantera dina ärenden.\n"
 "    - Gör en djupgående analys av dina ärenden med hjälp av pivotvyn i rapportmenyn.\n"
 "    - Skapa ett team och ange dess medlemmar, använd en automatisk tilldelningsmetod om du vill.\n"
 "    - Använd ett e-postalias för att automatiskt skapa ärenden och kommunicera med dina kunder.\n"
@@ -5097,6 +5150,15 @@ msgid ""
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,description:base.module_l10n_sa_pos
+msgid ""
+"\n"
+"K.S.A. POS Localization\n"
+"=======================================================\n"
+"    "
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,description:base.module_l10n_sa_hr_payroll
 msgid ""
 "\n"
@@ -5132,10 +5194,10 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Låter användaren skapa en anpassad instrumentpanel.\n"
+"Låter användare skapa en anpassad anslagstavla.\n"
 "========================================\n"
 "\n"
-"Tillåter användare att skapa en egen instrumentpanel.\n"
+"Tillåter användare att skapa en egen anslagstavla.\n"
 "    "
 
 #. module: base
@@ -5186,6 +5248,14 @@ msgid ""
 "* Equipments related to workcenters\n"
 "* MTBF, MTTR, ...\n"
 msgstr ""
+"\n"
+"Underhåll i MRP\n"
+"===================\n"
+"* Förebyggande kontra korrigerande underhåll\n"
+"* Definiera olika etapper för dina underhållsförfrågningar\n"
+"* Planera underhållsförfrågningar (även återkommande förebyggande)\n"
+"* Utrustning relaterad till produktionsgrupper\n"
+"* MTBF, MTTR, ...\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_twitter_wall
@@ -5264,7 +5334,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Hantera produktreturer från supportärenden\n"
+"Hantera produktreturer från kundtjänstärenden\n"
 "    "
 
 #. module: base
@@ -5410,7 +5480,7 @@ msgstr ""
 "Med den här modulen kan du göra order och faktura mer personlig med\n"
 "kategorier, delsummor eller sidbrytningar.\n"
 "\n"
-"Kontrollpanelen för säljledning kommer att innehålla följande\n"
+"Anslagstavla för säljledning kommer att innehålla följande\n"
 "------------------------------------------------\n"
 "* Mina offerter\n"
 "* Månadsomsättning (diagram)\n"
@@ -5453,7 +5523,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Hantera after sales på produkterna från supportärenden.\n"
+"Hantera after sales på produkterna från Kundtjänstärenden.\n"
 "    "
 
 #. module: base
@@ -5630,6 +5700,13 @@ msgid ""
 "associated to every resource. It also manages the leaves of every resource.\n"
 "    "
 msgstr ""
+"\n"
+"Modul för resurshantering.\n"
+"=================================\n"
+"\n"
+"En resurs representerar något som kan schemaläggas (en utveckling på en uppgift eller en\n"
+"produktionsgrupp för tillverkningsorder). Den här modulen hanterar en resurskalender\n"
+"kopplat till varje resurs. Den hanterar också bladen på varje resurs."
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_mail
@@ -6254,7 +6331,7 @@ msgstr ""
 "  tillverkningsorder eller arbetsorder (quality_mrp)\n"
 "* Kvalitetsvarningar kan skapas oberoende av eller i samband med kvalitetskontroller\n"
 "* Möjlighet att lägga till ett mått till kvalitetskontrollen med en min/max-tolerans\n"
-"* Definiera dina steg för kvalitetsvarningarna\n"
+"* Definiera dina etapper för kvalitetsvarningarna\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_quality_control
@@ -6275,7 +6352,7 @@ msgstr ""
 "  tillverkningsorder eller arbetsorder (quality_mrp)\n"
 "* Kvalitetsvarningar kan skapas oberoende av eller i samband med kvalitetskontroller\n"
 "* Möjlighet att lägga till ett mått till kvalitetskontrollen med en min/max-tolerans\n"
-"* Definiera dina steg för kvalitetsvarningarna\n"
+"* Definiera dina etapper för kvalitetsvarningarna\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_hr_payroll_expense
@@ -6319,7 +6396,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Reparera produkter från helpdesk-tickets\n"
+"Reparera produkter från kundtjänstärenden\n"
 "    "
 
 #. module: base
@@ -6418,9 +6495,9 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Kontrollpanelen för prenumerationer\n"
+"Anslagstavla för prenumerationer\n"
 "===========================\n"
-"Den lägger till instrumentpaneler till :\n"
+"Den lägger till anslagstavlor till :\n"
 "1) Analysera återkommande intäkter och andra mätvärden för prenumerationer\n"
 "2) Analysera abonnemangsändringar av säljare och beräkna deras värde.\n"
 "    "
@@ -7493,7 +7570,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Den här modulen lägger till en ny instrumentpanel i webbplats-appen.\n"
+"Den här modulen lägger till en ny anslagstavla i webbplats-appen.\n"
 "Den här nya typen av vy innehåller grundläggande statistik, ett diagram och en undervy för att ge dig en snabb överblick över din onlineförsäljning.\n"
 "Den innehåller också nya verktyg för att analysera dina data.\n"
 "    "
@@ -8640,7 +8717,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Integrering av forum för supportmodulen\n"
+"Integrering av forum för kundtjänstmodulen\n"
 "=================================================\n"
 "\n"
 "    Låt dina team ha ett relaterat forum för att besvara kundfrågor.\n"
@@ -8663,7 +8740,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Webbplats IM Livechat-integration för supportmodulen\n"
+"Webbplats IM Livechat-integration för kundtjänstmodulen\n"
 "=======================================================\n"
 "\n"
 "Funktioner:\n"
@@ -8685,7 +8762,7 @@ msgid ""
 "    "
 msgstr ""
 "\n"
-"Integration av eLearning i supportmodulen\n"
+"Integration av eLearning i Kundtjänstmodulen\n"
 "==================================================\n"
 "\n"
 "    Lägg till eLearning-presentationer till ditt team så att kunder som söker hjälp kan se dem innan de skickar in nya ärenden.\n"
@@ -8766,6 +8843,13 @@ msgid ""
 msgstr ""
 " Detta är basmodulen för att hantera kontoplaner och lokalisering för "
 "Hongkong"
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_pk
+msgid ""
+" This is the base module to manage chart of accounts and localization for "
+"the Pakistan "
+msgstr ""
 
 #. module: base
 #: code:addons/model.py:0
@@ -9563,6 +9647,8 @@ msgid ""
 "<strong>This operation will permanently erase all data currently stored by "
 "the modules!</strong>"
 msgstr ""
+"<strong>Den här åtgärden kommer att permanent radera all data som för "
+"närvarande lagras i modulerna!</strong>"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.report_irmodeloverview
@@ -10114,6 +10200,11 @@ msgid "Account Holder Name"
 msgstr "Kontoinnehavare"
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_account_intrastat_expiry
+msgid "Account Invoice Expiry"
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,shortdesc:base.module_account_invoice_extract
 msgid "Account Invoice Extract"
 msgstr ""
@@ -10427,6 +10518,7 @@ msgstr "Lägg till språk"
 #: model:ir.module.module,summary:base.module_data_merge_helpdesk
 msgid "Add Merge action in contextual menu of helpdesk ticket model."
 msgstr ""
+"Lägg till sammanslagningsåtgärd i kontextmenyn för kundtjänstärendemodell."
 
 #. module: base
 #: model:ir.module.module,description:base.module_data_merge_project
@@ -10596,6 +10688,11 @@ msgid ""
 "Addison Olson works in IT sector <b>since 10 years</b>. He is known\n"
 "    notably for selling mouse traps. With that trick he cut\n"
 "    IT budget by almost half within the last 2 years."
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,summary:base.module_l10n_be_hr_payroll_report_measures
+msgid "Additional Measures in Reporting"
 msgstr ""
 
 #. module: base
@@ -10840,7 +10937,7 @@ msgstr "Eftermarknadstjänster"
 #. module: base
 #: model:res.partner.industry,name:base.res_partner_industry_A
 msgid "Agriculture"
-msgstr ""
+msgstr "Jordbruk"
 
 #. module: base
 #: model:res.country,name:base.al
@@ -12030,6 +12127,11 @@ msgid "Belgian Intrastat Declaration"
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_report_measures
+msgid "Belgian Payroll - Addition Measures in Reporting"
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_holiday_pay_recovery
 msgid "Belgian Payroll - Holiday Pay Recovery"
 msgstr ""
@@ -12366,7 +12468,7 @@ msgstr ""
 #: model:ir.module.module,description:base.module_website_helpdesk
 #: model:ir.module.module,summary:base.module_website_helpdesk
 msgid "Bridge module for helpdesk modules using the website."
-msgstr "Bryggmodul för supportmoduler som använder webbplatsen."
+msgstr "Bryggmodul för Kundtjänstmoduler som använder webbplatsen."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_project_enterprise
@@ -13655,7 +13757,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_helpdesk_mail_plugin
 msgid "Convert emails to Helpdesk Tickets."
-msgstr ""
+msgstr "Konvertera e-postmeddelanden till Kundtjänstärenden."
 
 #. module: base
 #: model:res.country,name:base.ck
@@ -14364,8 +14466,8 @@ msgid ""
 "Customized views are used when users reorganize the content of their "
 "dashboard views (via web client)"
 msgstr ""
-"Anpassade vyer används när användare organiserar om sina infopaneler (via "
-"webb-klienten)."
+"Anpassade vyer används när användare organiserar om sina vyer för "
+"anslagstavlor (via webb-klienten)."
 
 #. module: base
 #: model:res.country,name:base.cy
@@ -14418,7 +14520,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_board_root
 #: model:ir.ui.menu,name:base.menu_reporting_dashboard
 msgid "Dashboards"
-msgstr "Kontrollpaneler"
+msgstr "Anslagstavlor"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_productivity_data_cleaning
@@ -14800,6 +14902,8 @@ msgid ""
 "Design great quotation templates with building blocks to significantly boost"
 " your success rate."
 msgstr ""
+"Designa fantastiska offertmallar med hjälp av byggblock för att avsevärt öka"
+" er framgång. "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_mass_mailing_sms
@@ -15703,6 +15807,10 @@ msgid ""
 "* Traceability report\n"
 "* Cost Structure report (mrp_account)"
 msgstr ""
+"Företragspåbyggnad för MRP\n"
+"* Arbetsorderplanering. Kontrollera planering efter Gantt-vyer grupperade efter produktionsorder/produktionsgrupp\n"
+"* Spårbarhetsrapport\n"
+"* Kostnadsstrukturrapport (mrp_account)"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_contacts_enterprise
@@ -15717,7 +15825,7 @@ msgstr ""
 #. module: base
 #: model:res.partner.industry,name:base.res_partner_industry_R
 msgid "Entertainment"
-msgstr ""
+msgstr "Underhållning"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_profile__entry_count
@@ -17067,7 +17175,7 @@ msgstr ""
 #: model:ir.ui.menu,name:base.menu_wizard_update_translations
 #: model_terms:ir.ui.view,arch_db:base.wizard_update_translations
 msgid "Generate Missing Terms"
-msgstr ""
+msgstr "Generera Saknade Termer"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.form_res_users_key_description
@@ -17462,6 +17570,11 @@ msgid "Gulf Cooperation Council (GCC)"
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_gcc_pos
+msgid "Gulf Cooperation Council - Point of Sale"
+msgstr ""
+
+#. module: base
 #: model:res.country,name:base.gy
 msgid "Guyana"
 msgstr "Guyana"
@@ -17519,7 +17632,7 @@ msgstr ""
 #: model_terms:res.partner,website_description:base.res_partner_3
 #: model_terms:res.partner,website_description:base.res_partner_4
 msgid "Happy to be Sponsor"
-msgstr ""
+msgstr "Glad att vara Sponsor"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hw_escpos
@@ -17587,67 +17700,67 @@ msgstr "Kundtjänst"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_crm_helpdesk
 msgid "Helpdesk - CRM"
-msgstr ""
+msgstr "Kundtjänst - CRM"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_account
 msgid "Helpdesk Account"
-msgstr "Supportkonto"
+msgstr "Kundtjänstkonto"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_sale
 msgid "Helpdesk After Sales"
-msgstr "Support After Sales"
+msgstr "Kundtjänst Efter Sälj"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_fsm
 msgid "Helpdesk FSM"
-msgstr "Support FSM"
+msgstr "Kundtjänst FSM"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_fsm_sale
 msgid "Helpdesk FSM - Sale"
-msgstr ""
+msgstr "Kundtjänst FSM - Sälj"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_fsm_report
 msgid "Helpdesk FSM Reports"
-msgstr ""
+msgstr "Kundtjänst FSM Rapporter"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_mail_plugin
 msgid "Helpdesk Mail Plugin"
-msgstr ""
+msgstr "Kundtjänst epost plugin"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_data_merge_helpdesk
 msgid "Helpdesk Merge action"
-msgstr ""
+msgstr "Kundtjänst Sammanfoga "
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_repair
 msgid "Helpdesk Repair"
-msgstr "Support reparationer"
+msgstr "Kundtjänst reparationer"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_sale_coupon
 msgid "Helpdesk Sale Coupon"
-msgstr "Support för rabattkupong"
+msgstr "Kundtjänst för rabattkupong"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_stock
 msgid "Helpdesk Stock"
-msgstr ""
+msgstr "Kundtjänst Lager"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_timesheet
 msgid "Helpdesk Timesheet"
-msgstr "Support tidrapport"
+msgstr "Kundtjänst tidrapport"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_forum
 msgid "Helpdesk: Knowledge Base"
-msgstr "Support: Kunskapsbas"
+msgstr "Kundtjänst: Kunskapsbas"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_sales_point_of_sale
@@ -18177,6 +18290,8 @@ msgid ""
 "If specified, this action will be opened at log on for this user, in "
 "addition to the standard menu."
 msgstr ""
+"Om angiven öppnas den här åtgärden vid inloggning för den här användaren, "
+"utöver standardmenyn."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_ui_view__groups_id
@@ -18247,7 +18362,7 @@ msgstr ""
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_upgrade
 msgid "If you wish to cancel the process, press the cancel button below"
-msgstr ""
+msgstr "Om du vill avbryta processen, klicka på avbryt-knappen nedan"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_avatar_mixin__image_1920
@@ -18306,7 +18421,7 @@ msgstr ""
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_upgrade
 msgid "Impacted Apps"
-msgstr ""
+msgstr "Påverkade appar"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_module_uninstall__model_ids
@@ -18755,6 +18870,8 @@ msgid ""
 "Integrate helpdesk with your mailbox.\n"
 "                   Turn emails received in your mailbox into Tickets and log their content as internal notes."
 msgstr ""
+"Integrera kundtjänst med din brevlåda.\n"
+"                    Förvandla e-postmeddelanden som tas emot i din brevlåda till Ärenden och logga deras innehåll som interna anteckningar."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_pos_six
@@ -19244,6 +19361,11 @@ msgid "K.S.A. - Payroll with Accounting"
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_sa_pos
+msgid "K.S.A. - Point of Sale"
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,shortdesc:base.module_digest
 msgid "KPI Digests"
 msgstr "Sammanställningar av KPI:er"
@@ -19297,7 +19419,7 @@ msgstr "Kiribati"
 #. module: base
 #: model:ir.module.module,summary:base.module_website_helpdesk_forum
 msgid "Knowledge base for helpdesk based on Odoo Forum"
-msgstr "Kunskapsbas för support baserad på Odoo Forum"
+msgstr "Kunskapsbas för kundtjänst baserad på Odoo Forum"
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_si
@@ -19716,7 +19838,7 @@ msgstr "Senaste version"
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_users__login_date
 msgid "Latest authentication"
-msgstr ""
+msgstr "Senaste autentisering"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__res_company__font__lato
@@ -20780,6 +20902,16 @@ msgid "Mexico - Accounting"
 msgstr ""
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_stock
+msgid "Mexico - Electronic Delivery Guide"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_stock_extended
+msgid "Mexico - Electronic Delivery Guide Comex"
+msgstr ""
+
+#. module: base
 #: model:res.country,name:base.fm
 msgid "Micronesia"
 msgstr "Mikronesien"
@@ -20926,7 +21058,7 @@ msgstr "Saknar vyarkitektur."
 #. module: base
 #: model:res.partner.title,name:base.res_partner_title_mister
 msgid "Mister"
-msgstr ""
+msgstr "Herr"
 
 #. module: base
 #: code:addons/base/models/ir_qweb_fields.py:0
@@ -21271,7 +21403,7 @@ msgstr "Mozambique"
 #. module: base
 #: model:res.partner.title,shortcut:base.res_partner_title_mister
 msgid "Mr."
-msgstr ""
+msgstr "Herr"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_mrp_repair
@@ -23528,7 +23660,7 @@ msgstr ""
 "-   Automatiserad fakturering\n"
 "-   Avbokningspolicy\n"
 "-   Särskilda priser för medlemmar\n"
-"-   Kontrollpaneler och rapportering\n"
+"-   Anslagstavlor och rapportering\n"
 "\n"
 "#### Organisera\n"
 "\n"
@@ -23774,6 +23906,16 @@ msgstr ""
 #: model:res.country,name:base.pk
 msgid "Pakistan"
 msgstr "Pakistan"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_pk
+msgid "Pakistan - Accounting"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_pk_reports
+msgid "Pakistan - Accounting Reports"
+msgstr ""
 
 #. module: base
 #: model:res.country,name:base.pw
@@ -24791,12 +24933,12 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,summary:base.module_helpdesk_fsm_sale
 msgid "Project, Helpdesk, FSM, Timesheet and Sale Orders"
-msgstr ""
+msgstr "Projekt, Kundtjänst, FSM, Tidrapporter och Säljorder"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_helpdesk_sale_timesheet
 msgid "Project, Helpdesk, Timesheet and Sale Orders"
-msgstr "Projekt, support, tidrapporter och order"
+msgstr "Projekt, Kundtjänst, Tidrapporter och Säljorder"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_helpdesk_account
@@ -26483,7 +26625,7 @@ msgstr "Sälj kurser"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_helpdesk_sale_timesheet
 msgid "Sell Helpdesk Timesheet"
-msgstr "Sälj support-tidrapport"
+msgstr "Sälj Kundtjänst-tidrapport"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_timesheet
@@ -27538,6 +27680,11 @@ msgid "Sweden"
 msgstr "Sverige"
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_se
+msgid "Sweden - Accounting"
+msgstr ""
+
+#. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se_reports
 msgid "Sweden - Accounting Reports"
 msgstr ""
@@ -27545,11 +27692,6 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_pos_l10n_se
 msgid "Sweden Registered Cash Register"
-msgstr ""
-
-#. module: base
-#: model:ir.module.module,shortdesc:base.module_l10n_se
-msgid "Swedish - Accounting"
 msgstr ""
 
 #. module: base
@@ -28610,6 +28752,12 @@ msgstr ""
 #, python-format
 msgid "This method can only be accessed over HTTP"
 msgstr "Denna metod kan endast nås via HTTP"
+
+#. module: base
+#: model:ir.module.module,summary:base.module_account_intrastat_expiry
+msgid ""
+"This module adds an expiry feature to transaction account intrastat codes."
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_mail_bot_hr
@@ -30468,12 +30616,12 @@ msgstr "Webbplats event-CRM"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk
 msgid "Website Helpdesk"
-msgstr "Webbplats support"
+msgstr "Webbplats Kundtjänst"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_livechat
 msgid "Website IM Livechat Helpdesk"
-msgstr "Webbplats livechat-support"
+msgstr "Webbplats livechat-Kundtjänst"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_jitsi
@@ -30540,7 +30688,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_dashboard
 msgid "Website Sales Dashboard"
-msgstr "Webbplatsens kontrollpanel för försäljning"
+msgstr "Webbplatsens anslagstavla för försäljning"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_helpdesk_slides
@@ -30844,7 +30992,7 @@ msgstr ""
 #: code:addons/base/models/ir_module.py:0
 #, python-format
 msgid "You are trying to install incompatible modules in category \"%s\":"
-msgstr "Du försöker installera inkompatibla moduler i kategorin %s:"
+msgstr "Du försöker installera inkompatibla moduler i kategorin \"%s\":"
 
 #. module: base
 #: code:addons/base/models/ir_module.py:0
@@ -31186,6 +31334,12 @@ msgid "binary"
 msgstr "binär"
 
 #. module: base
+#: code:addons/base/models/ir_attachment.py:0
+#, python-format
+msgid "binary_field_real_user should be a res.users record."
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__ttype__boolean
 msgid "boolean"
 msgstr "boolskt"
@@ -31471,6 +31625,12 @@ msgid "many2many"
 msgstr "many2many"
 
 #. module: base
+#: code:addons/base/models/ir_actions.py:0
+#, python-format
+msgid "many2many fields cannot be evaluated by reference"
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__ttype__many2one
 msgid "many2one"
 msgstr "many2one"
@@ -31744,7 +31904,7 @@ msgstr "titel"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_web_dashboard
 msgid "web_dashboard"
-msgstr "web_dashboard"
+msgstr "web_anslagstavla"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_sale_delivery_mondialrelay

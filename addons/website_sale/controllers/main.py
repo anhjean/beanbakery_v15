@@ -216,6 +216,23 @@ class WebsiteSale(http.Controller):
             if not qs or qs.lower() in loc:
                 yield {'loc': loc}
 
+    def _get_search_options(
+        self, category=None, attrib_values=None, pricelist=None, min_price=0.0, max_price=0.0, conversion_rate=1, **post
+    ):
+        return {
+            'displayDescription': True,
+            'displayDetail': True,
+            'displayExtraDetail': True,
+            'displayExtraLink': True,
+            'displayImage': True,
+            'allowFuzzy': not post.get('noFuzzy'),
+            'category': str(category.id) if category else None,
+            'min_price': min_price / conversion_rate,
+            'max_price': max_price / conversion_rate,
+            'attrib_values': attrib_values,
+            'display_currency': pricelist.currency_id,
+        }
+
     @http.route([
         '''/shop''',
         '''/shop/page/<int:page>''',
@@ -276,19 +293,15 @@ class WebsiteSale(http.Controller):
         if attrib_list:
             post['attrib'] = attrib_list
 
-        options = {
-            'displayDescription': True,
-            'displayDetail': True,
-            'displayExtraDetail': True,
-            'displayExtraLink': True,
-            'displayImage': True,
-            'allowFuzzy': not post.get('noFuzzy'),
-            'category': str(category.id) if category else None,
-            'min_price': min_price / conversion_rate,
-            'max_price': max_price / conversion_rate,
-            'attrib_values': attrib_values,
-            'display_currency': pricelist.currency_id,
-        }
+        options = self._get_search_options(
+            category=category,
+            attrib_values=attrib_values,
+            pricelist=pricelist,
+            min_price=min_price,
+            max_price=max_price,
+            conversion_rate=conversion_rate,
+            **post
+        )
         # No limit because attributes are obtained from complete product list
         product_count, details, fuzzy_search_term = request.website._search_with_fuzzy("products_only", search,
             limit=None, order=self._get_search_order(post), options=options)
@@ -441,9 +454,9 @@ class WebsiteSale(http.Controller):
 
     @http.route(['/shop/change_pricelist/<model("product.pricelist"):pl_id>'], type='http', auth="public", website=True, sitemap=False)
     def pricelist_change(self, pl_id, **post):
+        redirect_url = request.httprequest.referrer
         if (pl_id.selectable or pl_id == request.env.user.partner_id.property_product_pricelist) \
                 and request.website.is_pricelist_available(pl_id.id):
-            redirect_url = request.httprequest.referrer
             if redirect_url and request.website.is_view_active('website_sale.filter_products_price'):
                 decoded_url = url_parse(redirect_url)
                 args = url_decode(decoded_url.query)
@@ -833,6 +846,10 @@ class WebsiteSale(http.Controller):
                 values = kw
             else:
                 partner_id = self._checkout_form_save(mode, post, kw)
+                # We need to validate _checkout_form_save return, because when partner_id not in shippings
+                # it returns Forbidden() instead the partner_id
+                if isinstance(partner_id, Forbidden):
+                    return partner_id
                 if mode[1] == 'billing':
                     order.partner_id = partner_id
                     order.with_context(not_self_saleperson=True).onchange_partner_id()

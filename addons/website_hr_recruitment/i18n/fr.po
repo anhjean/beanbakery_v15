@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: website_hr_recruitment
 #: code:addons/website_hr_recruitment/models/hr_recruitment.py:0
@@ -68,7 +68,7 @@ msgstr "<span class=\"o_recruitment_purple\">Publié</span>"
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.apply
 msgid "<span class=\"s_website_form_label_content\">Department</span>"
-msgstr ""
+msgstr "<span class=\"s_website_form_label_content\">Départment</span>"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.apply
@@ -78,12 +78,12 @@ msgstr ""
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.apply
 msgid "<span class=\"s_website_form_label_content\">Resume</span>"
-msgstr ""
+msgstr "<span class=\"s_website_form_label_content\">Curriculum vitae</span>"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.apply
 msgid "<span class=\"s_website_form_label_content\">Short Introduction</span>"
-msgstr ""
+msgstr "<span class=\"s_website_form_label_content\">Brève introduction</span>"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.apply
@@ -109,6 +109,8 @@ msgid ""
 "<span class=\"s_website_form_label_content\">Your Phone Number</span>\n"
 "                                            <span class=\"s_website_form_mark\"> *</span>"
 msgstr ""
+"<span class=\"s_website_form_label_content\">Votre numéro de téléphone</span>\n"
+"                                            <span class=\"s_website_form_mark\"> *</span>"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.view_hr_job_kanban_referal_extends
@@ -136,7 +138,7 @@ msgstr ""
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.default_website_description
 msgid "A full-time position <br/>Attractive salary package."
-msgstr ""
+msgstr "Un poste à temps plein <br/>Package salarial attractif."
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.job_right_side_bar
@@ -193,7 +195,7 @@ msgstr "Postuler"
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.detail
 msgid "Apply Now!"
-msgstr "Candidatez !"
+msgstr "Postulez maintenant !"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.default_website_description
@@ -228,7 +230,7 @@ msgstr "Peut publier"
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.thankyou_ir_ui_view
 #: model_terms:website.page,arch_db:website_hr_recruitment.thankyou
 msgid "Congratulations!"
-msgstr "Félicitations! "
+msgstr "Félicitations !"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.index
@@ -362,7 +364,7 @@ msgstr "Postes"
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.index
 msgid "Join us and help disrupt the enterprise market!"
-msgstr "Rejoignez-nous et révolutionnez le marché de l'entreprise!"
+msgstr "Rejoignez-nous et révolutionnez le marché de l'entreprise !"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.index
@@ -459,6 +461,8 @@ msgstr "Évolution personnelle"
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.default_website_description
 msgid "Play any sport with colleagues, <br/>the bill is covered."
 msgstr ""
+"Pratiquez n'importe quel sport avec des collègues,<br/> la facture est "
+"couverte."
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.hr_job_website_inherit
@@ -609,7 +613,7 @@ msgstr "Ce que nous offrons"
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.default_website_description
 msgid "What's great in the job?"
-msgstr "Qu'est-ce qui est génial dans ce travail?"
+msgstr "Qu'est-ce qui est génial dans ce travail ?"
 
 #. module: website_hr_recruitment
 #: model_terms:ir.ui.view,arch_db:website_hr_recruitment.thankyou_ir_ui_view

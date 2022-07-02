@@ -6,8 +6,8 @@
 # RHTodoo, 2021
 # Alexandra Jubert <aju@odoo.com>, 2021
 # Caroline Renson <car@odoo.com>, 2022
-# Cécile Collart <cco@odoo.com>, 2022
 # sakodoo <sak@odoo.com>, 2022
+# Cécile Collart <cco@odoo.com>, 2022
 # Martin Trigaux, 2022
 # 
 msgid ""
@@ -587,7 +587,7 @@ msgstr "Entrez une description et le but de la clef."
 #: code:addons/portal/static/src/xml/portal_security.xml:0
 #, python-format
 msgid "Forgot password?"
-msgstr "Mot de passe oublié?"
+msgstr "Mot de passe oublié ?"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.wizard_view
@@ -644,10 +644,24 @@ msgid "Internal User"
 msgstr "Utilisateur interne"
 
 #. module: portal
+#. openerp-web
+#: code:addons/portal/static/src/xml/portal_chatter.xml:0
+#, python-format
+msgid "Internal Note"
+msgstr "Note interne"
+
+#. module: portal
+#. openerp-web
+#: code:addons/portal/static/src/xml/portal_chatter.xml:0
+#, python-format
+msgid "Internal notes are only displayed to internal users."
+msgstr ""
+
+#. module: portal
 #: code:addons/portal/controllers/portal.py:0
 #, python-format
 msgid "Invalid Email! Please enter a valid email address."
-msgstr "Adresse email incorrecte! Merci de saisir une adresse email valable."
+msgstr "Adresse email incorrecte ! Merci de saisir une adresse email valable."
 
 #. module: portal
 #: code:addons/portal/controllers/portal.py:0
@@ -812,7 +826,7 @@ msgstr "Partenaires"
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_security
 msgid "Password Updated!"
-msgstr "Mot-de-passe mis-à-jour!"
+msgstr "Mot-de-passe mis-à-jour !"
 
 #. module: portal
 #: model_terms:ir.ui.view,arch_db:portal.portal_my_security
@@ -1010,7 +1024,7 @@ msgstr "Rue"
 #: code:addons/portal/static/src/xml/portal_signature.xml:0
 #, python-format
 msgid "Thank You!"
-msgstr "Merci!"
+msgstr "Merci !"
 
 #. module: portal
 #: code:addons/portal/controllers/portal.py:0
@@ -1254,7 +1268,7 @@ msgstr "Historique de communication du site web"
 #: code:addons/portal/static/src/xml/portal_security.xml:0
 #, python-format
 msgid "What's this key for?"
-msgstr "À quoi sert cette clef?"
+msgstr "À quoi sert cette clef ?"
 
 #. module: portal
 #: model:ir.model.fields,field_description:portal.field_portal_wizard_user__wizard_id

@@ -8,9 +8,10 @@ from odoo.addons.crm.models.crm_lead import PARTNER_FIELDS_TO_SYNC, PARTNER_ADDR
 from odoo.addons.crm.tests.common import TestCrmCommon, INCOMING_EMAIL
 from odoo.addons.phone_validation.tools.phone_validation import phone_format
 from odoo.exceptions import UserError
-from odoo.tests.common import Form, users
+from odoo.tests.common import Form, tagged, users
 
 
+@tagged('lead_internals')
 class TestCRMLead(TestCrmCommon):
 
     @classmethod
@@ -231,6 +232,20 @@ class TestCRMLead(TestCrmCommon):
         self.assertEqual(lead.stage_id, self.stage_team1_1)
 
     @users('user_sales_manager')
+    def test_crm_lead_currency_sync(self):
+        lead = self.env['crm.lead'].create({
+            'name': 'Lead 1',
+            'company_id': self.company_main.id
+        })
+        self.assertEqual(lead.company_currency, self.env.ref('base.EUR'))
+
+        self.company_main.currency_id = self.env.ref('base.CHF')
+        lead.with_company(self.company_main).update({'company_id': False})
+        self.assertEqual(lead.company_currency, self.env.ref('base.CHF'))
+        #set back original currency
+        self.company_main.currency_id = self.env.ref('base.EUR')
+
+    @users('user_sales_manager')
     def test_crm_lead_partner_sync(self):
         lead, partner = self.lead_1.with_user(self.env.user), self.contact_2
         partner_email, partner_phone = self.contact_2.email, self.contact_2.phone
@@ -361,8 +376,10 @@ class TestCRMLead(TestCrmCommon):
         self.assertFalse(lead.mobile)
         self.assertFalse(lead.phone_sanitized)
         self.assertEqual(partner.mobile, partner_mobile)
-        self.assertEqual(partner.phone_sanitized, partner_mobile_sanitized,
-                         'Partner sanitized should be computed on mobile')
+        # if SMS is uninstalled, phone_sanitized is not available on partner
+        if 'phone_sanitized' in partner:
+            self.assertEqual(partner.phone_sanitized, partner_mobile_sanitized,
+                             'Partner sanitized should be computed on mobile')
 
     @users('user_sales_manager')
     def test_crm_lead_partner_sync_email_phone_corner_cases(self):
@@ -663,3 +680,26 @@ class TestCRMLead(TestCrmCommon):
         self.assertEqual(lead.phone, self.test_phone_data[1])
         self.assertEqual(lead.mobile, self.test_phone_data[2])
         self.assertFalse(lead.phone_sanitized)
+
+    def test_no_date_closed_update_between_won_stages(self):
+        # Test for one won lead
+        stage_team1_won2 = self.env['crm.stage'].create({
+            'name': 'Won2',
+            'sequence': 75,
+            'team_id': self.sales_team_1.id,
+            'is_won': True,
+        })
+        won_lead = self.lead_team_1_won
+        date_closed = datetime.strptime('2020-02-02 15:00', '%Y-%m-%d %H:%M')
+        won_lead.date_closed = date_closed
+        with freeze_time('2020-02-02 18:00'):
+            won_lead.stage_id = stage_team1_won2
+        self.assertEqual(won_lead.date_closed, date_closed)
+
+        # Test for one won and one unwon lead
+        leads = won_lead + self.lead_1
+        self.assertFalse(self.lead_1.date_closed)
+        with freeze_time('2020-02-02 18:00'):
+            leads.stage_id = self.stage_team1_won
+        self.assertEqual(won_lead.date_closed, date_closed)
+        self.assertEqual(self.lead_1.date_closed, datetime.strptime('2020-02-02 18:00', '%Y-%m-%d %H:%M'))

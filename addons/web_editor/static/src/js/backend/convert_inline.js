@@ -168,7 +168,7 @@ function bootstrapToTable($editable) {
             // 1. Replace generic "col" classes with specific "col-n", computed
             //    by sharing the available space between them.
             const flexColumns = bootstrapColumns.filter(column => !/\d/.test(column.className.match(RE_COL_MATCH)[0] || '0'));
-            const colTotalSize = bootstrapColumns.map(child => _getColumnSize(child)).reduce((a, b) => a + b);
+            const colTotalSize = bootstrapColumns.map(child => _getColumnSize(child)).reduce((a, b) => a + b, 0);
             const colSize = Math.max(1, Math.round((12 - colTotalSize) / flexColumns.length));
             for (const flexColumn of flexColumns) {
                 flexColumn.classList.remove(flexColumn.className.match(RE_COL_MATCH)[0].trim());
@@ -391,6 +391,7 @@ function classToStyle($editable, cssRules) {
  * @param {JQuery} [$iframe] the iframe containing the editable, if any
  */
 function toInline($editable, cssRules, $iframe) {
+    $editable.removeClass('odoo-editor-editable');
     const editable = $editable.get(0);
     const iframe = $iframe && $iframe.get(0);
     const doc = editable.ownerDocument;
@@ -448,6 +449,7 @@ function toInline($editable, cssRules, $iframe) {
     for (const [node, displayValue] of displaysToRestore) {
         node.style.setProperty('display', displayValue);
     }
+    $editable.addClass('odoo-editor-editable');
 }
 /**
  * Convert font icons to images.

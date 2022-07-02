@@ -11,6 +11,9 @@
 # Benson <Benson.Dr@Gmail.com>, 2022
 # Martin Trigaux, 2022
 # yong liu, 2022
+# Jeffery CHEN <jeffery9@gmail.com>, 2022
+# Jinjiu Liu, 2022
+# Desausoi Laurent, 2022
 # 山西清水欧度(QQ:54773801) <54773801@qq.com>, 2022
 # 
 msgid ""
@@ -473,7 +476,7 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"        <t t-set=\"doc_name\" t-value=\"'quotation' if object.state in ('draft', 'sent') else 'order'\"/>\n"
+"        <t t-set=\"doc_name\" t-value=\"'报价' if object.state in ('draft', 'sent') else '订单'\"/>\n"
 "        你好,\n"
 "        <br/><br/>\n"
 "        你的\n"
@@ -1679,6 +1682,12 @@ msgstr "预付款：%s"
 #, python-format
 msgid "Down Payments"
 msgstr "首付款"
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:0
+#, python-format
+msgid "Down payment"
+msgstr "预付款"
 
 #. module: sale
 #: model:ir.model.fields.selection,name:sale.selection__sale_advance_payment_inv__advance_payment_method__fixed
@@ -3159,7 +3168,7 @@ msgstr "报价已发送"
 #: code:addons/sale/controllers/portal.py:0
 #, python-format
 msgid "Quotation viewed by customer %s"
-msgstr "客户%s查看的报价单"
+msgstr "客户%s视图的报价单"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_quotations
@@ -4552,6 +4561,15 @@ msgid ""
 msgstr "您可以在此处设置将在销售订单上显示的通信类型。当客户选择付款方式时，将与客户进行通信。"
 
 #. module: sale
+#: code:addons/sale/models/product_product.py:0
+#: code:addons/sale/models/product_template.py:0
+#, python-format
+msgid ""
+"You cannot change the product's type because it is already used in sales "
+"orders."
+msgstr "您无法更改产品的类型，因为它已在销售订单中使用。"
+
+#. module: sale
 #: code:addons/sale/models/sale_order_line.py:0
 #, python-format
 msgid ""
@@ -4656,6 +4674,6 @@ msgid ""
 "(ctx.get('proforma') and 'Proforma' or 'Quotation') or 'Order' }} (Ref {{ "
 "object.name or 'n/a' }})"
 msgstr ""
-"{{ object.company_id.name }} {{ object.state in ('draft', 'sent') 和 "
-"(ctx.get('proforma') 和 'Proforma' 或 '报价单') or 'Order' }} (Ref {{ object.name"
-" or 'n/a' }})"
+"{{ object.company_id.name }} {{ object.state in ('draft', 'sent') and "
+"(ctx.get('proforma') and 'Proforma' or '报价单') or 'Order' }} (Ref {{ "
+"object.name or 'n/a' }})"

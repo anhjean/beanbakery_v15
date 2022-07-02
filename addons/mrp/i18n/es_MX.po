@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Language: es_MX\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
 #. module: mrp
 #: model:ir.model.fields,help:mrp.field_mrp_production__state
@@ -4514,6 +4514,12 @@ msgid ""
 msgstr ""
 "La unidad de medida del producto que eligió tiene una categoría diferente "
 "que la del formulario de producto."
+
+#. module: mrp
+#: code:addons/mrp/models/mrp_workcenter.py:0
+#, python-format
+msgid "The Workorder (%s) cannot be started twice!"
+msgstr "¡La orden de trabajo (%s) no se puede iniciar dos veces!"
 
 #. module: mrp
 #: code:addons/mrp/models/mrp_bom.py:0

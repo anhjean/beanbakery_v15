@@ -3114,7 +3114,7 @@ msgstr "Beschikbaar"
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_bom_line_view_form
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_workorder_tree_editable_view
 msgid "Operation"
-msgstr "Handeling"
+msgstr "Bewerking"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_move__operation_id
@@ -4499,6 +4499,12 @@ msgid ""
 msgstr ""
 "De maateenheid van het door jou gekozen product heeft een andere categorie "
 "dan in het product formulier."
+
+#. module: mrp
+#: code:addons/mrp/models/mrp_workcenter.py:0
+#, python-format
+msgid "The Workorder (%s) cannot be started twice!"
+msgstr "De werkorder (%s) kan niet twee keer worden gestart!"
 
 #. module: mrp
 #: code:addons/mrp/models/mrp_bom.py:0

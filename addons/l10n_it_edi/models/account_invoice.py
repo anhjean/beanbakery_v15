@@ -142,14 +142,14 @@ class AccountMove(models.Model):
                 return True
             return False
 
+        def format_alphanumeric(text_to_convert):
+            return text_to_convert.encode('latin-1', 'replace').decode('latin-1') if text_to_convert else False
+
         formato_trasmissione = "FPA12" if self._is_commercial_partner_pa() else "FPR12"
 
-        if self.move_type == 'out_invoice':
-            document_type = 'TD01'
-        elif self.move_type == 'out_refund':
-            document_type = 'TD04'
-        else:
-            document_type = 'TD0X'
+        document_type = self.env['account.edi.format']._l10n_it_get_document_type(self)
+        if self.env['account.edi.format']._l10n_it_is_simplified_document_type(document_type):
+            formato_trasmissione = "FSM10"
 
         # b64encode returns a bytestring, the template tries to turn it to string,
         # but only gets the repr(pdf) --> "b'<base64_data>'"
@@ -169,14 +169,14 @@ class AccountMove(models.Model):
         #   taxable base = sum(taxable base for each unit) + Arrotondamento
         tax_details = self._prepare_edi_tax_details()
         for _tax_name, tax_dict in tax_details['tax_details'].items():
-            base_amount = tax_dict['base_amount']
-            tax_amount = tax_dict['tax_amount']
+            base_amount = tax_dict['base_amount_currency']
+            tax_amount = tax_dict['tax_amount_currency']
             tax_rate = tax_dict['tax'].amount
             if tax_dict['tax'].price_include and tax_dict['tax'].amount_type == 'percent':
                 expected_base_amount = tax_amount * 100 / tax_rate if tax_rate else False
                 if expected_base_amount and float_compare(base_amount, expected_base_amount, 2):
                     tax_dict['rounding'] = base_amount - (tax_amount * 100 / tax_rate)
-                    tax_dict['base_amount'] = base_amount - tax_dict['rounding']
+                    tax_dict['base_amount_currency'] = base_amount - tax_dict['rounding']
 
         # Create file content.
         template_values = {
@@ -186,6 +186,8 @@ class AccountMove(models.Model):
             'format_numbers': format_numbers,
             'format_numbers_two': format_numbers_two,
             'format_phone': format_phone,
+            'format_alphanumeric': format_alphanumeric,
+            'normalize_codice_fiscale': self.env['res.partner']._l10n_it_normalize_codice_fiscale,
             'discount_type': discount_type,
             'get_vat_number': get_vat_number,
             'get_vat_country': get_vat_country,
@@ -206,7 +208,12 @@ class AccountMove(models.Model):
         :return: The XML content as str.
         '''
         template_values = self._prepare_fatturapa_export_values()
-        content = self.env.ref('l10n_it_edi.account_invoice_it_FatturaPA_export')._render(template_values)
+        if not self.env['account.edi.format']._l10n_it_is_simplified_document_type(template_values['document_type']):
+            content = self.env.ref('l10n_it_edi.account_invoice_it_FatturaPA_export')._render(template_values)
+        else:
+            content = self.env.ref('l10n_it_edi.account_invoice_it_simplified_FatturaPA_export')._render(template_values)
+            self.message_post(body=_("A simplified invoice was created instead of an ordinary one. This is because the invoice \
+                                    is a domestic invoice with a total amount of less than or equal to 400€ and the customer's address is incomplete."))
         return content
 
     def _post(self, soft=True):
