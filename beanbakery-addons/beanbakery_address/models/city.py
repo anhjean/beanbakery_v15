@@ -30,5 +30,5 @@ class City(models.Model):
     state_id = fields.Many2one(
         'res.country.state', 'State',domain="[('country_id', '=', country_id)]")
     country_id = fields.Many2one('res.country', string='Country', required=True, )
-    zipcode = fields.Char(string="Zipcode", default="700000")
+    zipcode = fields.Char(string="Zipcode", default="70000")
     

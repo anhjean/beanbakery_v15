@@ -6,7 +6,6 @@
       <field name="report_type">qweb-html</field>
       <field name="report_name">beanbakery_report.report_vehicle_order</field>
       <field name="report_file">beanbakery_report.report_vehicle_order</field>
-
       <field name="print_report_name">('The Report - %s' % (object.name))</field>
       <field name="binding_model_id" ref="base.model_res_partner"/>
       <field name="binding_type">report</field>

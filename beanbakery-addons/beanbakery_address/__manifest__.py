@@ -1,21 +1,17 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Beanbakery VN Address",
+    'name': "Beanus VN Address",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        This is the VN address module for Bean Bakery Biz
+            """,
 
     'description': """
-        Long description of module's purpose
+        This is the VN address module for Bean Bakery Biz. 
     """,
 
-    'author': "Bean Bakery",
-    'website': "https://www.beanbakery.vn",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
+    'author': "Beanus",
+    'website': "https://www.thebeanus.com",
     'category': 'Application',
     'version': '0.1',
     "license": "LGPL-3",
@@ -40,8 +36,4 @@
      'web.assets_qweb': [
             'bean_bakery_module/static/src/xml/**/*',
         ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
 }

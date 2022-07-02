@@ -15,6 +15,9 @@ class District(models.Model):
     state_id = fields.Many2one(
         'res.country.state', 'State',domain="[('country_id', '=', country_id)]")
     country_id = fields.Many2one('res.country', string='Country', required=True, )
-    zipcode = fields.Char(string='Zipcode',default='700000')
+    zipcode = fields.Char(string='Zipcode',default='')
+    
+    def get_website_sale_district(self, mode='billing'):
+        return self.sudo().search([])
    
     
