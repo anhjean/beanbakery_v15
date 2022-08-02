@@ -45,7 +45,7 @@ I use this project for my own bakery business with the following requirements:
     - **For Ubuntu v18.04** :
       - `sudo wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb && sudo apt install ./wkhtmltox_0.12.6-1.bionic_amd64.deb`
     -  Install **nodejs** : 
-      - `curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -`
+      - `curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -`
       - `sudo apt-get install -y nodejs`
       - `sudo npm install -g rtlcss`
       
